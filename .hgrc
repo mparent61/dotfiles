@@ -1,0 +1,46 @@
+[ui]
+username = Mike Parent <mparent@umich.edu>
+ignore = ~/.hgignore_global
+style = compact
+merge = vimdiff
+
+[extensions]
+color =
+graphlog =
+hgext.extdiff =
+progress =
+#prompt = ~/util/hg-prompt/prompt.py
+purge =
+
+[diff]
+# 'Git' diff is better than older 'diff'
+git = True
+
+[extdiff]
+cmd.vimdiff = vim
+opts.vimdiff = -f '+next' '+execute "DirDiff" fnameescape(argv(1)) fnameescape(argv(0))'
+
+[alias]
+vi = vimdiff
+vim = vimdiff
+cm = commit --message
+up = update --check
+. = summary
+? = status
+
+
+[merge-tools]
+#vimdiff.executable = vim
+#vimdiff.args = -d "$output" "$local" "$other" "$base" -c "wincmd J"
+splice.executable = vim
+splice.args = -f $base $local $other $output -c 'SpliceInit'
+splice.premerge = keep
+splice.priority = 1
+
+[color]
+status.modified = magenta bold
+status.added = green bold
+status.removed = red bold
+status.deleted = cyan bold
+status.unknown = blue bold
+status.ignored = black bold

@@ -1,0 +1,111 @@
+[user]
+    name = Mike Parent
+    email = mparent@umich.edu
+[core]
+    excludesfile = ~/.gitignore_global
+    pager = cat
+	attributesfile = ~/.gitattributes
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red
+    new = cyan
+[color "status"]
+    added = cyan
+    changed = yellow
+    untracked = red
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[alias]
+    co = checkout
+
+    br = branch
+    nb = checkout -b
+    # List last modified date for each branch
+    branchdate = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
+    # List merged/unmerged branches
+    brm = branch --merged
+    brnm = branch --no-merged
+
+    ci = commit
+    ca = commit -a
+    cm = commit -m
+
+    # Short status lines
+    st = status -sb
+
+    # Pretty looking log
+    ls = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    lr = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    # List commits showing changed files
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    # List w/o colors (for Unix pipes)
+    lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+
+    # TESTING: Update all submodules
+    upsub = pull --recurse-submodules
+
+    # List aliases
+    la = "!git config -l | grep alias | cut -c 7-"
+
+    # Push everything including all submodules
+    pushall = push --recurse-submodules=on-demand
+
+    # Undo, edit + recommit last commit (for 'Ooops I didn't mean to commit yet')
+    # http://stackoverflow.com/a/927386
+    # 1) First do this:
+    undoci = reset --soft 'HEAD^'
+    # 2) edit / add
+    # 3) Recommit via:
+    redoci = commit -c ORIG_HEAD
+
+    # Reset
+    r = reset
+    r1 = reset HEAD^
+    r2 = reset HEAD^^
+    rh = reset --hard
+    rh1 = reset HEAD^ --hard
+    rh2 = reset HEAD^^ --hard
+
+    # Find file path
+    f = "!git ls-files | grep -i"
+
+    # Grep
+    grep = grep -Ii
+    gr = grep -Ii
+
+    # Show modified files in last commit
+    dl = "!git ll -1"
+    dlc = diff --cached HEAD^
+
+    # DirDiff
+    dd = difftool --dir-diff
+
+[pull]
+    rebase = true
+[push]
+	default = simple
+[merge]
+	tool = fugitive
+;[diff]
+;    tool = vimdiff
+[difftool]
+    # Stop vim prompting about launching vimdiff
+    prompt = false
+[diff]
+    tool = default-difftool
+;[difftool]
+;    prompt = false
+[difftool "default-difftool"]
+    cmd = vim -f '+next' '+execute \"DirDiff\" argv(1) argv(0)' $REMOTE $LOCAL
+
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[diff "excel"]
+	command = ~/util/xldiff.py
