@@ -1,0 +1,16 @@
+# Ignore all non-dotfiles (by first ignoring everything, then allowing files beginning with period)
+/*
+!.*
+
+# Dotfile blacklist
+.CFUserTextEncoding
+.DS_Store
+.Trash/
+.bash_history
+.cups/
+.gem/
+.ssh/
+.vagrant.d/
+.vim/tmp
+.virtualenvs/
+.zsh_history
