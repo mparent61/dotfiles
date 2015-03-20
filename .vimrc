@@ -491,6 +491,11 @@
     "noremap ]d <C-N>:<C-U>execute <SID>StageDiff('Gvdiff')<CR><C-W>k
     "noremap ]d <C-N> D <C-W>k
 
+    " ----- Indent Guides -----
+    let g:indent_guides_auto_colors = 0
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=11
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+
     " ----- NerdTree -----
     noremap <leader>n :NERDTreeToggle<CR>
     let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$' ]
