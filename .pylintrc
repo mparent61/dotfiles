@@ -39,6 +39,7 @@ load-plugins=
 # C0302 - Too many lines in module
 # C0321 - More than one statement on a single line
 # C0322 - Operator not preceded by a space
+# C1001 - Old-style class defined
 # W0142 - Used * or ** magic
 # W0232 - Class has no __init__ method
 # W0403 - Relative imports
@@ -62,7 +63,7 @@ load-plugins=
 #   R0914 = Too many local variables
 #   R0915 = Too many statements
 #   R0921 - Abstract class not referenced (mparent: Limited to file scope, so useless)
-disable=C0103,C0111,C0302,C0321,C0322,W0142,W0232,W0403,W0511,W0613,W0704,W1001,R0201,R0901,R0902,R0903,R0904,R0912,R0913,R0914,R0915,I0011,I0012,F0401,R0921
+disable=C0103,C0111,C0302,C0321,C0322,C1001,W0142,W0232,W0403,W0511,W0613,W0704,W1001,R0201,R0901,R0902,R0903,R0904,R0912,R0913,R0914,R0915,I0011,I0012,F0401,R0921
 
 [REPORTS]
 
@@ -143,7 +144,7 @@ no-docstring-rgx=__.*__
 [FORMAT]
 
 # Maximum number of characters on a single line.
-max-line-length=120
+max-line-length=100
 
 # Maximum number of lines in a module
 max-module-lines=10000
@@ -179,19 +180,13 @@ ignore-mixin-members=yes
 
 # List of classes names for which member attributes should not be checked
 # (useful for classes with attributes dynamically set).
-#   Browser -- mechanize 'Browser' class
-#   DegreeProgram -- mapped relationship member 'program' not detected by PyLint
 #   FakeDatetime -- mock time helper class used in tests but confuses PyLint in no-test modules
 #   ParseResult -- urlparse.ParseResult is a named tuple that confuses PyLint
 #   Popen -- subprocess.Popen confuses PyLint
 #   RelationshipProperty -- dynamically as member of Sqlalchemy model
-#   Reservation -- several SQLalchemy-generated 'relationship' members
 #   SplitResult -- urlparse.SplitResult is a named tuple that confuses PyLint
-#   Program -- mapped relationship member 'group' not detected by PyLint
-#   ProgramCategory -- mapped relationship member 'programs' not detected by PyLint
-#   Target -- mapped relationship member 'school' not detected by PyLint
-#   TestSetup -- common mixin pattern for common setup code shared among unittest Test Cases
-ignored-classes=Browser,DegreeProgram,FakeDatetime,ParseResult,Popen,RelationshipProperty,Reservation,SplitResult,Program,ProgramCategory,Target,TestSetup
+#   WSGIRequest - used esp in test cases, members confuse PyLint
+ignored-classes=FakeDatetime,ParseResult,Popen,RelationshipProperty,SplitResult,WSGIRequest
 
 # When zope mode is activated, add a predefined set of Zope acquired attributes
 # to generated-members.
