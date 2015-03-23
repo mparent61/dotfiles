@@ -5,10 +5,15 @@
 # Dotfile blacklist
 .CFUserTextEncoding
 .DS_Store
+.NERDTreeBookmarks
 .Trash/
 .bash_history
+.cache/
 .cups/
 .gem/
+.local/
+.node-gyp/
+.npm/
 .ssh/
 .vagrant.d/
 .vim/tmp
