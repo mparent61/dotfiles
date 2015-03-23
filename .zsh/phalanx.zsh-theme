@@ -48,31 +48,19 @@ function precmd {
     fi
 }
 
-function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
-}
-
-function hg_prompt_info {
-    hg prompt --angle-brackets "\
-< on %{$COLOR_ORANGE%}<branch|quiet>%{$reset_color%}>\
-< at %{$COLOR_YELLOW%}<tags|%{$reset_color%|quiet} >%{$reset_color%}>\
-%{$COLOR_GREEN%}<status|modified|unknown><update>%{$reset_color%}" 2>/dev/null
-}
-
 PROMPT='
-' # Newline
+'  # Newline
 PROMPT+='%{$PR_COLOR_USER%}%n'
 PROMPT+='%{$reset_color%}@'
 PROMPT+='%{$PR_COLOR_HOST%}$(hostname -s)'
 PROMPT+='%{$reset_color%} '
 PROMPT+='%{$COLOR_ORANGE%}${PWD/#$HOME/~}'
-#PROMPT+='%{$reset_color%}$(git_prompt_info)$(hg_prompt_info)'
 PROMPT+='%{$reset_color%}$(git_prompt_info)'
 PROMPT+=' '
 PROMPT+='%{$COLOR_CYAN%}%(?,,%{$COLOR_RED%}[%?] )'
 PROMPT+='
 '  # Newline
-PROMPT+='$(virtualenv_info)'
+PROMPT+='$(virtualenv_prompt_info)'
 PROMPT+='$%{$reset_color%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$COLOR_ORANGE%}"

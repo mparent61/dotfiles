@@ -25,7 +25,9 @@ plugins=(autojump
          python
          tmux
          tmuxinator
-         vi-mode)
+         vi-mode
+         virtualenv
+         virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -40,25 +42,18 @@ alias top='top -o cpu'
 alias hgv='hg vimdiff'
 alias nt='nosetests'
 alias nf='nt --failed'
-alias dev='workon dev && cd ~/biz/dev'
-alias score='workon score && cd ~/biz/score'
-alias master='workon master && cd ~/biz/master'
-alias watch='dev && fab test.watch'
-alias sysop='workon sysop && cd ~/biz/sysop'
 alias v='vim'
 alias vi='vim'
 # Read-only VIM
 alias vr='vim -M'
 alias vimrc='vim ~/.vimrc'
 alias zshrc='vim ~/.zshrc'
-alias plan='vim -O ~/Dropbox/TaskPaper/plan.taskpaper ~/Dropbox/TaskPaper/TODO.taskpaper'
-alias fu='fab unit'
+#alias plan='vim -O ~/Dropbox/TaskPaper/plan.taskpaper ~/Dropbox/TaskPaper/TODO.taskpaper'
+alias plan='vim -O ~/plan.taskpaper ~/notes.txt'
 alias brewcheck='brew update && brew outdated'
 alias gs='git st'
 alias gc='git commit'
 alias gcv='git commit --no-verify'
-alias acp='~/biz/sysop/scripts/acp.py'
-alias ash='~/biz/sysop/scripts/ash.py'
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
@@ -100,16 +95,16 @@ else
     # Ubuntu puts this in a weird spot
     source /etc/bash_completion.d/virtualenvwrapper
 fi
-# Auto-enable venv on entering directory with .venv file
-check_has_virtualenv() {
-    if [ -e .venv ]; then
-        workon `cat .venv`
-    fi
-}
-venv_cd () {
-    builtin cd "$@" && check_has_virtualenv
-}
-alias cd="venv_cd"
+## Auto-enable venv on entering directory with .venv file
+#check_has_virtualenv() {
+#    if [ -e .venv ]; then
+#        workon `cat .venv`
+#    fi
+#}
+#venv_cd () {
+#    builtin cd "$@" && check_has_virtualenv
+#}
+#alias cd="venv_cd"
 
 ## Enable colored output (via homebrew's coreutils g* commands)
 if [ `uname` = "Linux" ]; then
