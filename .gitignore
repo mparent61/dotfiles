@@ -17,7 +17,7 @@
 .ssh/
 .vagrant.d/
 .vim/.netrwhist
+.vim/disabled-bundles
 .vim/tmp
 .virtualenvs/
 .zsh_history
-
