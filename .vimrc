@@ -9,8 +9,8 @@
 
     filetype off                " Force reloading *after* pathogen loaded
 
-    call pathogen#infect()                      " use pathogen
-    call pathogen#runtime_append_all_bundles()  " use pathogen
+    " Use pathogen to load bundles
+    execute pathogen#infect()
 
     filetype plugin indent on   " Enable detection, plugins and indenting in one step
 " }}
