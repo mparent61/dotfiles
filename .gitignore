@@ -16,6 +16,8 @@
 .npm/
 .ssh/
 .vagrant.d/
+.vim/.netrwhist
 .vim/tmp
 .virtualenvs/
 .zsh_history
+
