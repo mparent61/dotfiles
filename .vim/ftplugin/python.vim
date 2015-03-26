@@ -2,15 +2,13 @@
 setlocal tabstop=4
 setlocal softtabstop=4
 setlocal shiftwidth=4
-setlocal textwidth=80
 setlocal smarttab
 setlocal expandtab
-" Added to avoid messing up 'python.vim' indent plugin
-"setlocal nosmartindent
 
 set foldlevel=1    " Open folds by default
 set foldnestmax=1  " Max one-level folding (high-level only)
 
+" TODO: CHeck if nose or py.test installed
 compiler nose
 
 nnoremap <localleader>l :wa<CR>:PymodeLint<CR>
@@ -33,8 +31,16 @@ let g:pymode_lint_config = findfile('.pylintrc', '.;')  " Search upward for conf
 let g:pymode_lint_on_write = 1  " Check on write (if file modified)
 " CtrlP uses '<leader>b' already
 let g:pymode_breakpoint_key = '<localleader>b'
+" Sets cursorcolumn (+ maybe other stuff)
+let g:pymode_options_max_line_length = 100
+
+" Force pylint to use correct line length. Otherwise seem to always use '80' despite whatever
+" set in pylintrc and python-mode options.
+let g:pymode_lint_options_pylint =
+    \ {'max-line-length': g:pymode_options_max_line_length}
+
 " List of (non-pylint) errors to also ignore
-" The 80-character retriction is antiquated.
+" The 80-character retriction is antiquated, should not be an error. PyLint will throw warning C0301 anyway.
 "   E501: line too long
 " Ignore multiple whitespace before + after operator, as this can be
 " useful for aligning code.
@@ -87,7 +93,9 @@ def _PyRunModuleTest():
     test_path = os.path.join(module_dir, module)
     if os.path.exists(test_path):
         # TODO: Set current virtual env
-        vim.command(':call VimuxRunCommand("dev && nosetests %s")' % test_path)
+        # TODO: Check if nose or py.test installed. Maybe use 'compiler' option?
+        #vim.command(':call VimuxRunCommand("dev && nosetests %s")' % test_path)
+        vim.command(':call VimuxRunCommand("py.test %s")' % test_path)
     else:
         sys.stderr.write('No test file exists!')
 EOF
