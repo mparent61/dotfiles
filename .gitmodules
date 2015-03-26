@@ -28,3 +28,39 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule ".vim/bundle/ctrlp.vim"]
+	path = .vim/bundle/ctrlp.vim
+	url = git@github.com:kien/ctrlp.vim.git
+[submodule ".vim/bundle/rainbow_parentheses.vim"]
+	path = .vim/bundle/rainbow_parentheses.vim
+	url = git@github.com:kien/rainbow_parentheses.vim.git
+[submodule ".vim/bundle/vim-powerline"]
+	path = .vim/bundle/vim-powerline
+	url = git@github.com:Lokaltog/vim-powerline.git
+[submodule ".vim/bundle/vim-javascript"]
+	path = .vim/bundle/vim-javascript
+	url = git@github.com:pangloss/vim-javascript.git
+[submodule ".vim/bundle/vim-repeat"]
+	path = .vim/bundle/vim-repeat
+	url = git@github.com:tpope/vim-repeat.git
+[submodule ".vim/bundle/vim-surround"]
+	path = .vim/bundle/vim-surround
+	url = git@github.com:tpope/vim-surround.git
+[submodule ".vim/bundle/nerdcommenter"]
+	path = .vim/bundle/nerdcommenter
+	url = git@github.com:scrooloose/nerdcommenter.git
+[submodule ".vim/bundle/UltiSnips"]
+	path = .vim/bundle/UltiSnips
+	url = git@github.com:vim-scripts/UltiSnips.git
+[submodule ".vim/bundle/YankRing.vim"]
+	path = .vim/bundle/YankRing.vim
+	url = git@github.com:vim-scripts/YankRing.vim.git
+[submodule ".vim/bundle/ag.vim"]
+	path = .vim/bundle/ag.vim
+	url = git@github.com:rking/ag.vim.git
+[submodule ".vim/bundle/closetag.vim"]
+	path = .vim/bundle/closetag.vim
+	url = git@github.com:docunext/closetag.vim.git
+[submodule ".vim/bundle/vitality.vim"]
+	path = .vim/bundle/vitality.vim
+	url = git@github.com:sjl/vitality.vim.git
