@@ -195,9 +195,8 @@ zope=no
 # List of members which are set dynamically and missed by pylint inference
 # system, and so shouldn't trigger E0201 or E1101 when accessed. Python regular
 # expressions are accepted.
-#   wtforms.Form.populate_obj
-#   web.request.ShipRequest.registry
-generated-members=add,query,merge,append,flush,close,Task,populate_obj,registry
+#   objects: Django ORM
+generated-members=add,query,merge,append,flush,close,Task,objects
 
 
 [VARIABLES]
