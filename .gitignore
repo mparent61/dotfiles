@@ -21,3 +21,4 @@
 .vim/tmp
 .virtualenvs/
 .zsh_history
+.zcompdump*
