@@ -497,7 +497,7 @@
     autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
 
     " ----- NerdTree -----
-    noremap <leader>n :NERDTreeToggle<CR>
+    noremap <leader>E :NERDTreeToggle<CR>
     let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$' ]
     " Show hidden files, too
     let NERDTreeShowFiles=1
