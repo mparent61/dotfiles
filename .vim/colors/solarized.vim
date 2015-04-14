@@ -651,15 +651,10 @@ exe "hi! DiffChange"     .s:fmt_bold   .s:bg_yellow .s:fg_base02 .s:sp_yellow
 exe "hi! DiffDelete"     .s:fmt_bold   .s:bg_red    .s:fg_base02
 exe "hi! DiffText"       .s:fmt_bold   .s:bg_blue   .s:fg_base02 .s:sp_blue
     else
-exe "hi! DiffAdd"        .s:fmt_none   .s:fg_cyan   .s:bg_base2 .s:sp_green
-exe "hi! DiffChange"     .s:fmt_none   .s:fg_yellow .s:bg_base2 .s:sp_yellow
+exe "hi! DiffAdd"        .s:fmt_none   .s:bg_cyan   .s:fg_base3 .s:sp_cyan
+exe "hi! DiffChange"     .s:fmt_none   .s:bg_yellow .s:fg_base2 .s:sp_yellow
 exe "hi! DiffDelete"     .s:fmt_none   .s:bg_red    .s:fg_red
-exe "hi! DiffText"       .s:fmt_none   .s:fg_blue   .s:bg_base2 .s:sp_blue
-" mparent(2014-10-26): Colored backgrounds (stopped working with cursorline color precedence changes)
-"exe "hi! DiffAdd"        .s:fmt_none   .s:bg_cyan   .s:fg_base3 .s:sp_cyan
-"exe "hi! DiffChange"     .s:fmt_none   .s:bg_yellow .s:fg_base3 .s:sp_yellow
-"exe "hi! DiffDelete"     .s:fmt_none   .s:bg_red    .s:fg_red
-"exe "hi! DiffText"       .s:fmt_none   .s:bg_blue   .s:fg_base3 .s:sp_blue
+exe "hi! DiffText"       .s:fmt_none   .s:bg_blue   .s:fg_base3 .s:sp_blue
     endif
 endif
 exe "hi! SignColumn"     .s:fmt_none   .s:fg_base0
