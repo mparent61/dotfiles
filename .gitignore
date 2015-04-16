@@ -9,8 +9,11 @@
 .Trash/
 .bash_history
 .cache/
+.config/configstore/
 .cups/
 .gem/
+.ipython/
+.pylint.d/
 .local/
 .node-gyp/
 .npm/
