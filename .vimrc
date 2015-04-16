@@ -32,6 +32,7 @@
     set background=dark
     " Enable me (before 'colorscheme command') for terminals without custom Solarized palette
     "let g:solarized_termcolors=256
+    "let g:solarized_diffmode="high"
     colorscheme solarized
 " }}
 
@@ -149,7 +150,7 @@
     nnoremap <leader>ep :n $HOME/.vim/ftplugin/python.vim<CR> " Edit python settings
     nnoremap <leader>ez :n $HOME/.zshrc<CR>                   " Edit zshrc
 
-    nnoremap <leader>rv :source $MYVIMRC<CR>:redraw<CR>:echo $MYVIMRC 'reloaded'<CR>
+    "nnoremap <leader>rv :source $MYVIMRC<CR>:redraw<CR>:echo $MYVIMRC 'reloaded'<CR>
     " Auto-reload VIMRC on change
     augroup reload_vimrc
         autocmd!
@@ -462,18 +463,23 @@
     " Find word under cursor
     nnoremap <leader>K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
+    " ----- Dispatch -----
+    nnoremap <leader>R :Focus<space>
+    "  Auto-save then run
+    nnoremap <leader>r :wa<CR>:Dispatch<CR>
+
     " ----- Easy Motion -----
     " Faster than default 2-key press of <leader><leader>
     let g:EasyMotion_leader_key = '<localleader>'
 
     " ----- Vimux -----
-    nnoremap <leader>rp :update<CR>:VimuxPromptCommand<CR>
-    nnoremap <leader>rl :update<CR>:VimuxRunLastCommand<CR>
-    "nnoremap <leader>rl :update<CR>:VimuxPromptCommand<CR>!!<CR>
-    nnoremap <leader>rx :VimuxCloseRunner<CR>
-    nnoremap <leader>ri :VimuxInspectRunner<CR>
-    nnoremap <leader>rs :VimuxInterruptRunner<CR>
-    "nnoremap <leader>rc :VimuxClearRunnerHistory<CR>
+    "nnoremap <leader>rp :update<CR>:VimuxPromptCommand<CR>
+    "nnoremap <leader>rl :update<CR>:VimuxRunLastCommand<CR>
+    ""nnoremap <leader>rl :update<CR>:VimuxPromptCommand<CR>!!<CR>
+    "nnoremap <leader>rx :VimuxCloseRunner<CR>
+    "nnoremap <leader>ri :VimuxInspectRunner<CR>
+    "nnoremap <leader>rs :VimuxInterruptRunner<CR>
+    ""nnoremap <leader>rc :VimuxClearRunnerHistory<CR>
 
     " ----- Gundo -----
     noremap <leader>U :GundoToggle<CR>
@@ -487,6 +493,8 @@
     noremap <leader>gl :Glog<CR>
     noremap <leader>gd :Gvdiff<CR>
     noremap <leader>ge :Gedit<CR>
+    noremap <leader>gr :Gread<CR>
+    noremap <leader>gw :Gwrite<CR>
     " mparent(2014-02-18): testing easy way to scroll through diffs
     "noremap ]d <C-N>:<C-U>execute <SID>StageDiff('Gvdiff')<CR><C-W>k
     "noremap ]d <C-N> D <C-W>k
@@ -495,6 +503,12 @@
     let g:indent_guides_auto_colors = 0
     autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=11
     autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+
+    " ----- Local Vimrc -----
+    " Local vimrc's complain about sandbox mode, so disable it (but need to use whitelist for security)
+    let g:localvimrc_sandbox = 0
+    " Only trust certain localvimrc files
+    let g:localvimrc_whitelist = expand('$HOME/.lvimrc')
 
     " ----- NerdTree -----
     noremap <leader>E :NERDTreeToggle<CR>
@@ -535,15 +549,14 @@
                 \ [ '4',  '#268bd2'],
                 \ ]
 
-
     " ----- Syntastic -----
     " Show errors in location list buffer
 
     let g:syntastic_auto_loc_list=1
     " NOTE: 'passive' mode was simplest way I could find to disable Python auto-checking
     let g:syntastic_mode_map = { 'mode': 'active',
-                               \ 'active_filetypes': ['javascript'],
-                               \ 'passive_filetypes': ['css', 'python'] }
+                               \ 'active_filetypes': [],
+                               \ 'passive_filetypes': ['javascript', 'css', 'python'] }
     "" ----- Tabular -----
     nmap <leader>T= :Tabularize /^[^=]*\zs<CR>
     vmap <leader>T= :Tabularize /^[^=]*\zs<CR>
@@ -588,4 +601,10 @@
 
     " cd to current buffer's directory
     nnoremap <silent> <leader>cd :cd %:p:h<CR>
+
+    " Load optional local VIMRC
+    if filereadable(expand("~/.vimrc.local"))
+        source ~/.vimrc.local
+    endif
+
 " }}

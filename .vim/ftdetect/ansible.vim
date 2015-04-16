@@ -1,17 +1,17 @@
 " Extends vim-ansible-yaml filetype checks
-autocmd BufNewFile,BufRead *.yml  call s:SelectAnsibleCustomPaths()
+autocmd BufNewFile,BufRead *.yml,inventory  call s:SelectAnsibleCustomPaths()
 
 " Detect based on additional base directories
 fun! s:SelectAnsibleCustomPaths()
   let fp = expand("<afile>:p")
 
   " TODO: Combine into single regex (or even a variable, set by vimrc + vimrc local), but need to figure out the syntax
-  if fp =~ '/ansible-playbooks/.*\.yml$'
+  if fp =~ '/ansible-.*/.*\.yml$'
     set filetype=ansible
     return
   endif
 
-  if fp =~ '/ansible-roles/.*\.yml$'
+  if fp =~ '/ansible-.*/inventory$'
     set filetype=ansible
     return
   endif

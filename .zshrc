@@ -39,7 +39,6 @@ unsetopt correct_all
 alias reload='source ~/.zshrc'
 alias x='chmod ugo+x'
 alias top='top -o cpu'
-alias hgv='hg vimdiff'
 alias nt='nosetests'
 alias nf='nt --failed'
 alias v='vim'
@@ -73,9 +72,6 @@ source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 # Default is UP/DOWN arrows, but CTRL-J/K is faster
 bindkey '^K' history-substring-search-up
 bindkey '^J' history-substring-search-down
-
-# View diffs on commit
-export HGEDITOR=~/bin/hgeditor
 
 # Reload latest crontab
 if [[ -f ~/.crontab.$(hostname) ]]; then

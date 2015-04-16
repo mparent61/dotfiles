@@ -1,1 +1,1 @@
-au BufRead,BufNewFile *.{notes,story} setfiletype mkd
+au BufRead,BufNewFile *.{notes,story} setfiletype story
