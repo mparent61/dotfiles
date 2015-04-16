@@ -8,9 +8,12 @@
 .NERDTreeBookmarks
 .Trash/
 .bash_history
+.boto
 .cache/
 .config/configstore/
 .cups/
+.dropbox/
+.fontconfig/
 .gem/
 .ipython/
 .pylint.d/
