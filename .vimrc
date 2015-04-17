@@ -11,6 +11,8 @@
 
     " Use pathogen to load bundles
     execute pathogen#infect()
+    " Load all bundle help docs
+    execute pathogen#helptags()
 
     filetype plugin indent on   " Enable detection, plugins and indenting in one step
 " }}
