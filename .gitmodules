@@ -1,72 +1,96 @@
 [submodule ".vim/bundle/CamelCaseMotion"]
 	path = .vim/bundle/CamelCaseMotion
 	url = https://github.com/bkad/CamelCaseMotion
+    ignore = untracked
 [submodule ".vim/bundle/DirDiff.vim"]
 	path = .vim/bundle/DirDiff.vim
 	url = git@github.com:vim-scripts/DirDiff.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/vim-unimpaired"]
 	path = .vim/bundle/vim-unimpaired
 	url = git@github.com:tpope/vim-unimpaired.git
+    ignore = untracked
 [submodule ".vim/bundle/nerdtree"]
 	path = .vim/bundle/nerdtree
 	url = git@github.com:scrooloose/nerdtree.git
+    ignore = untracked
 [submodule ".vim/bundle/python-mode"]
 	path = .vim/bundle/python-mode
 	url = git@github.com:klen/python-mode.git
+    ignore = untracked
 [submodule ".vim/bundle/gundo.vim"]
 	path = .vim/bundle/gundo.vim
 	url = git@github.com:sjl/gundo.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
+    ignore = untracked
 [submodule ".vim/bundle/taskpaper.vim"]
 	path = .vim/bundle/taskpaper.vim
 	url = git@github.com:davidoc/taskpaper.vim.git
+    ignore = untracked
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+    ignore = untracked
 [submodule ".vim/bundle/ctrlp.vim"]
 	path = .vim/bundle/ctrlp.vim
 	url = git@github.com:kien/ctrlp.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/rainbow_parentheses.vim"]
 	path = .vim/bundle/rainbow_parentheses.vim
 	url = git@github.com:kien/rainbow_parentheses.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/vim-powerline"]
 	path = .vim/bundle/vim-powerline
 	url = git@github.com:Lokaltog/vim-powerline.git
+    ignore = untracked
 [submodule ".vim/bundle/vim-javascript"]
 	path = .vim/bundle/vim-javascript
 	url = git@github.com:pangloss/vim-javascript.git
+    ignore = untracked
 [submodule ".vim/bundle/vim-repeat"]
 	path = .vim/bundle/vim-repeat
 	url = git@github.com:tpope/vim-repeat.git
+    ignore = untracked
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = git@github.com:tpope/vim-surround.git
+    ignore = untracked
 [submodule ".vim/bundle/nerdcommenter"]
 	path = .vim/bundle/nerdcommenter
 	url = git@github.com:scrooloose/nerdcommenter.git
+    ignore = untracked
 [submodule ".vim/bundle/UltiSnips"]
 	path = .vim/bundle/UltiSnips
 	url = git@github.com:vim-scripts/UltiSnips.git
+    ignore = untracked
 [submodule ".vim/bundle/YankRing.vim"]
 	path = .vim/bundle/YankRing.vim
 	url = git@github.com:vim-scripts/YankRing.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/ag.vim"]
 	path = .vim/bundle/ag.vim
 	url = git@github.com:rking/ag.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/closetag.vim"]
 	path = .vim/bundle/closetag.vim
 	url = git@github.com:docunext/closetag.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/vitality.vim"]
 	path = .vim/bundle/vitality.vim
 	url = git@github.com:sjl/vitality.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/jshint.vim"]
 	path = .vim/bundle/jshint.vim
 	url = git@github.com:wookiehangover/jshint.vim.git
+    ignore = untracked
 [submodule ".vim/bundle/vcl-vim-plugin"]
 	path = .vim/bundle/vcl-vim-plugin
 	url = git@github.com:smerrill/vcl-vim-plugin.git
+    ignore = untracked
 [submodule ".vim/bundle/vim-ansible-yaml"]
 	path = .vim/bundle/vim-ansible-yaml
 	url = git@github.com:chase/vim-ansible-yaml.git
+    ignore = untracked
