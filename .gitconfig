@@ -48,8 +48,8 @@
     # List w/o colors (for Unix pipes)
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
 
-    # TESTING: Update all submodules
-    upsub = pull --recurse-submodules
+    # Update all submodules
+    upsub = submodule foreach git pull
 
     # List aliases
     la = "!git config -l | grep alias | cut -c 7-"
