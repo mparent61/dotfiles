@@ -23,8 +23,10 @@ plugins=(autojump
          mercurial
          osx
          python
+         sudo
          tmux
          tmuxinator
+         vagrant
          vi-mode
          virtualenv
          virtualenvwrapper)
