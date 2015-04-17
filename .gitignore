@@ -28,3 +28,7 @@
 .virtualenvs/
 .zsh_history
 .zcompdump*
+
+# The "ignore all except dotfiles" magic at top overrides any gitignore_global dotfile patterns, so we nee
+# to add them here
+**/.ropeproject/
