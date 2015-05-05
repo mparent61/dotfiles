@@ -41,12 +41,14 @@ load-plugins=
 # C0322 - Operator not preceded by a space
 # C1001 - Old-style class defined
 # W0142 - Used * or ** magic
+# W0201 - Attribute defined outside __init__()
 # W0232 - Class has no __init__ method
 # W0403 - Relative imports
 # W0511 - TODO comments
 # W0613 - Unused argument
 # W0704 - Except doesn't do anything (Used when an except clause does nothing but "pass" and there is no "else" clause)
 # W1001 - Use of "property" on an old style class
+# E1101 - Has no "x" member -- confused by Django
 # Ignore warnings about disabling warnings within file (though useful sanity check)
 #   I0011 - Locally disabling WARNING
 #   I0012 - Locally enabling WARNING
@@ -63,7 +65,7 @@ load-plugins=
 #   R0914 = Too many local variables
 #   R0915 = Too many statements
 #   R0921 - Abstract class not referenced (mparent: Limited to file scope, so useless)
-disable=C0103,C0111,C0302,C0321,C0322,C1001,W0142,W0232,W0403,W0511,W0613,W0704,W1001,R0201,R0901,R0902,R0903,R0904,R0912,R0913,R0914,R0915,I0011,I0012,F0401,R0921
+disable=C0103,C0111,C0302,C0321,C0322,C1001,W0142,W0201,W0232,W0403,W0511,W0613,W0704,W1001,E1101,R0201,R0901,R0902,R0903,R0904,R0912,R0913,R0914,R0915,I0011,I0012,F0401,R0921
 
 [REPORTS]
 
@@ -186,7 +188,7 @@ ignore-mixin-members=yes
 #   RelationshipProperty -- dynamically as member of Sqlalchemy model
 #   SplitResult -- urlparse.SplitResult is a named tuple that confuses PyLint
 #   WSGIRequest - used esp in test cases, members confuse PyLint
-ignored-classes=FakeDatetime,ParseResult,Popen,RelationshipProperty,SplitResult,WSGIRequest
+ignored-classes=FakeDatetime,ParseResult,Popen,RelationshipProperty,SplitResult,WSGIRequest,Content,Video
 
 # When zope mode is activated, add a predefined set of Zope acquired attributes
 # to generated-members.

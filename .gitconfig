@@ -41,8 +41,7 @@
     st = status -sb
 
     # Pretty looking log
-    ls = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
-    lr = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    ls = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ai\\ %C(blue)%<(14)%cn\\ %C(red)%d%C(reset)\\ %s" --decorate --date=short --max-count=100 
     # List commits showing changed files
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     # List w/o colors (for Unix pipes)
@@ -86,6 +85,14 @@
 
     # DirDiff
     dd = difftool --dir-diff
+
+    # Stash diff via DirDiff
+    diffstash = difftool --dir-diff stash@{0}
+
+    # Housekeeping - delete stale remote-tracking branches
+    # TODO: Add more stuff to this commend?
+    # Note: could also do "git fetch -p"
+    cleanup = remote prune origin
 
 [pull]
     rebase = true

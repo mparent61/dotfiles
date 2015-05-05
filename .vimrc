@@ -160,9 +160,6 @@
         autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
     augroup END
 
-    " Quickfix window always on bottom taking up entire horizontal space
-    au FileType qf wincmd J
-
     " Open previous buffer
     nmap <C-e> :e#<CR>
 
@@ -195,6 +192,17 @@
     au FocusLost * silent! :wa    " Auto-save everything on lost focus (GUI-mode only)
     set autowriteall
     set autoread
+" }}
+
+" Quickfix {{
+    " Quickfix window always on bottom taking up entire horizontal space
+    au FileType qf wincmd J
+
+    " Auto resize QF window to fit contents
+    au FileType qf call AdjustWindowHeight(3, 20)
+        function! AdjustWindowHeight(minheight, maxheight)
+        exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+    endfunction
 " }}
 
 " Tab/Space/Wrap {{
@@ -237,6 +245,8 @@
         autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
     augroup END
     endif
+
+
 
     " Change cursor to vertical bar in insert mode when using iTerm2
     if $TERM_PROGRAM == 'iTerm.app'
@@ -513,7 +523,8 @@
     let g:localvimrc_whitelist = expand('$HOME/.lvimrc')
 
     " ----- NerdTree -----
-    noremap <leader>E :NERDTreeToggle<CR>
+    noremap <leader>n :NERDTreeToggle<CR>
+    noremap <leader>N :NERDTreeFind<CR>
     let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$' ]
     " Show hidden files, too
     let NERDTreeShowFiles=1
@@ -541,6 +552,7 @@
     au Syntax * RainbowParenthesesLoadBraces
     " Parentheses colors using Solarized
     let g:rbpt_colorpairs = [
+                \ [ '4',  '#268bd2'],
                 \ [ '13', '#6c71c4'],
                 \ [ '5',  '#d33682'],
                 \ [ '1',  '#dc322f'],
@@ -548,7 +560,6 @@
                 \ [ '3',  '#b58900'],
                 \ [ '2',  '#859900'],
                 \ [ '6',  '#2aa198'],
-                \ [ '4',  '#268bd2'],
                 \ ]
 
     " ----- Syntastic -----
