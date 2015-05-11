@@ -51,7 +51,6 @@
     set showcmd
     set hidden              " Allow buffer switching without saving
     set visualbell          " Visual bell (instead of audible beep)
-    set cursorline          " Highlight current line
     set ttyfast             " better screen updates for faster terminals
     set ruler               " Statusbar ruler w/ line/column info
     set laststatus=2        " Always have status line
@@ -59,17 +58,31 @@
     set title               " Set terminal title to VIM filename
     set shortmess+=aIfilmnrxoOstT  " Abbrev. of messages (avoids 'hit enter')
     if exists('+relativenumber')
+        " Hybrid mode - shows relative numbering with current line's absolute number
         set relativenumber
+        set number
     endif
+
 
     if exists("+shellslash")
         set shellslash    " expand filenames with forward slash (for Windows)
     endif
 
-    " Cursorline only in active window
-    augroup CursorLineOnlyInActiveWindow
+    " Toggle some options that depend on whether we're in diff mode or not
+    function! ToggleDiffOptions()
+        if &diff
+            " Cursorline + Colorcolumn conflict with solarized colors
+            setlocal nocursorline
+            setlocal colorcolumn=
+        else
+            setlocal cursorline
+            setlocal colorcolumn=+1
+        endif
+    endfunction
+    augroup DiffModeOptions
         autocmd!
-        autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+        autocmd VimEnter,WinEnter,BufWinEnter,FilterWritePre,FilterWritePost * call ToggleDiffOptions()
+        " Only show cursorline in active window
         autocmd WinLeave * setlocal nocursorline
     augroup END
 
@@ -213,7 +226,6 @@
     set shiftround          " use multiple of shiftwidth when indenting with '<' and '>'
 
     set textwidth=120       " Standard '80 is too small. Screens are bigger these days.
-    set colorcolumn=+1      " Highlight column(s) after 'textwidth'
 
     set nojoinspaces        " Insert only one space after '.', '?', '!' when joining lines
     set nolist              " Don't show special characters for whitespace (tab, eol, etc)
@@ -374,14 +386,11 @@
 " }}
 
 " Diff {{
-    if &diff
-        " Disable color column (conflicts with Solarized highlight colors)
-        set colorcolumn=
-    endif
 
     function! DiffToggle()
         if &diff
-            diffoff
+            " Turn off diff in all windows in current tab
+            diffoff!
         else
             diffthis
         endif
