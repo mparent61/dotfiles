@@ -180,7 +180,7 @@
 
 " Save/Quit {{
     " Force-save file (useful if I forget to run vim w/ sudo)
-    cmap w!! w !sudo tee % >/dev/null
+    cmap w!! w !sudo tee "%" >/dev/null
 
     " 'wall' saves all open buffers if modified (vs 'update' which just applies to current buffer)
     nmap <leader>w :wall<CR>
