@@ -95,7 +95,7 @@ def _PyRunModuleTest():
         # TODO: Set current virtual env
         # TODO: Check if nose or py.test installed. Maybe use 'compiler' option?
         #vim.command(':call VimuxRunCommand("dev && nosetests %s")' % test_path)
-        vim.command(':call VimuxRunCommand("py.test %s")' % test_path)
+        vim.command(':call VimuxRunCommand("nosetests %s")' % test_path)
     else:
         sys.stderr.write('No test file exists!')
 EOF
