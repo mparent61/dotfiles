@@ -94,3 +94,6 @@
 	path = .vim/bundle/vim-ansible-yaml
 	url = git@github.com:chase/vim-ansible-yaml.git
     ignore = untracked
+[submodule "/Users/mparent/.vim/bundle/vim-bundle-mako"]
+	path = /Users/mparent/.vim/bundle/vim-bundle-mako
+	url = git@github.com:sophacles/vim-bundle-mako.git
