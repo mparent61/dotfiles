@@ -23,7 +23,7 @@
 .ssh/
 .vagrant.d/
 .vim/.netrwhist
-.vim/disabled-bundles
+.vim/disabled-bundle
 .vim/tmp
 .virtualenvs/
 .zsh_history
@@ -32,3 +32,10 @@
 # The "ignore all except dotfiles" magic at top overrides any gitignore_global dotfile patterns, so we nee
 # to add them here
 **/.ropeproject/
+
+# OSX
+.calibre_calibre_GUI.lock
+.erlang.cookie
+.fonts/
+.gnupg/
+.s3cfg
