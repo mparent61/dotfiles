@@ -1,0 +1,17 @@
+[nosetests]
+#processes=4
+#process-timeout=300
+
+# Enable 'yanc' color output plugin
+#with-yanc=1
+
+# Quit after first failed test
+stop=1
+
+# Turn on test IDs, useful for using the '--failed' option
+with-id=1
+
+## nose-progressive (progress bar)
+# NOTE: as of nose-progressive 1.5, it disables parallel tests 
+# mparent(2014-05-03): But still seems useful for small test batches
+#with-progressive=1
