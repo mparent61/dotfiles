@@ -8,26 +8,39 @@
 .NERDTreeBookmarks
 .Trash/
 .bash_history
+.boot2docker/
 .boto
 .cache/
+.config/
 .config/configstore/
 .cups/
+.docker/
+.dockercfg
 .dropbox/
 .fontconfig/
 .gem/
 .ipython/
-.pylint.d/
 .local/
 .node-gyp/
 .npm/
+.psql_history
+.pylint.d/
+.pypirc
+.rediscli_history
+.rnd
 .ssh/
 .vagrant.d/
 .vim/.netrwhist
 .vim/disabled-bundles
 .vim/tmp
 .virtualenvs/
-.zsh_history
+.yolk/
 .zcompdump*
+.zsh_history
+
+# This file is symlinked from ~/.vim/local/${HOSTNAME}.vimrc
+.vimrc.local
+
 
 # The "ignore all except dotfiles" magic at top overrides any gitignore_global dotfile patterns, so we nee
 # to add them here
