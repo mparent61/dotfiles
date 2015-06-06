@@ -1,8 +1,12 @@
 snippet task "new ansible task template" 
 ---
-- hosts : $0
+- hosts: $0
   vars:
   roles:
   handlers:
   tasks:
+endsnippet
+
+snippet service "service task/handler" b
+	service: name=${1:name} state=${2:started}
 endsnippet
