@@ -87,8 +87,8 @@
     # DirDiff
     dd = difftool --dir-diff
 
-    # Stash diff via DirDiff
-    diffstash = difftool --dir-diff stash@{0}
+    # Show top stash changes
+    diffstash = stash show -p stash@{0}
 
     # Housekeeping - delete stale remote-tracking branches
     # TODO: Add more stuff to this commend?
