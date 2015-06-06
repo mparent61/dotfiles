@@ -213,7 +213,7 @@
 
     " Auto resize QF window to fit contents
     au FileType qf call AdjustWindowHeight(3, 20)
-        function! AdjustWindowHeight(minheight, maxheight)
+    function! AdjustWindowHeight(minheight, maxheight)
         exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
     endfunction
 " }}
@@ -479,7 +479,7 @@
     endif
 
     " Fast find shortcut
-    nnoremap <leader>a :Ag<space>
+    nnoremap <leader>a :Ags<space>
 
     " Find word under cursor
     nnoremap <leader>K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -512,6 +512,7 @@
     noremap <leader>gc :Git commit<CR>
     noremap <leader>gv :Git commit --no-verify<CR>
     noremap <leader>gl :Glog<CR>
+    noremap <leader>gb :Gblame<CR>
     noremap <leader>gd :Gvdiff<CR>
     noremap <leader>ge :Gedit<CR>
     noremap <leader>gr :Gread<CR>
@@ -524,6 +525,9 @@
     let g:indent_guides_auto_colors = 0
     autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=11
     autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+
+    " ----- Lightline -----
+    "  See .vim/plugin/lightline.vim
 
     " ----- Local Vimrc -----
     " Local vimrc's complain about sandbox mode, so disable it (but need to use whitelist for security)
@@ -546,19 +550,12 @@
     " ----- NERDCommenter -----
     let g:NERDMenuMode = 0  " Disable menu
 
-    " ----- Powerline -----
-    " mparent(2014-04-18): TODO: Need to patch fonts for this to work
-    " https://github.com/felixge/dotfiles/tree/master/.vim/bundle/powerline/fontpatcher
-    let g:Powerline_symbols = 'fancy'
-    "let g:Powerline_theme="skwp"
-    "let g:Powerline_colorscheme="skwp"
-
     " ----- Rainbow Parens -----
-    " Always On
-    au VimEnter * RainbowParenthesesToggle
-    au Syntax * RainbowParenthesesLoadRound
-    au Syntax * RainbowParenthesesLoadSquare
-    au Syntax * RainbowParenthesesLoadBraces
+    " Always Just Python For now (Messes up AGS search results for one)
+    au VimEnter *.py RainbowParenthesesToggle
+    au Syntax *.py RainbowParenthesesLoadRound
+    au Syntax *.py RainbowParenthesesLoadSquare
+    au Syntax *.py RainbowParenthesesLoadBraces
     " Parentheses colors using Solarized
     let g:rbpt_colorpairs = [
                 \ [ '4',  '#268bd2'],
