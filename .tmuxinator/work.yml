@@ -22,16 +22,16 @@ root: ~/
 # startup_window: logs
 
 windows:
-  - plan:
+  - plan: vim ~/plan.taskpaper
+  - devops:
       layout: main-vertical
+      root: ~/dev/ansible-playbooks
       panes:
-        - vim ~/plan.taskpaper
-  - django-bulbs:
+          - vim
+          - ssh
+  - onion:
       layout: main-vertical
+      root: ~/dev/onion
       panes:
-        - vim ~/plan.taskpaper
-        - vim ~/plan.taskpaper
-  - ansible:
-      layout: main-vertical
-      panes:
-        - cd ~/dev/ansible-roles
+        - vim
+        - shell
