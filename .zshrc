@@ -93,16 +93,6 @@ else
     # Ubuntu puts this in a weird spot
     source /etc/bash_completion.d/virtualenvwrapper
 fi
-## Auto-enable venv on entering directory with .venv file
-#check_has_virtualenv() {
-#    if [ -e .venv ]; then
-#        workon `cat .venv`
-#    fi
-#}
-#venv_cd () {
-#    builtin cd "$@" && check_has_virtualenv
-#}
-#alias cd="venv_cd"
 
 ## Enable colored output (via homebrew's coreutils g* commands)
 if [ `uname` = "Linux" ]; then
