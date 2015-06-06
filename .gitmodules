@@ -94,3 +94,12 @@
 	path = .vim/bundle/vim-ansible-yaml
 	url = git@github.com:chase/vim-ansible-yaml.git
     ignore = untracked
+[submodule ".vim/bundle/lightline.vim"]
+	path = .vim/bundle/lightline.vim
+	url = git@github.com:itchyny/lightline.vim.git
+[submodule "/Users/michaelparent/.vim/bundle/tmux.vim"]
+	path = /Users/michaelparent/.vim/bundle/tmux.vim
+	url = git@github.com:Keithbsmiley/tmux.vim.git
+[submodule "/Users/michaelparent/.vim/bundle/vim-instant-markdown"]
+	path = /Users/michaelparent/.vim/bundle/vim-instant-markdown
+	url = git@github.com:suan/vim-instant-markdown.git
