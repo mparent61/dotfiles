@@ -38,6 +38,12 @@
 .zcompdump*
 .zsh_history
 
+.nviminfo
+.nvimlog
+.python_history
+.s3cfg
+.travis/
+
 # This file is symlinked from ~/.vim/local/${HOSTNAME}.vimrc
 .vimrc.local
 
