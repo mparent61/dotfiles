@@ -91,3 +91,9 @@
 [submodule "/Users/michaelparent/.vim/bundle/vim-instant-markdown"]
 	path = /Users/michaelparent/.vim/bundle/vim-instant-markdown
 	url = git@github.com:suan/vim-instant-markdown.git
+[submodule ".vim/bundle/vim-ags"]
+	path = .vim/bundle/vim-ags
+	url = git@github.com:gabesoft/vim-ags.git
+[submodule ".vim/bundle/vim-dispatch"]
+	path = .vim/bundle/vim-dispatch
+	url = git@github.com:tpope/vim-dispatch.git
