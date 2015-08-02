@@ -134,9 +134,6 @@
 " Allow or disallow certain features based on current terminal emulator or
 " environment.
 
-" mparent(2012-09-21): Flipped Diff FG + BG colors
-" mparent(2014-09-12): Light text on terminal to better work with latest cursorline
-
 " Terminals that support italics
 let s:terms_italic=[
             \"rxvt",
@@ -635,26 +632,26 @@ exe "hi! WildMenu"       .s:fmt_none   .s:fg_base2  .s:bg_base02 .s:fmt_revbb
 exe "hi! Folded"         .s:fmt_undb   .s:fg_base0  .s:bg_base02  .s:sp_base03
 exe "hi! FoldColumn"     .s:fmt_none   .s:fg_base0  .s:bg_base02
 if      (g:solarized_diffmode=="high")
-exe "hi! DiffAdd"        .s:fmt_revr   .s:bg_cyan   .s:fg_none
-exe "hi! DiffChange"     .s:fmt_revr   .s:bg_yellow .s:fg_none
-exe "hi! DiffDelete"     .s:fmt_revr   .s:bg_red    .s:fg_none
-exe "hi! DiffText"       .s:fmt_revr   .s:bg_blue   .s:fg_none
+exe "hi! DiffAdd"        .s:fmt_revr   .s:fg_green  .s:bg_none
+exe "hi! DiffChange"     .s:fmt_revr   .s:fg_yellow .s:bg_none
+exe "hi! DiffDelete"     .s:fmt_revr   .s:fg_red    .s:bg_none
+exe "hi! DiffText"       .s:fmt_revr   .s:fg_blue   .s:bg_none
 elseif  (g:solarized_diffmode=="low")
-exe "hi! DiffAdd"        .s:fmt_undr   .s:bg_cyan   .s:fg_none   .s:sp_cyan
-exe "hi! DiffChange"     .s:fmt_undr   .s:bg_yellow .s:fg_none   .s:sp_yellow
-exe "hi! DiffDelete"     .s:fmt_bold   .s:bg_red    .s:fg_none
-exe "hi! DiffText"       .s:fmt_undr   .s:bg_blue   .s:fg_none   .s:sp_blue
+exe "hi! DiffAdd"        .s:fmt_undr   .s:fg_green  .s:bg_none   .s:sp_green
+exe "hi! DiffChange"     .s:fmt_undr   .s:fg_yellow .s:bg_none   .s:sp_yellow
+exe "hi! DiffDelete"     .s:fmt_bold   .s:fg_red    .s:bg_none
+exe "hi! DiffText"       .s:fmt_undr   .s:fg_blue   .s:bg_none   .s:sp_blue
 else " normal
     if has("gui_running")
-exe "hi! DiffAdd"        .s:fmt_bold   .s:bg_cyan   .s:fg_base02 .s:sp_cyan
-exe "hi! DiffChange"     .s:fmt_bold   .s:bg_yellow .s:fg_base02 .s:sp_yellow
-exe "hi! DiffDelete"     .s:fmt_bold   .s:bg_red    .s:fg_base02
-exe "hi! DiffText"       .s:fmt_bold   .s:bg_blue   .s:fg_base02 .s:sp_blue
+exe "hi! DiffAdd"        .s:fmt_bold   .s:fg_green  .s:bg_base02 .s:sp_green
+exe "hi! DiffChange"     .s:fmt_bold   .s:fg_yellow .s:bg_base02 .s:sp_yellow
+exe "hi! DiffDelete"     .s:fmt_bold   .s:fg_red    .s:bg_base02
+exe "hi! DiffText"       .s:fmt_bold   .s:fg_blue   .s:bg_base02 .s:sp_blue
     else
-exe "hi! DiffAdd"        .s:fmt_none   .s:bg_cyan   .s:fg_base3 .s:sp_cyan
-exe "hi! DiffChange"     .s:fmt_none   .s:bg_yellow .s:fg_base2 .s:sp_yellow
-exe "hi! DiffDelete"     .s:fmt_none   .s:bg_red    .s:fg_red
-exe "hi! DiffText"       .s:fmt_none   .s:bg_blue   .s:fg_base3 .s:sp_blue
+exe "hi! DiffAdd"        .s:fmt_none   .s:fg_cyan   .s:bg_base2 .s:sp_green
+exe "hi! DiffChange"     .s:fmt_none   .s:fg_yellow .s:bg_base2 .s:sp_yellow
+exe "hi! DiffDelete"     .s:fmt_none   .s:fg_red    .s:bg_base2
+exe "hi! DiffText"       .s:fmt_none   .s:fg_base3  .s:bg_blue  .s:sp_blue
     endif
 endif
 exe "hi! SignColumn"     .s:fmt_none   .s:fg_base0

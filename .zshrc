@@ -17,6 +17,7 @@ export PATH=/usr/local/sbin:$PATH
 
 plugins=(autojump
          brew
+         docker
          fabric
          git
          history
@@ -55,6 +56,16 @@ alias brewcheck='brew update && brew outdated'
 alias gs='git st'
 alias gc='git commit'
 alias gcv='git commit --no-verify'
+# CD to current git repo root
+alias cdr='$(git rev-parse --show-toplevel)'
+# Use GitHub git wrapper
+alias git=hub
+# Travis CI
+alias travislogin='travis login --auto --pro'
+# Docker
+alias dock=docker
+alias dm=docker-machine
+alias dc=docker-compose
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
@@ -103,3 +114,14 @@ else
 fi
 
 export NOSE_PROGRESSIVE_BAR_FILLED_COLOR=4  # BLUE (solarized)
+
+# added by travis gem
+[ -f /Users/michaelparent/.travis/travis.sh ] && source /Users/michaelparent/.travis/travis.sh
+
+# User Bin
+export PATH=~/util/bin:$PATH
+
+if [[ -f "${HOME}/.zshrc.local" ]]; then
+    source "${HOME}/.zshrc.local"
+fi
+

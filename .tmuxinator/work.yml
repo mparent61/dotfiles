@@ -22,7 +22,7 @@ root: ~/
 # startup_window: logs
 
 windows:
-  - plan: vim ~/plan.taskpaper
+  - plan: vim ~/Dropbox/Taskpaper/plan.taskpaper
   - devops:
       layout: main-vertical
       root: ~/dev/ansible-playbooks

@@ -42,10 +42,6 @@
 	path = .vim/bundle/rainbow_parentheses.vim
 	url = git@github.com:kien/rainbow_parentheses.vim.git
     ignore = untracked
-[submodule ".vim/bundle/vim-powerline"]
-	path = .vim/bundle/vim-powerline
-	url = git@github.com:Lokaltog/vim-powerline.git
-    ignore = untracked
 [submodule ".vim/bundle/vim-javascript"]
 	path = .vim/bundle/vim-javascript
 	url = git@github.com:pangloss/vim-javascript.git
@@ -70,10 +66,6 @@
 	path = .vim/bundle/YankRing.vim
 	url = git@github.com:vim-scripts/YankRing.vim.git
     ignore = untracked
-[submodule ".vim/bundle/ag.vim"]
-	path = .vim/bundle/ag.vim
-	url = git@github.com:rking/ag.vim.git
-    ignore = untracked
 [submodule ".vim/bundle/closetag.vim"]
 	path = .vim/bundle/closetag.vim
 	url = git@github.com:docunext/closetag.vim.git
@@ -81,10 +73,6 @@
 [submodule ".vim/bundle/vitality.vim"]
 	path = .vim/bundle/vitality.vim
 	url = git@github.com:sjl/vitality.vim.git
-    ignore = untracked
-[submodule ".vim/bundle/jshint.vim"]
-	path = .vim/bundle/jshint.vim
-	url = git@github.com:wookiehangover/jshint.vim.git
     ignore = untracked
 [submodule ".vim/bundle/vcl-vim-plugin"]
 	path = .vim/bundle/vcl-vim-plugin

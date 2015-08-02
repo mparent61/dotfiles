@@ -162,6 +162,10 @@ snippet argpos "add argparse positional argument" !b
 parser.add_argument('${1:name}', metavar='$1', help='${2:help}')
 endsnippet
 
+snippet argopt "add argparse optional argument" !b
+parser.add_argument('--${1:name}', help='${2:help}')
+endsnippet
+
 snippet argbool "add argparse boolean argument" !b
 parser.add_argument('--${1:name}', action='store_true', help='${2:help}')
 endsnippet

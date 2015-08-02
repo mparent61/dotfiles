@@ -28,11 +28,16 @@ let g:pymode_folding = 0  " Disabled
 let g:pymode_lint = 1  " Enable lint checking
 let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8']  " Trying w/o noisy pyflakes
 let g:pymode_lint_config = findfile('.pylintrc', '.;')  " Search upward for config
-let g:pymode_lint_on_write = 1  " Check on write (if file modified)
+" mparent(2015-04-23): Disabled -- slowing down dev
+let g:pymode_lint_on_write = 0  " Check on write (if file modified)
 " CtrlP uses '<leader>b' already
 let g:pymode_breakpoint_key = '<localleader>b'
 " Sets cursorcolumn (+ maybe other stuff)
 let g:pymode_options_max_line_length = 100
+
+" mparent(2015-04-22): Temp disable rope, as performance is super slow on Yosimite
+" REF: https://github.com/klen/python-mode/issues/525
+let g:pymode_rope = 0
 
 " Force pylint to use correct line length. Otherwise seem to always use '80' despite whatever
 " set in pylintrc and python-mode options.

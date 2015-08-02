@@ -24,11 +24,14 @@
     remote = green
 [alias]
     co = checkout
+    # Undo all unstaged modifications
+    revertall = git checkout -- .
 
-    br = branch
     nb = checkout -b
-    # List last modified date for each branch
-    branchdate = !git for-each-ref --sort='-authordate' --format='%(refname)%09%(authordate)' refs/heads | sed -e 's-refs/heads/--'
+    br = branch
+    # List of branches by date modified
+    # TODO: Fixed width columns
+    brd = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset)) - %(contents:subject) - %(authorname)'
     # List merged/unmerged branches
     brm = branch --merged
     brnm = branch --no-merged
@@ -79,6 +82,7 @@
     # Grep
     grep = grep -Ii
     gr = grep -Ii
+    grephist = "!git rev-list --all | xargs git grep"
 
     # Show modified files in last commit
     dl = "!git ll -1"
@@ -90,10 +94,17 @@
     # Show top stash changes
     diffstash = stash show -p stash@{0}
 
+    # Diff last commit
+    difflast = diff HEAD^..HEAD
+    ddlast = dd HEAD^..HEAD
+
     # Housekeeping - delete stale remote-tracking branches
     # TODO: Add more stuff to this commend?
     # Note: could also do "git fetch -p"
     cleanup = remote prune origin
+
+    # Repo Info
+    rso = remote show origin
 
 [pull]
     rebase = true
