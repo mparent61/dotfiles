@@ -113,7 +113,19 @@ else
     alias ls='gls --color'
 fi
 
-export NOSE_PROGRESSIVE_BAR_FILLED_COLOR=4  # BLUE (solarized)
+# Fast switch between VIM + SZH
+# http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
 
 # added by travis gem
 [ -f /Users/michaelparent/.travis/travis.sh ] && source /Users/michaelparent/.travis/travis.sh
