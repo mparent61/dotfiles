@@ -32,15 +32,12 @@
     endif
 
     set background=dark
-    " Enable me (before 'colorscheme command') for terminals without custom Solarized palette
-    "let g:solarized_termcolors=256
-    "let g:solarized_diffmode="high"
     colorscheme solarized
 " }}
 
 " General {{
     " Leaders
-    let mapleader = ","
+    let mapleader = "\<Space>"
     let maplocalleader = "\\"
 
     set encoding=utf-8
@@ -62,7 +59,6 @@
         set relativenumber
         set number
     endif
-
 
     if exists("+shellslash")
         set shellslash    " expand filenames with forward slash (for Windows)
@@ -127,9 +123,6 @@
     nnoremap <F1> <ESC>
     vnoremap <F1> <ESC>
 
-    " SHIFT is optional when i save files (or any other ':' commands)
-    "nnoremap ; :
-
     " Make j/k move by 'screen line' instead of 'file line'
     nnoremap j gj
     nnoremap k gk
@@ -192,6 +185,7 @@
 " }}
 
 " Save/Quit {{
+
     " Force-save file (useful if I forget to run vim w/ sudo)
     cmap w!! w !sudo tee % >/dev/null
 
@@ -206,6 +200,7 @@
     set autowriteall
     set autoread
 " }}
+
 
 " Quickfix {{
     " Quickfix window always on bottom taking up entire horizontal space
@@ -501,6 +496,10 @@
     "nnoremap <leader>ri :VimuxInspectRunner<CR>
     "nnoremap <leader>rs :VimuxInterruptRunner<CR>
     ""nnoremap <leader>rc :VimuxClearRunnerHistory<CR>
+
+    " ----- Expand Region -----
+    vmap v <Plug>(expand_region_expand)
+    vmap <C-v> <Plug>(expand_region_shrink)
 
     " ----- Gundo -----
     noremap <leader>U :GundoToggle<CR>

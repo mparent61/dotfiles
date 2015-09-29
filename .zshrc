@@ -66,6 +66,8 @@ alias travislogin='travis login --auto --pro'
 alias dock=docker
 alias dm=docker-machine
 alias dc=docker-compose
+# HTTPie (Curl Replacement)
+alias http='http --style solarized'
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
@@ -76,11 +78,9 @@ export EDITOR=`which vim`
 
 export GREP_OPTIONS='--color=auto'
 
-export HISTSIZE=1000
-export HISTFILESIZE=1000
-export HISTCONTROL=erasedups
-# Only store unique commands in history, delete older instances on add
-setopt HIST_IGNORE_ALL_DUPS
+# Save LOTS of history
+export HISTSIZE=100000
+export SAVEHIST=100000
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 # Default is UP/DOWN arrows, but CTRL-J/K is faster
 bindkey '^K' history-substring-search-up

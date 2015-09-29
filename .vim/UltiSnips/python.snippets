@@ -153,8 +153,8 @@ endsnippet
 snippet argparse "argparse command line args" !b
 import argparse
 
-parser = argparse.ArgumentParser(description='Initialize ship database')
-${1}
+parser = argparse.ArgumentParser(description='${1}')
+${2}
 args = parser.parse_args()
 endsnippet
 
