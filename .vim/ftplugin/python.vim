@@ -37,7 +37,7 @@ let g:pymode_options_max_line_length = 100
 
 " mparent(2015-04-22): Temp disable rope, as performance is super slow on Yosimite
 " REF: https://github.com/klen/python-mode/issues/525
-let g:pymode_rope = 0
+let g:pymode_rope = 1
 
 " Force pylint to use correct line length. Otherwise seem to always use '80' despite whatever
 " set in pylintrc and python-mode options.

@@ -203,7 +203,7 @@ import unittest; raise unittest.SkipTest('TODO')
 endsnippet
 
 snippet here "build path to this source file" !b
-here = join(dirname(__file__))
+here = os.path.dirname(os.path.realpath(__file__))
 endsnippet
 
 snippet futureprint "Import future print() function" !b
@@ -217,4 +217,18 @@ snippet hybridprop "SQLAlchemy Hybrid Property" !b
 @hybrid_property
 def ${1:name}(self):
     return ${2:value}
+endsnippet
+
+snippet ifmain "Description" b
+def main():
+	$1
+
+if __name__ == '__main__':
+    main()
+endsnippet
+
+snippet #! "Shebang (Python 3)" b
+#!/usr/bin/env python3
+
+
 endsnippet
