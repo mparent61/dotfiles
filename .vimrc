@@ -29,7 +29,7 @@ Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'docunext/closetag'
+Plug 'docunext/closetag.vim'
 Plug 'davidoc/taskpaper.vim'
 Plug 'gabesoft/vim-ags'
 
