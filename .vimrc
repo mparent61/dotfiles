@@ -10,7 +10,9 @@ set nocompatible
 "----------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
 
+Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeFind', 'NERDTreeToggle'] }
@@ -27,9 +29,12 @@ Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'vim-scripts/closetag.vim'
+Plug 'docunext/closetag'
 Plug 'davidoc/taskpaper.vim'
 Plug 'gabesoft/vim-ags'
+
+Plug 'smerrill/vcl-vim-plugin'  " Varnish syntax
+Plug 'Keithbsmiley/tmux.vim'    " TMUX syntax
 
 " Language-specific
 Plug 'klen/python-mode', { 'for': 'python' }
@@ -38,10 +43,18 @@ Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 
 " Experimental
-Plug 'tpope/vim-sensible'
 Plug 'justinmk/vim-sneak'
 Plug 'terryma/vim-expand-region'
+"Plug 'tpope/vim-sensible'
+"Plug 'tpope/vim-endwise'
+"Plug 'tpope/vim-vinegar'
 "Plug 'christoomey/vim-tmux-navigator'
+Plug 'kien/rainbow_parentheses.vim'
+"Plug 'joequery/Stupid-EasyMotion'
+"Plug '5long/pytest-vim-compiler'
+"Plug 'chrisbra/vim-diff-enhanced'
+"vim-icinga
+Plug 'nathanaelkane/vim-indent-guides'
 
 
 call plug#end()
