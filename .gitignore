@@ -31,7 +31,7 @@
 .ssh/
 .vagrant.d/
 .vim/.netrwhist
-.vim/disabled-bundles
+.vim/plugged
 .vim/tmp
 .virtualenvs/
 .yolk/

@@ -1,21 +1,52 @@
-" Init {{
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={{,}} foldlevel=1 foldmethod=marker:
 "
-"   Mike's VIM Config
+" Mike's VIM Config
 
-    " Avoid VIM's attempts to be compatible with VI.
-    " This must be the first line, because it affects other options.
-    set nocompatible
+" Avoid VIM's attempts to be compatible with VI. Must be first line.
+set nocompatible
 
-    filetype off                " Force reloading *after* pathogen loaded
+"======================================================================
+" PLUGINS
+"----------------------------------------------------------------------
+call plug#begin('~/.vim/plugged')
 
-    " Use pathogen to load bundles
-    execute pathogen#infect()
-    " Load all bundle help docs
-    execute pathogen#helptags()
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeFind', 'NERDTreeToggle'] }
+Plug 'scrooloose/nerdcommenter'
+Plug 'sjl/gundo.vim'
+Plug 'sjl/vitality.vim'
+Plug 'bkad/CamelCaseMotion'
 
-    filetype plugin indent on   " Enable detection, plugins and indenting in one step
-" }}
+"Plug 'altercation/vim-colors-solarized'
+
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+Plug 'vim-scripts/DirDiff.vim'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'vim-scripts/closetag.vim'
+Plug 'davidoc/taskpaper.vim'
+Plug 'gabesoft/vim-ags'
+
+" Language-specific
+Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
+Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
+
+" Experimental
+Plug 'tpope/vim-sensible'
+Plug 'justinmk/vim-sneak'
+Plug 'terryma/vim-expand-region'
+"Plug 'christoomey/vim-tmux-navigator'
+
+
+call plug#end()
+"======================================================================
+
 
 " Syntax {{
     syntax on
@@ -117,11 +148,6 @@
 
     " Disable entering the dreaded 'ex' mode (useless!)
     nnoremap Q <nop>
-
-    " I always hit F1/Help key when I'm aiming for ESC
-    inoremap <F1> <ESC>
-    nnoremap <F1> <ESC>
-    vnoremap <F1> <ESC>
 
     " Make j/k move by 'screen line' instead of 'file line'
     nnoremap j gj
@@ -488,15 +514,6 @@
     " Faster than default 2-key press of <leader><leader>
     let g:EasyMotion_leader_key = '<localleader>'
 
-    " ----- Vimux -----
-    "nnoremap <leader>rp :update<CR>:VimuxPromptCommand<CR>
-    "nnoremap <leader>rl :update<CR>:VimuxRunLastCommand<CR>
-    ""nnoremap <leader>rl :update<CR>:VimuxPromptCommand<CR>!!<CR>
-    "nnoremap <leader>rx :VimuxCloseRunner<CR>
-    "nnoremap <leader>ri :VimuxInspectRunner<CR>
-    "nnoremap <leader>rs :VimuxInterruptRunner<CR>
-    ""nnoremap <leader>rc :VimuxClearRunnerHistory<CR>
-
     " ----- Expand Region -----
     vmap v <Plug>(expand_region_expand)
     vmap <C-v> <Plug>(expand_region_shrink)
@@ -612,17 +629,7 @@
     iab RECIEVED RECEIVED
 " }}
 
-" Miscellaneous {{
-
-    " Highlight VCS conflict markers
-    match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-
-    " cd to current buffer's directory
-    nnoremap <silent> <leader>cd :cd %:p:h<CR>
-
-    " Load optional local VIMRC
-    if filereadable(expand("~/.vimrc.local"))
-        source ~/.vimrc.local
-    endif
-
-" }}
+" Load optional local VIMRC
+if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
