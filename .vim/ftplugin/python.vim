@@ -76,33 +76,33 @@ let g:pymode_lint_ignore = "E501,E201,E202,E221,E241,E702,E261,E262,E26,E711,E71
 
 let g:pymode_lint_sort = ['E', 'C', 'I']  " Sort errors by relevance
 
-" TESTING
-" Run tests for current module
-python << EOF
-def _PyRunModuleTest():
-    import os
-    import sys
-    import vim
+"" TESTING
+"" Run tests for current module
+"python << EOF
+"def _PyRunModuleTest():
+"    import os
+"    import sys
+"    import vim
 
-    b = vim.current.buffer
-    module_dir = os.path.dirname(b.name)
-    module = os.path.basename(b.name)
+"    b = vim.current.buffer
+"    module_dir = os.path.dirname(b.name)
+"    module = os.path.basename(b.name)
 
-    if module == '__init__.py':
-        # Special case: sub/dir/__init__.py has test file sub/dir/test_dir.py
-        module = os.path.basename(module_dir) + '.py'
+"    if module == '__init__.py':
+"        # Special case: sub/dir/__init__.py has test file sub/dir/test_dir.py
+"        module = os.path.basename(module_dir) + '.py'
 
-    if not module.startswith('test_'):
-        module = 'test_' + module
+"    if not module.startswith('test_'):
+"        module = 'test_' + module
 
-    test_path = os.path.join(module_dir, module)
-    if os.path.exists(test_path):
-        # TODO: Set current virtual env
-        # TODO: Check if nose or py.test installed. Maybe use 'compiler' option?
-        #vim.command(':call VimuxRunCommand("dev && nosetests %s")' % test_path)
-        vim.command(':call VimuxRunCommand("py.test %s")' % test_path)
-    else:
-        sys.stderr.write('No test file exists!')
-EOF
-nnoremap <localleader>t :wa<CR>:python _PyRunModuleTest()<CR>
-"nnoremap <localleader>u :wa<CR>:!fab unit<CR>
+"    test_path = os.path.join(module_dir, module)
+"    if os.path.exists(test_path):
+"        # TODO: Set current virtual env
+"        # TODO: Check if nose or py.test installed. Maybe use 'compiler' option?
+"        #vim.command(':call VimuxRunCommand("dev && nosetests %s")' % test_path)
+"        vim.command(':call VimuxRunCommand("py.test %s")' % test_path)
+"    else:
+"        sys.stderr.write('No test file exists!')
+"EOF
+"nnoremap <localleader>t :wa<CR>:python _PyRunModuleTest()<CR>
+""nnoremap <localleader>u :wa<CR>:!fab unit<CR>
