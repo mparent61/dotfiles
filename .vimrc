@@ -11,6 +11,7 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -20,6 +21,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'sjl/gundo.vim'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
+Plug 'vim-scripts/matchit.zip'
 
 "Plug 'altercation/vim-colors-solarized'
 
@@ -43,8 +45,10 @@ Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 
 " Experimental
+Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 Plug 'justinmk/vim-sneak'
 Plug 'terryma/vim-expand-region'
+Plug 'mtth/scratch.vim'
 "Plug 'tpope/vim-sensible'
 "Plug 'tpope/vim-endwise'
 "Plug 'tpope/vim-vinegar'
