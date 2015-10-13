@@ -43,6 +43,7 @@ Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
+Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
 
 " Experimental
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
@@ -51,7 +52,7 @@ Plug 'terryma/vim-expand-region'
 Plug 'mtth/scratch.vim'
 "Plug 'tpope/vim-sensible'
 "Plug 'tpope/vim-endwise'
-"Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-vinegar'
 "Plug 'christoomey/vim-tmux-navigator'
 Plug 'kien/rainbow_parentheses.vim'
 "Plug 'joequery/Stupid-EasyMotion'
