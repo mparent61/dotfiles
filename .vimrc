@@ -56,6 +56,11 @@ Plug 'kien/rainbow_parentheses.vim'
 "vim-icinga
 Plug 'nathanaelkane/vim-indent-guides'
 
+" Testing out distraction-free writing
+Plug 'tpope/vim-markdown'
+Plug 'junegunn/limelight.vim', { 'for': 'markdown' }
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 
 call plug#end()
 "======================================================================
@@ -291,8 +296,6 @@ call plug#end()
         autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
     augroup END
     endif
-
-
 
     " Change cursor to vertical bar in insert mode when using iTerm2
     if $TERM_PROGRAM == 'iTerm.app'
@@ -531,6 +534,27 @@ call plug#end()
     vmap v <Plug>(expand_region_expand)
     vmap <C-v> <Plug>(expand_region_shrink)
 
+
+    " ----- Goyo / Limelight -----
+    autocmd! User GoyoEnter Limelight
+    autocmd! User GoyoLeave Limelight!
+    let g:limelight_conceal_ctermfg = 240
+
+    function! s:auto_goyo()
+    if &ft == 'markdown'
+        Goyo 80
+    elseif exists('#goyo')
+        let bufnr = bufnr('%')
+        Goyo!
+        execute 'b '.bufnr
+    endif
+    endfunction
+
+    augroup goyo_markdown
+        autocmd!
+        autocmd BufNewFile,BufRead * call s:auto_goyo()
+    augroup END
+
     " ----- Gundo -----
     noremap <leader>U :GundoToggle<CR>
 
@@ -557,12 +581,6 @@ call plug#end()
 
     " ----- Lightline -----
     "  See .vim/plugin/lightline.vim
-
-    " ----- Local Vimrc -----
-    " Local vimrc's complain about sandbox mode, so disable it (but need to use whitelist for security)
-    let g:localvimrc_sandbox = 0
-    " Only trust certain localvimrc files
-    let g:localvimrc_whitelist = expand('$HOME/.lvimrc')
 
     " ----- NerdTree -----
     noremap <leader>n :NERDTreeToggle<CR>
