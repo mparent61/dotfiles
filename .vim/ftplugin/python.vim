@@ -8,9 +8,6 @@ setlocal expandtab
 set foldlevel=1    " Open folds by default
 set foldnestmax=1  " Max one-level folding (high-level only)
 
-" TODO: CHeck if nose or py.test installed
-compiler nose
-
 nnoremap <localleader>l :wa<CR>:PymodeLint<CR>
 nnoremap <localleader>L :wa<CR>:PymodeLintAuto<CR>
 "nnoremap <leader>l :!autopep8 --max-line-length=120 --in-place %<CR><CR>:w<CR>
