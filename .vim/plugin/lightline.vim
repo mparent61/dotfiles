@@ -1,4 +1,4 @@
-" Config for Lightline (Pathogen plugin inside /bundle)
+" Config for Lightline
 
 " mparent(2015-05-14): Original lightline, replaced by more advanced one below
 "let g:lightline = {
