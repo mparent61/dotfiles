@@ -66,12 +66,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 "Plug 'junegunn/limelight.vim', { 'for': 'markdown' }
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'amix/vim-zenroom2', { 'for': 'markdown' }
-Plug 'itspriddle/vim-marked'
-"Plug 'jacekd/vim-iawriter'
+Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
 Plug 'reedes/vim-colors-pencil'
-" OR TRY THIS:
-""Plug 'laktek/distraction-free-writing-vim', { 'for': 'markdown' }
-
 "Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 
 call plug#end()
