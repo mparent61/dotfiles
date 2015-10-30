@@ -42,9 +42,9 @@ Plug 'Keithbsmiley/tmux.vim'    " TMUX syntax
 Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-"Plug 'suan/vim-instant-markdown', { 'for': 'markdown', 'after': 'npm install -g instant-markdown-d'}
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
+Plug 'nginx/nginx', { 'rtp': 'contrib/vim' }
 
 " Experimental
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
@@ -548,20 +548,6 @@ call plug#end()
     autocmd! User GoyoLeave Limelight!
     let g:limelight_conceal_ctermfg = 240
 
-    function! s:auto_goyo()
-    if &ft == 'markdown'
-        Goyo 80
-    elseif exists('#goyo')
-        let bufnr = bufnr('%')
-        Goyo!
-        execute 'b '.bufnr
-    endif
-    endfunction
-
-    augroup goyo_markdown
-        autocmd!
-        autocmd BufNewFile,BufRead * call s:auto_goyo()
-    augroup END
 
     " ----- Gundo -----
     noremap <leader>U :GundoToggle<CR>

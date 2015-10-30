@@ -92,8 +92,20 @@ fi
 # zsh-completions
 fpath=(/usr/local/share/zsh-completions $fpath)
 
+#--------------------------------------------------
+# Require virtualenv by default
+# http://hackercodex.com/guide/python-development-environment-on-mac-osx/
+export PIP_REQUIRE_VIRTUALENV=true
+# Explicit override for global install 
+gpip() {
+   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+#--------------------------------------------------
+
 # Use setuptools by default, distribute deprecated
 export VIRTUALENV_SETUPTOOLS=1
+# Default to Python 3
+export VIRTUALENVWRAPPER_PYTHON=python3
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/biz
 if [ `uname` = "Darwin" ]; then
