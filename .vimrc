@@ -41,7 +41,8 @@ Plug 'Keithbsmiley/tmux.vim'    " TMUX syntax
 " Language-specific
 Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+"Plug 'suan/vim-instant-markdown', { 'for': 'markdown', 'after': 'npm install -g instant-markdown-d'}
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
 
@@ -62,10 +63,16 @@ Plug 'kien/rainbow_parentheses.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " Testing out distraction-free writing
-Plug 'tpope/vim-markdown'
-Plug 'junegunn/limelight.vim', { 'for': 'markdown' }
+"Plug 'junegunn/limelight.vim', { 'for': 'markdown' }
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-Plug 'reedes/vim-pencil', { 'for': 'markdown' }
+Plug 'amix/vim-zenroom2', { 'for': 'markdown' }
+Plug 'itspriddle/vim-marked'
+"Plug 'jacekd/vim-iawriter'
+Plug 'reedes/vim-colors-pencil'
+" OR TRY THIS:
+""Plug 'laktek/distraction-free-writing-vim', { 'for': 'markdown' }
+
+"Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 
 call plug#end()
 "======================================================================

@@ -7,12 +7,12 @@ nmap <silent> <localleader>s :set spell!<CR>
 nmap <leader>w :!wc -w %<CR>
 
 if has("gui_macvim")
-    colorscheme iawriter
-    set fullscreen 		        " Fullscreen editing mode
+    "set fullscreen 		        " Fullscreen editing mode
+    colorscheme pencil
     set guifont=Cousine:h16     " iA Writer uses this font
 endif
 
 setlocal nocursorline
 
-" Initailize vim-pencil (does this work?)
-call pencil#init()
+"" Initailize vim-pencil (does this work?)
+"call pencil#init()
