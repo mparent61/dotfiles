@@ -48,10 +48,22 @@ function precmd {
     fi
 }
 
+# Display username if not default user
+prompt_username() {
+  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    echo -n "%{$PR_COLOR_USER%}"
+    echo -n "%n"
+    echo -n "%{$reset_color%}"
+    echo -n "@"
+  fi
+}
+
 PROMPT='
+
 '  # Newline
-PROMPT+='%{$PR_COLOR_USER%}%n'
-PROMPT+='%{$reset_color%}@'
+
+# Display username if not default user
+PROMPT+='$(prompt_username)'
 PROMPT+='%{$PR_COLOR_HOST%}$(hostname -s)'
 PROMPT+='%{$reset_color%} '
 PROMPT+='%{$COLOR_ORANGE%}${PWD/#$HOME/~}'
