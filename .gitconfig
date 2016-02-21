@@ -35,6 +35,12 @@
     # List merged/unmerged branches
     brm = branch --merged
     brnm = branch --no-merged
+    # http://stevenharman.net/git-clean-delete-already-merged-branches
+    delete-merged-branches = !sh -c 'git branch --merged master | grep -v master | xargs -n 1 git branch -d'
+    delete-branch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
+    really-delete-branch = "!f(){ git branch -D ${1} && git push origin --delete ${1}; };f"
+
+    mt = mergetool
 
     ci = commit
     ca = commit -a
@@ -112,19 +118,15 @@
 	default = simple
 [merge]
 	tool = fugitive
-;[diff]
-;    tool = vimdiff
 [difftool]
     # Stop vim prompting about launching vimdiff
     prompt = false
 [diff]
     tool = default-difftool
-;[difftool]
-;    prompt = false
 [difftool "default-difftool"]
     cmd = vim -f '+next' '+execute \"DirDiff\" argv(1) argv(0)' $REMOTE $LOCAL
-
+[mergetool]
+    # Don't create *.orig backup files
+	keepBackup = false
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
-[diff "excel"]
-	command = ~/util/xldiff.py

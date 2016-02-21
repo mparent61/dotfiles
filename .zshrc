@@ -105,15 +105,16 @@ gpip() {
 # Use setuptools by default, distribute deprecated
 export VIRTUALENV_SETUPTOOLS=1
 # Default to Python 3
-export VIRTUALENVWRAPPER_PYTHON=python3
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+#export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/pyvenv-3.5
 export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/biz
-if [ `uname` = "Darwin" ]; then
-    source /usr/local/bin/virtualenvwrapper.sh
-else
-    # Ubuntu puts this in a weird spot
-    source /etc/bash_completion.d/virtualenvwrapper
-fi
+source `which virtualenvwrapper.sh`
+mkvirtualenv2() {
+    mkvirtualenv -p python2.7 "$@"
+}
+mkvirtualenv3() {
+    mkvirtualenv -p python3 "$@"
+}
 
 ## Enable colored output (via homebrew's coreutils g* commands)
 if [ `uname` = "Linux" ]; then
@@ -144,3 +145,6 @@ if [[ -f "${HOME}/.zshrc.local" ]]; then
     source "${HOME}/.zshrc.local"
 fi
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# AG is faster than 'find'
+export FZF_DEFAULT_COMMAND='ag --hidden -l -g ""'

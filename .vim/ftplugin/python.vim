@@ -12,7 +12,8 @@ nnoremap <localleader>l :wa<CR>:PymodeLint<CR>
 nnoremap <localleader>L :wa<CR>:PymodeLintAuto<CR>
 "nnoremap <leader>l :!autopep8 --max-line-length=120 --in-place %<CR><CR>:w<CR>
 
-nnoremap <localleader>v :CtrlP $VIRTUAL_ENV/lib/python2.7/site-packages
+" Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
+nnoremap <localleader>v :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
 
 " Trying out omni complete
 "set omnifunc=pythoncomplete#Complete
@@ -23,14 +24,15 @@ let g:pymode_run = 0  " I never use this, and it takes up a shortcut key
 let g:pymode_folding = 0  " Disabled
 "let g:pymode_lint_checker = 'pylint,pyflakes,pep8'
 let g:pymode_lint = 1  " Enable lint checking
-let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8']  " Trying w/o noisy pyflakes
+let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8']
 let g:pymode_lint_config = findfile('.pylintrc', '.;')  " Search upward for config
-" mparent(2015-04-23): Disabled -- slowing down dev
-let g:pymode_lint_on_write = 0  " Check on write (if file modified)
+let g:pymode_lint_on_write = 1  " Check on write (if file modified)
 " CtrlP uses '<leader>b' already
 let g:pymode_breakpoint_key = '<localleader>b'
 " Sets cursorcolumn (+ maybe other stuff)
 let g:pymode_options_max_line_length = 100
+let g:pymode_virtualenv = 1
+
 
 " mparent(2015-04-22): Temp disable rope, as performance is super slow on Yosimite
 " REF: https://github.com/klen/python-mode/issues/525
@@ -55,7 +57,6 @@ let g:pymode_lint_options_pylint =
 " and these warnings are annoying.
 "   E702: multiple statements on one line (semi-colon)
 " Overly verbose comment warnings, slows down development
-"   E261 at least two spaces before inline comment [pep8]
 "   E262 inline comment should start with "# " [pep8]
 "   E26  Fix spacing after comment hash.
 " Flags valid SQLAlchemy filter statements: q.filter(User.name == None)
@@ -69,7 +70,7 @@ let g:pymode_lint_options_pylint =
 "   R0912: Too many branches
 "   R0915: Too many statements
 "   R0924: Badly implemented container (eliminated from recent PyLint builds, python-mode is behind)
-let g:pymode_lint_ignore = "E501,E201,E202,E221,E241,E702,E261,E262,E26,E711,E712,C901,C0110,C0302,C0330,R0901,R0912,R0915,R0924"
+let g:pymode_lint_ignore = "E501,E201,E202,E221,E241,E702,E262,E26,E711,E712,C901,C0110,C0302,C0330,R0901,R0912,R0915,R0924"
 
 let g:pymode_lint_sort = ['E', 'C', 'I']  " Sort errors by relevance
 

@@ -1,7 +1,7 @@
 " Distraction-free writing
 
-setlocal nospell                " Spellcheck off by default
-setlocal spelllang=en_us        " use U.S. English dictionary
+setlocal spell                " Spellcheck on by default
+setlocal spelllang=en_us      " Use U.S. English dictionary
 nmap <silent> <localleader>s :set spell!<CR>
 
 nmap <leader>w :!wc -w %<CR>
