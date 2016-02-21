@@ -13,33 +13,35 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeFind', 'NERDTreeToggle'] }
+Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdcommenter'
 Plug 'sjl/gundo.vim'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/matchit.zip'
-
-"Plug 'altercation/vim-colors-solarized'
-
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" Fuzzy finder
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'kien/ctrlp.vim'
 Plug 'docunext/closetag.vim'
 Plug 'davidoc/taskpaper.vim'
 Plug 'gabesoft/vim-ags'
 
+" File Syntax
 Plug 'smerrill/vcl-vim-plugin'  " Varnish syntax
 Plug 'Keithbsmiley/tmux.vim'    " TMUX syntax
 
 " Language-specific
 Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
@@ -47,27 +49,30 @@ Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
 Plug 'nginx/nginx', { 'rtp': 'contrib/vim' }
 
 " Experimental
+Plug 'fisadev/vim-isort', { 'for': 'python' }
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 Plug 'justinmk/vim-sneak'
 Plug 'terryma/vim-expand-region'
 Plug 'mtth/scratch.vim'
 "Plug 'tpope/vim-sensible'
 "Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-vinegar'
 "Plug 'christoomey/vim-tmux-navigator'
 Plug 'kien/rainbow_parentheses.vim'
-"Plug 'joequery/Stupid-EasyMotion'
 "Plug '5long/pytest-vim-compiler'
 "Plug 'chrisbra/vim-diff-enhanced'
-"vim-icinga
 Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'unblevable/quick-scope'
+Plug 'PeterRincker/vim-argumentative'
+"Plug 'Mizuchi/vim-ranger'
+Plug 'dietsche/vim-lastplace'
+"Plug 'altercation/vim-colors-solarized'
 
-" Testing out distraction-free writing
-"Plug 'junegunn/limelight.vim', { 'for': 'markdown' }
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-Plug 'amix/vim-zenroom2', { 'for': 'markdown' }
+" Markdown
 Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
-Plug 'reedes/vim-colors-pencil'
+Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
+"Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+"Plug 'amix/vim-zenroom2', { 'for': 'markdown' }
+"Plug 'reedes/vim-colors-pencil', { 'for': 'markdown' }
 "Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 
 call plug#end()
@@ -371,7 +376,6 @@ call plug#end()
 " }}
 
 " Wild Menu  {{
-    " Note: also used by CtrlP
     set wildmenu
     set wildmode=list:longest  "Only complete up to point of ambiguity
     if exists ("&wildignorecase")
@@ -478,50 +482,10 @@ call plug#end()
     sunmap B
     sunmap E
 
-    "----- CtrlP -----
-    " YankRing already uses <c-p>
-    let g:ctrlp_map = '<leader>f'
-    " Fast buffer access
-    nnoremap ; :CtrlPBuffer<CR>
-    " Configure 'mixed' mode to show both buffers and files (relative
-    " to project) so I don't have to remember if file is open or not
-    " and choose corresponding 'file' or 'buffer' mode)
-    let g:ctrlp_cmd = 'CtrlPMixed'
-    let g:ctrlp_mruf_relative = 1   " Exclude files outside project
-    " Include dotfiles
-    let g:ctrlp_show_hidden = 1
-
-    " Open X files in vertical splits, rest hidden. 'r' makes first file open in existing buffer (instead of new one)
-    let g:ctrlp_open_multiple_files = '4vr'
-
-    " Search upward for repository root
-    let g:ctrlp_working_path_mode = 'ra'
-
-    "let g:ctrlp_custom_ignore = {
-    "    \ 'dir':  '\v[\/]\.(git|hg|svn)$|tmp$',
-    "    \ 'file': '\v\.(exe|pyc|so|dll|yaml|DS_Store)$',
-    "    \ }
-    " Flip mappings, I use 'reset' a lot, never 'regex'
-    let g:ctrlp_prompt_mappings = {
-        \ 'ToggleRegex()':        ['<F5>'],
-        \ 'PrtClearCache()':      ['<c-r>'],
-        \ }
-
-    " Always open files in new buffers
-    let g:ctrlp_switch_buffer = 0
-
-    " ----- Silver Searcher (fast grep) -----
-    " Use Silver Searcher w/ 'grep' and 'CtrlP' (if available)
-    if executable('ag')
-        " Use ag over grep
-        set grepprg=ag\ --nogroup\ --nocolor\ --hidden
-
-        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-        let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-
-        " ag is fast enough that CtrlP doesn't need to cache
-        let g:ctrlp_use_caching = 0
-    endif
+    "----- FZF -----
+    nmap <leader>f :Files<CR>
+    nmap ; :Buffers<CR>
+    nmap <leader>l :Lines<CR>
 
     " Fast find shortcut
     nnoremap <leader>a :Ags<space>
@@ -542,12 +506,10 @@ call plug#end()
     vmap v <Plug>(expand_region_expand)
     vmap <C-v> <Plug>(expand_region_shrink)
 
-
     " ----- Goyo / Limelight -----
     autocmd! User GoyoEnter Limelight
     autocmd! User GoyoLeave Limelight!
     let g:limelight_conceal_ctermfg = 240
-
 
     " ----- Gundo -----
     noremap <leader>U :GundoToggle<CR>
@@ -572,24 +534,6 @@ call plug#end()
     let g:indent_guides_auto_colors = 0
     autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=11
     autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
-
-    " ----- Lightline -----
-    "  See .vim/plugin/lightline.vim
-
-    " ----- NerdTree -----
-    noremap <leader>n :NERDTreeToggle<CR>
-    noremap <leader>N :NERDTreeFind<CR>
-    let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$' ]
-    " Show hidden files, too
-    let NERDTreeShowFiles=1
-    let NERDTreeShowHidden=1
-    " Quit on opening files from the tree
-    "let NERDTreeQuitOnOpen=1
-    " Highlight the selected entry in the tree
-    let NERDTreeHighlightCursorline=1
-
-    " ----- NERDCommenter -----
-    let g:NERDMenuMode = 0  " Disable menu
 
     " ----- Rainbow Parens -----
     " Always Just Python For now (Messes up AGS search results for one)
