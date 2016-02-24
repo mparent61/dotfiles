@@ -60,10 +60,10 @@ prompt_username() {
 
 git_stash() {
   # Show git stash count
-  stashNb=`git stash list 2> /dev/null | wc -l | tr -d '[[:space:]]'`
-  if [ "$stashNb" != "0" ]
+  stash_count=`git stash list 2> /dev/null | wc -l | tr -d '[[:space:]]'`
+  if [ "$stash_count" != "0" ]
   then
-    echo -n " %{$COLOR_BLUE%}($stashNb)%f"
+    echo -n " %{$COLOR_BLUE%}($stash_count)%f"
   fi
 }
 
