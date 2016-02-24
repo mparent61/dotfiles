@@ -58,6 +58,16 @@ prompt_username() {
   fi
 }
 
+git_stash() {
+  # Show git stash count
+  stashNb=`git stash list 2> /dev/null | wc -l | tr -d '[[:space:]]'`
+  if [ "$stashNb" != "0" ]
+  then
+    echo -n " %{$COLOR_BLUE%}($stashNb)%f"
+  fi
+}
+
+
 PROMPT='
 
 '  # Newline
@@ -67,7 +77,7 @@ PROMPT+='$(prompt_username)'
 PROMPT+='%{$PR_COLOR_HOST%}$(hostname -s)'
 PROMPT+='%{$reset_color%} '
 PROMPT+='%{$COLOR_ORANGE%}${PWD/#$HOME/~}'
-PROMPT+='%{$reset_color%}$(git_prompt_info)'
+PROMPT+='%{$reset_color%}$(git_prompt_info)$(git_stash)'
 PROMPT+=' '
 PROMPT+='%{$COLOR_CYAN%}%(?,,%{$COLOR_RED%}[%?] )'
 PROMPT+='
