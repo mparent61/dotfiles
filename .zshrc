@@ -66,6 +66,10 @@ alias dm=docker-machine
 alias dc=docker-compose
 # HTTPie (Curl Replacement)
 alias http='http --style solarized'
+# OSX HTOP requires sudo
+alias htop='sudo htop'
+# Include hidden files by default
+alias ag='ag --hidden'
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
