@@ -12,8 +12,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -27,6 +25,9 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/YankRing.vim'
@@ -39,41 +40,47 @@ Plug 'gabesoft/vim-ags'
 Plug 'smerrill/vcl-vim-plugin'  " Varnish syntax
 Plug 'Keithbsmiley/tmux.vim'    " TMUX syntax
 
-" Language-specific
-Plug 'klen/python-mode', { 'for': 'python' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+" Markdown
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
+Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
+
+" Javascript
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
+
+" Language-specific
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'klen/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
 Plug 'nginx/nginx', { 'rtp': 'contrib/vim' }
 
 " Experimental
-Plug 'fisadev/vim-isort', { 'for': 'python' }
-Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
-Plug 'justinmk/vim-sneak'
-Plug 'terryma/vim-expand-region'
-Plug 'mtth/scratch.vim'
-"Plug 'tpope/vim-sensible'
-"Plug 'tpope/vim-endwise'
-"Plug 'christoomey/vim-tmux-navigator'
-Plug 'kien/rainbow_parentheses.vim'
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'idbrii/itchy.vim'
+Plug 'idbrii/vim-diffusable'
+"Plug 'mbbill/undotree'
 "Plug '5long/pytest-vim-compiler'
-"Plug 'chrisbra/vim-diff-enhanced'
-Plug 'nathanaelkane/vim-indent-guides'
-"Plug 'unblevable/quick-scope'
-Plug 'PeterRincker/vim-argumentative'
-"Plug 'Mizuchi/vim-ranger'
-Plug 'dietsche/vim-lastplace'
 "Plug 'altercation/vim-colors-solarized'
-
-" Markdown
-Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
-Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
-"Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-"Plug 'amix/vim-zenroom2', { 'for': 'markdown' }
-"Plug 'reedes/vim-colors-pencil', { 'for': 'markdown' }
-"Plug 'reedes/vim-pencil', { 'for': 'markdown' }
+"Plug 'chrisbra/vim-diff-enhanced'
+"Plug 'christoomey/vim-tmux-navigator'
+"Plug 'tpope/vim-endwise'
+"Plug 'unblevable/quick-scope'
+"Plug 'scrooloose/syntastic'
+"Plug 'tweekmonster/django-plus.vim'
+Plug 'PeterRincker/vim-argumentative'
+Plug 'dietsche/vim-lastplace'
+Plug 'fisadev/vim-isort', { 'for': 'python' }
+"Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-sneak'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'terryma/vim-expand-region'
+Plug 'tpope/vim-sensible'
+"Plug 'dyng/ctrlsf.vim'
+" mparent(2016-09-08): Tried to use this but requires 'python' (homebrew just has 'python3')
+"Plug 'maralla/validator.vim'
 
 call plug#end()
 "======================================================================
@@ -95,6 +102,7 @@ call plug#end()
 
     set background=dark
     colorscheme solarized
+    "colorscheme flattened_dark
 " }}
 
 " General {{
@@ -206,6 +214,9 @@ call plug#end()
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
 
+    " Auto-resize splits on window resize
+    autocmd VimResized * wincmd =
+
     " Fast vertical split
     nnoremap <leader>v :vsplit<space>
 
@@ -246,8 +257,8 @@ call plug#end()
     " Force-save file (useful if I forget to run vim w/ sudo)
     cmap w!! w !sudo tee % >/dev/null
 
-    " 'wall' saves all open buffers if modified (vs 'update' which just applies to current buffer)
-    nmap <leader>w :wall<CR>
+    " Force write current file
+    nmap <leader>w :w!<CR>
     nmap <leader>x :x<CR>
     nmap <leader>q :xa<CR>
     nmap <leader>o :only<CR>
@@ -298,7 +309,6 @@ call plug#end()
     set foldenable          " Auto fold code
     "set foldnestmax=1       " Max 1-level deep (I just want high-level overview)
     "set foldlevelstart=999  " All fold levels open at start
-    nnoremap <space> zA     " Open/close folds
 
     " Quick insertion of newline in normal mode with <CR>
     if has("autocmd")
@@ -338,7 +348,7 @@ call plug#end()
         " Restore cursor
         call setpos('.', save_cursor)
     endfunction
-    autocmd BufWritePre *.py,*.mako,*.js,*.css,*.less,*.sls,*.cpp,*.h,*.todo,*.txt,*.ini,*.taskpaper,*.vim,.vimrc call DeleteTrailingWhitespace()
+    autocmd BufWritePre *.py,*.mako,*.js,*.css,*.less,*.cpp,*.h,*.todo,*.txt,*.ini,*.taskpaper,*.vim,.vimrc call DeleteTrailingWhitespace()
     nnoremap <leader>W :call DeleteTrailingWhitespace()<CR>
 
     " Fix mixed EOLs (^M)
@@ -420,19 +430,6 @@ call plug#end()
     endif
 " }}
 
-" Restore Cursor Position (on window open) {{
-    function! ResCur()
-    if line("'\"") <= line("$")
-        normal! g`"
-        return 1
-    endif
-    endfunction
-
-    augroup resCur
-    autocmd!
-    autocmd BufWinEnter * call ResCur()
-    augroup END
-" }}
 
 " Diff {{
 
@@ -461,6 +458,19 @@ call plug#end()
     set diffopt+=vertical
 " }}
 
+
+" Marks {{
+    " Quick jump to previous file type
+    autocmd BufLeave *.css,*.less,*scss             normal! mC
+    autocmd BufLeave *.html                         normal! mH
+    autocmd BufLeave *.js                           normal! mJ
+    autocmd BufLeave *.py                           normal! mP
+    autocmd BufLeave tests.py,test_*.py,*.tests.js  normal! mT
+    autocmd BufLeave *.sass                         normal! mS
+    autocmd BufLeave *.yml                          normal! mY
+    autocmd BufLeave Dockerfile                     normal! mD
+" }}
+
 " Plugins {{
 
     " ----- DirDiff -----
@@ -486,8 +496,10 @@ call plug#end()
     nmap <leader>f :Files<CR>
     nmap ; :Buffers<CR>
     nmap <leader>l :Lines<CR>
+    " Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
+    nnoremap <leader>V :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
 
-    " Fast find shortcut
+    " Silver Searcher (via vim-ags)
     nnoremap <leader>a :Ags<space>
 
     " Find word under cursor
@@ -513,22 +525,36 @@ call plug#end()
 
     " ----- Gundo -----
     noremap <leader>U :GundoToggle<CR>
+    let g:gundo_prefer_python3 = 1  " Python 3 support
 
     " ----- Fugitive -----
-    noremap <leader>gs :Gstatus<CR>
-    " Git commit plays better with pre-commit hook (shows console output + "Gcommit" seems to trigger hook 2x, once
-    " before commit message and once after).
-    noremap <leader>gc :Git commit<CR>
-    noremap <leader>gv :Git commit --no-verify<CR>
-    noremap <leader>gl :Glog<CR>
-    noremap <leader>gb :Gblame<CR>
-    noremap <leader>gd :Gvdiff<CR>
-    noremap <leader>ge :Gedit<CR>
-    noremap <leader>gr :Gread<CR>
-    noremap <leader>gw :Gwrite<CR>
-    " mparent(2014-02-18): testing easy way to scroll through diffs
-    "noremap ]d <C-N>:<C-U>execute <SID>StageDiff('Gvdiff')<CR><C-W>k
-    "noremap ]d <C-N> D <C-W>k
+
+    " Delete Fugitive buffers when I leave them so they don't pollute BufExplorer
+    " REF: https://github.com/tpope/vim-fugitive/issues/81#issuecomment-1245830
+    autocmd BufReadPost fugitive://* set bufhidden=delete
+
+    nnoremap <leader>ga :Git add %:p<CR><CR>
+    nnoremap <leader>gs :Gstatus<CR>
+    nnoremap <leader>gb :Gblame<CR>
+    nnoremap <leader>gc :Gcommit --no-verify<CR>
+    nnoremap <leader>gv :Gcommit --no-verify -q<CR>
+    nnoremap <leader>gt :Gcommit --no-verify -q %:p<CR>
+    nnoremap <leader>gd :Gdiff<CR>
+    "nnoremap <leader>gd :Gvdiff<CR>
+    nnoremap <leader>ge :Gedit<CR>
+    nnoremap <leader>gR :Gremove<CR>
+    nnoremap <leader>gr :Gread<CR>
+    nnoremap <leader>gw :Gwrite<CR><CR>
+    nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
+    nnoremap <leader>gp :Ggrep<Space>
+    nnoremap <leader>gm :Gmove<Space>
+    nnoremap <leader>gb :Git branch<Space>
+    nnoremap <leader>go :Git checkout<Space>
+    nnoremap <leader>gps :Dispatch! git push<CR>
+    nnoremap <leader>gpl :Dispatch! git pull<CR>
+
+    " ----- Jedi -----
+    let g:jedi#rename_command = "<localleader>r"  " Remap away for Dispatch
 
     " ----- Indent Guides -----
     let g:indent_guides_auto_colors = 0
@@ -555,12 +581,15 @@ call plug#end()
 
     " ----- Syntastic -----
     " Show errors in location list buffer
-
     let g:syntastic_auto_loc_list=1
     " NOTE: 'passive' mode was simplest way I could find to disable Python auto-checking
     let g:syntastic_mode_map = { 'mode': 'active',
-                               \ 'active_filetypes': [],
-                               \ 'passive_filetypes': ['javascript', 'css', 'python'] }
+                               \ 'active_filetypes': ['javascript'],
+                               \ 'passive_filetypes': ['css', 'python'] }
+    " TODO: Move to plugin file(s)
+    " https://github.com/scrooloose/syntastic/wiki/HTML:---tidy
+    let g:syntastic_html_tidy_ignore_errors = [ '<input> proprietary attribute "ng-model"' ]
+
     "" ----- Tabular -----
     nmap <leader>T= :Tabularize /^[^=]*\zs<CR>
     vmap <leader>T= :Tabularize /^[^=]*\zs<CR>
