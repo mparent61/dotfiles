@@ -1,8 +1,15 @@
 snippet #! "Python Hash Bang"
 #!/usr/bin/env python
-# encoding: utf-8
+#
 
 endsnippet
+
+snippet #!3 "Shebang (Python 3)" b
+#!/usr/bin/env python3
+#
+
+endsnippet
+
 
 snippet im "Import module"
 import ${1:module}
@@ -92,13 +99,13 @@ endsnippet
 
 snippet setup "unittest setUp method" !b
 def setUp(self):
-    ${1:base}.setUp(self)
+    super(${1:class}, self).setUp()
     ${2}
 
 endsnippet
 
 snippet log "standard logging" !b
-log = __import__('logging').getLogger(__name__)
+logger = __import__('logging').getLogger(__name__)
 
 endsnippet
 
@@ -108,7 +115,7 @@ log = get_task_logger(__name__)
 
 endsnippet
 
-snippet disable "PyLint Disable Warning" !b 
+snippet disable "PyLint Disable Warning" !b
 # pylint: disable=${1:code}
 # pylint: enable=$1
 endsnippet
@@ -126,7 +133,7 @@ snippet skipif
 endsnippet
 
 snippet todo
-# TODO(mparent): 
+# TODO(mparent):
 endsnippet
 
 snippet noseattr
@@ -176,7 +183,7 @@ endsnippet
 
 snippet init "object __init__ method" !b
 def __init__(self):
-    
+
 endsnippet
 
 snippet Enum "SQLAlchemy-friendly enumeration" !b
@@ -206,7 +213,7 @@ snippet here "build path to this source file" !b
 here = os.path.dirname(os.path.realpath(__file__))
 endsnippet
 
-snippet futureprint "Import future print() function" !b
+snippet fprint "Import future print() function" !b
 from __future__ import print_function
 endsnippet
 
@@ -227,8 +234,6 @@ if __name__ == '__main__':
     main()
 endsnippet
 
-snippet #! "Shebang (Python 3)" b
-#!/usr/bin/env python3
-
-
+snippet utf8 "Source header encoding: utf-8" b
+# -*- coding: utf-8 -*-
 endsnippet

@@ -58,18 +58,29 @@ prompt_username() {
   fi
 }
 
-git_stash() {
+git_extra_info() {
   # Show git stash count
-  stash_count=`git stash list 2> /dev/null | wc -l | tr -d '[[:space:]]'`
-  if [ "$stash_count" != "0" ]
+  local STASH_COUNT=`git stash list 2> /dev/null | wc -l | tr -d '[[:space:]]'`
+  if [ "$STASH_COUNT" -gt 0 ]
   then
-    echo -n " %{$COLOR_BLUE%}($stash_count)%f"
+    echo -n " %{$COLOR_BLUE%}($STASH_COUNT stashed)"
   fi
+
+  ## Show ahead/behind
+  #local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
+  #if [ "$NUM_AHEAD" -gt 0 ]; then
+  #  echo -n "A"
+  #fi
+
+  #local NUM_BEHIND="$(git log --oneline ..@{u} 2> /dev/null | wc -l | tr -d ' ')"
+  #if [ "$NUM_BEHIND" -gt 0 ]; then
+  #  echo -n "B"
+  #fi
+
 }
 
 
 PROMPT='
-
 '  # Newline
 
 # Display username if not default user
@@ -77,7 +88,7 @@ PROMPT+='$(prompt_username)'
 PROMPT+='%{$PR_COLOR_HOST%}$(hostname -s)'
 PROMPT+='%{$reset_color%} '
 PROMPT+='%{$COLOR_ORANGE%}${PWD/#$HOME/~}'
-PROMPT+='%{$reset_color%}$(git_prompt_info)$(git_stash)'
+PROMPT+='%{$reset_color%}$(git_prompt_info)$(git_extra_info)'
 PROMPT+=' '
 PROMPT+='%{$COLOR_CYAN%}%(?,,%{$COLOR_RED%}[%?] )'
 PROMPT+='

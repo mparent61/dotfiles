@@ -16,12 +16,13 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-sensible'
 Plug 'sjl/gundo.vim'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/matchit.zip'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'idbrii/itchy.vim'  " Scrach buffer
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -57,8 +58,14 @@ Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
 Plug 'nginx/nginx', { 'rtp': 'contrib/vim' }
 
 " Experimental
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'airblade/vim-rooter'
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'idbrii/itchy.vim'
+
+" Disable search highlighting when not searching
+Plug 'romainl/vim-cool'
+
 Plug 'idbrii/vim-diffusable'
 "Plug 'mbbill/undotree'
 "Plug '5long/pytest-vim-compiler'
@@ -77,7 +84,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 "Plug 'terryma/vim-expand-region'
-Plug 'tpope/vim-sensible'
 "Plug 'dyng/ctrlsf.vim'
 " mparent(2016-09-08): Tried to use this but requires 'python' (homebrew just has 'python3')
 "Plug 'maralla/validator.vim'
@@ -279,6 +285,12 @@ call plug#end()
     function! AdjustWindowHeight(minheight, maxheight)
         exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
     endfunction
+" }}
+
+" NetRW {{
+
+    " Allow netrw to remove non-empty local directories
+    let g:netrw_localrmdir="rm -r"
 " }}
 
 " Tab/Space/Wrap {{
@@ -493,17 +505,32 @@ call plug#end()
     sunmap E
 
     "----- FZF -----
-    nmap <leader>f :Files<CR>
+
+    " Automatically find top-level directory (https://github.com/junegunn/fzf/issues/369)
+    function! s:FZF_Root_Files()
+        for vcs in ['.git', '.svn', '.hg']
+            let dir = finddir(vcs.'/..', ';')
+            if !empty(dir)
+                execute 'Files' dir
+                return
+            endif
+        endfor
+        Files
+    endfunction
+
+    command! RootFiles call s:FZF_Root_Files()
+
+    nmap <leader>f :RootFiles<CR>
     nmap ; :Buffers<CR>
     nmap <leader>l :Lines<CR>
     " Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
     nnoremap <leader>V :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
 
-    " Silver Searcher (via vim-ags)
     nnoremap <leader>a :Ags<space>
 
     " Find word under cursor
     nnoremap <leader>K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
 
     " ----- Dispatch -----
     nnoremap <leader>R :Focus<space>
@@ -543,7 +570,7 @@ call plug#end()
     "nnoremap <leader>gd :Gvdiff<CR>
     nnoremap <leader>ge :Gedit<CR>
     nnoremap <leader>gR :Gremove<CR>
-    nnoremap <leader>gr :Gread<CR>
+    nnoremap <leader>gr :Gread<CR>:w!<CR>
     nnoremap <leader>gw :Gwrite<CR><CR>
     nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
     nnoremap <leader>gp :Ggrep<Space>

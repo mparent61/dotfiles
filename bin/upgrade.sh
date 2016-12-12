@@ -3,10 +3,9 @@
 brew update
 brew doctor
 
-brew install vim --override-system-vi --with-python3
-
 brew install \
     autoenv \
+    autossh \
     coreutils \
     git \
     htop-osx \
@@ -14,7 +13,11 @@ brew install \
     tmux \
     trash \
     the_silver_searcher \
-    zsh
+    zsh \
+    homebrew/versions/ansible19
+
+# Ranger + plugins (esp syntax highlighting)
+brew install ranger atool w3m mediainfo
 
 brew upgrade --all
 

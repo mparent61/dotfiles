@@ -12,9 +12,6 @@ nnoremap <localleader>l :wa<CR>:PymodeLint<CR>
 nnoremap <localleader>L :wa<CR>:PymodeLintAuto<CR>
 "nnoremap <leader>l :!autopep8 --max-line-length=120 --in-place %<CR><CR>:w<CR>
 
-" Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
-nnoremap <localleader>v :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
-
 " Trying out omni complete
 "set omnifunc=pythoncomplete#Complete
 inoremap <C-space> <C-x><C-o>
@@ -24,28 +21,32 @@ let g:pymode_run = 0  " I never use this, and it takes up a shortcut key
 let g:pymode_folding = 0  " Disabled
 "let g:pymode_lint_checker = 'pylint,pyflakes,pep8'
 let g:pymode_lint = 1  " Enable lint checking
-let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8']
+let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_lint_config = findfile('.pylintrc', '.;')  " Search upward for config
 let g:pymode_lint_on_write = 1  " Check on write (if file modified)
 " CtrlP uses '<leader>b' already
-let g:pymode_breakpoint_key = '<localleader>b'
+"let g:pymode_breakpoint_key = '<localleader>b'
 " Sets cursorcolumn (+ maybe other stuff)
 let g:pymode_options_max_line_length = 100
 let g:pymode_virtualenv = 1
-
+let g:pymode_python = 'python3'
 
 " mparent(2015-04-22): Temp disable rope, as performance is super slow on Yosimite
 " REF: https://github.com/klen/python-mode/issues/525
 let g:pymode_rope = 1
 
-" Force pylint to use correct line length. Otherwise seem to always use '80' despite whatever
-" set in pylintrc and python-mode options.
+
+let g:jedi#force_py_version = 3
+
+
+" Force linters to use correct line length. Otherwise seem to always use '80' despite whatever
+" set in config files.
 let g:pymode_lint_options_pylint =
     \ {'max-line-length': g:pymode_options_max_line_length}
+let g:pymode_lint_options_pep8 =
+    \ {'max_line_length': g:pymode_options_max_line_length}
 
 " List of (non-pylint) errors to also ignore
-" The 80-character retriction is antiquated, should not be an error. PyLint will throw warning C0301 anyway.
-"   E501: line too long
 " Ignore multiple whitespace before + after operator, as this can be
 " useful for aligning code.
 "   E201: whitespace after '{'
@@ -56,8 +57,8 @@ let g:pymode_lint_options_pylint =
 "       import pdb; pdb.set_trace()
 " and these warnings are annoying.
 "   E702: multiple statements on one line (semi-colon)
+"   E501: Line length -- lots of legacy Onion code has long lines
 " Overly verbose comment warnings, slows down development
-"   E262 inline comment should start with "# " [pep8]
 "   E26  Fix spacing after comment hash.
 " Flags valid SQLAlchemy filter statements: q.filter(User.name == None)
 "   E711: comparison to None should be "if cond is None:"
@@ -70,7 +71,7 @@ let g:pymode_lint_options_pylint =
 "   R0912: Too many branches
 "   R0915: Too many statements
 "   R0924: Badly implemented container (eliminated from recent PyLint builds, python-mode is behind)
-let g:pymode_lint_ignore = "E501,E201,E202,E221,E241,E702,E262,E26,E711,E712,C901,C0110,C0302,C0330,R0901,R0912,R0915,R0924"
+let g:pymode_lint_ignore = "E201,E202,E221,E241,E501,E702,E711,E712,C901,C0110,C0302,C0330,R0901,R0912,R0915,R0924"
 
 let g:pymode_lint_sort = ['E', 'C', 'I']  " Sort errors by relevance
 
@@ -104,3 +105,6 @@ let g:pymode_lint_sort = ['E', 'C', 'I']  " Sort errors by relevance
 "EOF
 "nnoremap <localleader>t :wa<CR>:python _PyRunModuleTest()<CR>
 ""nnoremap <localleader>u :wa<CR>:!fab unit<CR>
+
+" Yapf auto-lint support
+nnoremap <leader>y :0,$!yapf --style='{ COLUMN_LIMIT: 120}'<Cr>

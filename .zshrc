@@ -19,6 +19,7 @@ plugins=(autojump
          brew
          docker
          fabric
+         fzf
          git
          history
          mercurial
@@ -48,6 +49,10 @@ alias v='vim'
 alias vi='vim'
 # Read-only VIM
 alias vr='vim -M'
+# Sudo VIM
+alias sv='sudo vim'
+alias svi='sudo vim'
+alias svim='sudo vim'
 alias vimrc='vim ~/.vimrc'
 alias zshrc='vim ~/.zshrc'
 #alias plan='vim -O ~/Dropbox/TaskPaper/plan.taskpaper ~/Dropbox/TaskPaper/TODO.taskpaper'
@@ -149,6 +154,29 @@ if [[ -f "${HOME}/.zshrc.local" ]]; then
     source "${HOME}/.zshrc.local"
 fi
 
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # AG is faster than 'find'
 export FZF_DEFAULT_COMMAND='ag --hidden -l -g ""'
+
+# Make Directory + CD to it
+mkcdir ()
+{
+    mkdir -p -- "$1" &&
+      cd -P -- "$1"
+}
+
+#----------------------------------------------------------------------
+# TESTING
+#----------------------------------------------------------------------
+# Ranger
+function ranger-cd {
+  tempfile='/tmp/chosendir'
+  ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+  test -f "$tempfile" &&
+  if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+    cd -- "$(cat "$tempfile")"
+  fi
+  rm -f -- "$tempfile"
+}
+

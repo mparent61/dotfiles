@@ -6,6 +6,7 @@ nmap <silent> <localleader>s :set spell!<CR>
 
 nmap <leader>w :!wc -w %<CR>
 
+set wrap
 
 " Goyo Auto-Starter
 function! s:auto_goyo()

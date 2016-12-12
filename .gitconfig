@@ -24,6 +24,7 @@
     remote = green
 [alias]
     co = checkout
+    co-all = checkout -- .
     # Undo all unstaged modifications
     revertall = git checkout -- .
 
@@ -31,14 +32,15 @@
     br = branch
     # List of branches by date modified
     # TODO: Fixed width columns
-    brd = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset)) - %(contents:subject) - %(authorname)'
+    brd = for-each-ref --sort=committerdate refs/heads/ --format='%(color:red)%(objectname:short)%(color:reset) %(color:green)%(committerdate:relative)%(color:reset)\t%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(contents:subject) - %(authorname)'
     # List merged/unmerged branches
     brm = branch --merged
     brnm = branch --no-merged
     # http://stevenharman.net/git-clean-delete-already-merged-branches
     delete-merged-branches = !sh -c 'git branch --merged master | grep -v master | xargs -n 1 git branch -d'
-    delete-branch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
-    really-delete-branch = "!f(){ git branch -D ${1} && git push origin --delete ${1}; };f"
+    delete-branch = "!f(){ git branch -D ${1} && git push origin --delete ${1}; };f"
+
+    sync = !git pull && git delete-merged-branches
 
     mt = mergetool
 
@@ -98,7 +100,9 @@
     dd = difftool --dir-diff
 
     # Show top stash changes
-    diffstash = stash show -p stash@{0}
+    stashls = stash list --date=relative
+    stashdiff = diff stash@{0}^ stash@{0}
+    stashdd = dd stash@{0} stash@{0}^
 
     # Diff last commit
     difflast = diff HEAD^..HEAD
