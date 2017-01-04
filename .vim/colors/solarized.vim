@@ -648,10 +648,11 @@ exe "hi! DiffChange"     .s:fmt_bold   .s:fg_yellow .s:bg_base02 .s:sp_yellow
 exe "hi! DiffDelete"     .s:fmt_bold   .s:fg_red    .s:bg_base02
 exe "hi! DiffText"       .s:fmt_bold   .s:fg_blue   .s:bg_base02 .s:sp_blue
     else
-exe "hi! DiffAdd"        .s:fmt_none   .s:fg_cyan   .s:bg_base2 .s:sp_green
-exe "hi! DiffChange"     .s:fmt_none   .s:fg_yellow .s:bg_base2 .s:sp_yellow
-exe "hi! DiffDelete"     .s:fmt_none   .s:fg_red    .s:bg_base2
-exe "hi! DiffText"       .s:fmt_none   .s:fg_base3  .s:bg_blue  .s:sp_blue
+" Use this one for OSX/TMUX VIM
+exe "hi! DiffAdd"        .s:fmt_none   .s:fg_none   .s:bg_base2 .s:sp_green
+exe "hi! DiffChange"     .s:fmt_none   .s:fg_none   .s:bg_base2 .s:sp_yellow
+exe "hi! DiffDelete"     .s:fmt_none   .s:fg_red    .s:bg_red
+exe "hi! DiffText"       .s:fmt_none   .s:fg_base3  .s:bg_blue  .s:sp_magenta
     endif
 endif
 exe "hi! SignColumn"     .s:fmt_none   .s:fg_base0
