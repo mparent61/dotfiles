@@ -36,8 +36,9 @@
     # List merged/unmerged branches
     brm = branch --merged
     brnm = branch --no-merged
-    # http://stevenharman.net/git-clean-delete-already-merged-branches
-    delete-merged-branches = !sh -c 'git branch --merged master | grep -v master | xargs -n 1 git branch -d'
+    # http://stackoverflow.com/a/38404202
+    delete-merged-branches = !git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
+
     delete-branch = "!f(){ git branch -D ${1} && git push origin --delete ${1}; };f"
 
     sync = !git pull && git delete-merged-branches
