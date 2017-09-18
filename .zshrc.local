@@ -1,0 +1,6 @@
+# Work SSH access
+export ANSIBLE_INVENTORY=~/onion/ansible-playbooks/inventory
+
+
+# Organization
+alias plan='vim -O ~/Dropbox/TaskPaper/TODO.taskpaper'

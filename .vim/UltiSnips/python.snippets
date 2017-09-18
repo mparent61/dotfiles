@@ -237,3 +237,10 @@ endsnippet
 snippet utf8 "Source header encoding: utf-8" b
 # -*- coding: utf-8 -*-
 endsnippet
+
+snippet os.walk "os.walk recursive directory walk" b
+for root, _dirs, files in os.walk(${1:path}):
+	for f in files:
+		path = os.path.join(root, f)
+		$2
+endsnippet
