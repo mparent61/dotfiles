@@ -52,7 +52,7 @@ Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 
 " Language-specific
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'klen/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
 Plug 'nginx/nginx', { 'rtp': 'contrib/vim' }
@@ -60,11 +60,16 @@ Plug 'nginx/nginx', { 'rtp': 'contrib/vim' }
 " Experimental
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
-Plug 'airblade/vim-rooter'
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+" HTML, JS, CSS Beautify
+Plug 'maksimr/vim-jsbeautify'
 
 " Disable search highlighting when not searching
 Plug 'romainl/vim-cool'
+
+" Experimental Scala Stuff
+Plug 'jceb/vim-hier'
 
 Plug 'idbrii/vim-diffusable'
 "Plug 'mbbill/undotree'
@@ -563,7 +568,7 @@ call plug#end()
     nnoremap <leader>ga :Git add %:p<CR><CR>
     nnoremap <leader>gs :Gstatus<CR>
     nnoremap <leader>gb :Gblame<CR>
-    nnoremap <leader>gc :Gcommit --no-verify<CR>
+    nnoremap <leader>gc :Gcommit<CR>
     nnoremap <leader>gv :Gcommit --no-verify -q<CR>
     nnoremap <leader>gt :Gcommit --no-verify -q %:p<CR>
     nnoremap <leader>gd :Gdiff<CR>
@@ -616,14 +621,6 @@ call plug#end()
     " TODO: Move to plugin file(s)
     " https://github.com/scrooloose/syntastic/wiki/HTML:---tidy
     let g:syntastic_html_tidy_ignore_errors = [ '<input> proprietary attribute "ng-model"' ]
-
-    "" ----- Tabular -----
-    nmap <leader>T= :Tabularize /^[^=]*\zs<CR>
-    vmap <leader>T= :Tabularize /^[^=]*\zs<CR>
-    "nmap <Leader>T= :Tabularize /=<CR>
-    "vmap <Leader>a= :Tabularize /=<CR>
-    "nmap <Leader>a: :Tabularize /:\zs<CR>
-    "vmap <Leader>a: :Tabularize /:\zs<CR>
 
     " ----- Taskpaper -----
     " Solarized colors:

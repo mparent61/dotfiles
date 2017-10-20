@@ -26,7 +26,7 @@
     co = checkout
     co-all = checkout -- .
     # Undo all unstaged modifications
-    revertall = git checkout -- .
+    revertall = checkout -- .
 
     nb = checkout -b
     br = branch

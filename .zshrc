@@ -45,6 +45,8 @@ alias x='chmod ugo+x'
 alias top='top -o cpu'
 alias nt='nosetests'
 alias nf='nt --failed'
+# Switch to neovim
+#alias vim='nvim'
 alias v='vim'
 alias vi='vim'
 # Read-only VIM
@@ -114,7 +116,7 @@ gpip() {
 # Use setuptools by default, distribute deprecated
 export VIRTUALENV_SETUPTOOLS=1
 # Default to Python 3
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 #export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/pyvenv-3.5
 export WORKON_HOME=$HOME/.virtualenvs
 source `which virtualenvwrapper.sh`
@@ -166,6 +168,15 @@ mkcdir ()
       cd -P -- "$1"
 }
 
+# Easy Curl + JQ
+jcurl () {
+    curl $@ | jq
+}
+
+whatismyip () {
+    dig TXT +short o-o.myaddr.l.google.com @ns1.google.com
+}
+
 #----------------------------------------------------------------------
 # TESTING
 #----------------------------------------------------------------------
@@ -179,4 +190,11 @@ function ranger-cd {
   fi
   rm -f -- "$tempfile"
 }
+
+
+#----------------------------------------------------------------------
+# PyEnv (per HomeBrew caveat)
+#----------------------------------------------------------------------
+export PYENV_ROOT=/usr/local/var/pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
