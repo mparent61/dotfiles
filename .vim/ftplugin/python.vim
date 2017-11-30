@@ -8,8 +8,8 @@ setlocal expandtab
 set foldlevel=1    " Open folds by default
 set foldnestmax=1  " Max one-level folding (high-level only)
 
-nnoremap <localleader>l :wa<CR>:PymodeLint<CR>
-nnoremap <localleader>L :wa<CR>:PymodeLintAuto<CR>
+" nnoremap <localleader>l :wa<CR>:PymodeLint<CR>
+" nnoremap <localleader>L :wa<CR>:PymodeLintAuto<CR>
 "nnoremap <leader>l :!autopep8 --max-line-length=120 --in-place %<CR><CR>:w<CR>
 
 " Trying out omni complete
@@ -20,10 +20,7 @@ inoremap <C-space> <C-x><C-o>
 let g:pymode_run = 0  " I never use this, and it takes up a shortcut key
 let g:pymode_folding = 0  " Disabled
 "let g:pymode_lint_checker = 'pylint,pyflakes,pep8'
-let g:pymode_lint = 1  " Enable lint checking
-let g:pymode_lint_checkers = ['pyflakes', 'pep8']
-let g:pymode_lint_config = findfile('.pylintrc', '.;')  " Search upward for config
-let g:pymode_lint_on_write = 1  " Check on write (if file modified)
+let g:pymode_lint = 0  " Use ALE instead
 " CtrlP uses '<leader>b' already
 "let g:pymode_breakpoint_key = '<localleader>b'
 " Sets cursorcolumn (+ maybe other stuff)
@@ -31,9 +28,8 @@ let g:pymode_options_max_line_length = 100
 let g:pymode_virtualenv = 1
 let g:pymode_python = 'python3'
 
-" mparent(2015-04-22): Temp disable rope, as performance is super slow on Yosimite
-" REF: https://github.com/klen/python-mode/issues/525
-let g:pymode_rope = 1
+" Lots of ALE warnings
+let g:pymode_rope = 0
 
 
 let g:jedi#force_py_version = 3
@@ -45,6 +41,10 @@ let g:pymode_lint_options_pylint =
     \ {'max-line-length': g:pymode_options_max_line_length}
 let g:pymode_lint_options_pep8 =
     \ {'max_line_length': g:pymode_options_max_line_length}
+
+
+let g:ale_python_flake8_options = ''
+
 
 " List of (non-pylint) errors to also ignore
 " Ignore multiple whitespace before + after operator, as this can be
@@ -108,3 +108,15 @@ let g:pymode_lint_sort = ['E', 'C', 'I']  " Sort errors by relevance
 
 " Yapf auto-lint support
 nnoremap <leader>y :0,$!yapf --style='{ COLUMN_LIMIT: 120}'<Cr>
+
+
+" ----- Jedi -----
+let g:jedi#rename_command = "<localleader>r"  " Remap away for Dispatch
+let g:jedi#force_py_version = 3
+
+" ----- ALE -----
+let g:ale_python_flake8_executable = 'python3'
+
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
