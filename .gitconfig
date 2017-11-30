@@ -129,9 +129,9 @@
 [diff]
     tool = default-difftool
 [difftool "default-difftool"]
-    cmd = vim -f '+next' '+execute \"DirDiff\" argv(1) argv(0)' $REMOTE $LOCAL
+    cmd = nvim -f '+next' '+execute \"DirDiff\" argv(1) argv(0)' $REMOTE $LOCAL
 [mergetool]
     # Don't create *.orig backup files
 	keepBackup = false
 [mergetool "fugitive"]
-	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
