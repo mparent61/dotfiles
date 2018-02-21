@@ -36,11 +36,11 @@
     # List merged/unmerged branches
     brm = branch --merged
     brnm = branch --no-merged
-    # http://stackoverflow.com/a/38404202
-    delete-merged-branches = !git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
 
     delete-branch = "!f(){ git branch -D ${1} && git push origin --delete ${1}; };f"
 
+    # http://stackoverflow.com/a/38404202
+    delete-merged-branches = !git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
     sync = !git pull && git delete-merged-branches
 
     mt = mergetool

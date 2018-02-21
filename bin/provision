@@ -38,3 +38,6 @@ brew reinstall --HEAD neovim
 
 # Oh-My-Zsh
 env ZSH=$ZSH /bin/sh $ZSH/tools/upgrade.sh
+
+# Required for VIM/NeoVIM plugins (including Deoplete)
+pip3 install --upgrade neovim

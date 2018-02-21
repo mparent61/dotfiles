@@ -58,6 +58,7 @@ Plug 'junegunn/rainbow_parentheses.vim'
 " File Syntax
 Plug 'smerrill/vcl-vim-plugin'  " Varnish syntax
 Plug 'Keithbsmiley/tmux.vim'    " TMUX syntax
+Plug 'duganchen/vim-soy'        " Closure templates
 
 " Markdown
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
@@ -96,6 +97,7 @@ Plug 'PeterRincker/vim-argumentative'
 "Plug 'jceb/vim-hier'
 
 "---------- Experimental ----------
+Plug 'codeindulgence/vim-tig'
 Plug 'tpope/vim-abolish'
 Plug 'idbrii/vim-diffusable'
 Plug 'dietsche/vim-lastplace'
@@ -252,7 +254,6 @@ set fileformats=unix,dos,mac  " Prefer Unix
 set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄ " Unicode chars for diffs/folds, and rely on Colors for window borders
 silent! set foldmethod=marker " Use braces by default
 set formatoptions+=t    " Don't auto-wrap text using textwidth
-set formatoptions+=c    " Auto-wrap comments using textwidth
 set formatoptions+=q    " Allow formatting of comments with "gq".
 set formatoptions+=1    " Don't break a line after a one-letter word.
 set formatoptions+=n    " When formatting text, recognize numbered lists
@@ -305,6 +306,10 @@ set wildignore+=*.DS_Store                  " OSX finder/spotlight crap
 set wildignore+=*.lock,*.cache
 set wildignore+=node_modules
 set wrapscan                    " Wrap around when searching
+
+
+" Force-disable comment continuation
+au FileType * set fo-=c fo-=r fo-=o
 
 "======================================================================
 " Section: Copy/Paste {{{1
@@ -552,6 +557,7 @@ nmap ; :Buffers<CR>
 nmap <leader>l :Lines<CR>
 nmap <leader>t :Tags<CR>
 nmap <leader>f :RootFiles<CR>
+nmap <leader>A :Ag<CR>
 " Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
 nnoremap <leader>V :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
 
@@ -638,6 +644,10 @@ let g:sneak#s_next = 1
 hi link taskpaperDone Underlined
 "   Canceled tasks -> Yellow
 hi link taskpaperCancelled Type
+
+
+"---------- Tig (Git Explorer) ----------
+map <C-G> :Tig<Cr>
 
 "---------- UltiSnips ----------
 " Edit window is horizontal split (default is vertical)

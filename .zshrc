@@ -1,3 +1,39 @@
+# vim:ft=zsh:ts=2:sw=2:sts:et:
+#
+# Mike's ZSH Config
+
+#======================================================================
+# INTERNAL UTILITY FUNCTIONS
+#======================================================================
+
+
+# Returns whether the given command is executable or aliased.
+_has() {
+  return $( whence $1 >/dev/null )
+}
+
+# Returns whether the given statement executed cleanly. Try to avoid this
+# because this slows down shell loading.
+_try() {
+  return $( eval $* >/dev/null 2>&1 )
+}
+
+# Returns whether the current host type is what we think it is. (HOSTTYPE is
+# set later.)
+_is() {
+  return $( [ "$HOSTTYPE" = "$1" ] )
+}
+
+# Returns whether out terminal supports color.
+_color() {
+  return $( [ -z "$INSIDE_EMACS" ] )
+}
+
+
+#======================================================================
+# OH-MY-ZSH
+#======================================================================
+
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_CUSTOM=$HOME/.zsh
 export ZSH_THEME="phalanx"
@@ -11,9 +47,11 @@ export DISABLE_AUTO_UPDATE="true"
 # COMPLETION_WAITING_DOTS="true"
 
 # Homebrewed Python
-export PATH=/usr/local/bin:$PATH
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 # Some Homebrew installs (inc RabbitMQ)
 export PATH=/usr/local/sbin:$PATH
+# For some reason this was missing...
+export PATH=/usr/local/bin:$PATH
 
 plugins=(autojump
          brew
@@ -40,26 +78,49 @@ source $ZSH/oh-my-zsh.sh
 # Auto-correct sucks
 unsetopt correct_all
 
+
+
+# PATH MODIFICATIONS
+
+# Functions which modify the path given a directory, but only if the directory
+# exists and is not already in the path. (Super useful in ~/.zshlocal)
+
+_prepend_to_path() {
+  if [ -d $1 -a -z ${path[(r)$1]} ]; then
+    path=($1 $path);
+  fi
+}
+
+_append_to_path() {
+  if [ -d $1 -a -z ${path[(r)$1]} ]; then
+    path=($path $1);
+  fi
+}
+
+_force_prepend_to_path() {
+  path=($1 ${(@)path:#$1})
+}
+
+# Aliases
+
 alias reload='source ~/.zshrc'
 alias x='chmod ugo+x'
-alias top='top -o cpu'
-alias nt='nosetests'
-alias nf='nt --failed'
 # Switch to neovim
-#alias vim='nvim'
-alias v='vim'
-alias vi='vim'
+alias vim='nvim'
+alias v='nvim'
+alias vi='nvim'
+alias vimdiff='nvim -d'
 # Read-only VIM
-alias vr='vim -M'
+alias vr='nvim -M'
 # Sudo VIM
-alias sv='sudo vim'
-alias svi='sudo vim'
-alias svim='sudo vim'
-alias vimrc='vim ~/.vimrc'
-alias zshrc='vim ~/.zshrc'
-#alias plan='vim -O ~/Dropbox/TaskPaper/plan.taskpaper ~/Dropbox/TaskPaper/TODO.taskpaper'
-alias plan='vim -O ~/plan.taskpaper ~/notes.txt'
+alias sv='sudo nvim'
+alias svi='sudo nvim'
+alias svim='sudo nvim'
+alias vimrc='nvim ~/.vimrc'
+alias zshrc='nvim ~/.zshrc'
+alias plan='nvim -O ~/plan.taskpaper ~/notes.txt'
 alias brewcheck='brew update && brew outdated && brew doctor'
+alias g='git'
 alias gs='git st'
 alias gc='git commit'
 alias gcv='git commit --no-verify'
@@ -81,9 +142,9 @@ alias ag='ag --hidden'
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
 # Vim Directory Diff
-ddiff() { vim '+next' "+execute \"DirDiff\" \"$1\" \"$2\""; }
+ddiff() { nvim '+next' "+execute \"DirDiff\" \"$1\" \"$2\""; }
 
-export EDITOR=`which vim`
+export EDITOR=`which nvim`
 
 export GREP_OPTIONS='--color=auto'
 
@@ -102,16 +163,6 @@ fi
 
 # zsh-completions
 fpath=(/usr/local/share/zsh-completions $fpath)
-
-#--------------------------------------------------
-# Require virtualenv by default
-# http://hackercodex.com/guide/python-development-environment-on-mac-osx/
-export PIP_REQUIRE_VIRTUALENV=true
-# Explicit override for global install 
-gpip() {
-   PIP_REQUIRE_VIRTUALENV="" pip "$@"
-}
-#--------------------------------------------------
 
 # Use setuptools by default, distribute deprecated
 export VIRTUALENV_SETUPTOOLS=1
@@ -157,9 +208,23 @@ if [[ -f "${HOME}/.zshrc.local" ]]; then
 fi
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# AG is faster than 'find'
-export FZF_DEFAULT_COMMAND='ag --hidden -l -g ""'
+# fzf via Homebrew
+if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
+  source /usr/local/opt/fzf/shell/key-bindings.zsh
+  source /usr/local/opt/fzf/shell/completion.zsh
+fi
+
+# fzf + ag configuration
+if _has fzf && _has ag; then
+  export FZF_DEFAULT_COMMAND='ag --hidden --nocolor -g ""'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_DEFAULT_OPTS='
+  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
+  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
+  '
+fi
+
 
 # Make Directory + CD to it
 mkcdir ()
@@ -193,8 +258,6 @@ function ranger-cd {
 
 
 #----------------------------------------------------------------------
-# PyEnv (per HomeBrew caveat)
+# FZF
 #----------------------------------------------------------------------
-export PYENV_ROOT=/usr/local/var/pyenv
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
