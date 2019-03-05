@@ -1,0 +1,20 @@
+snippet task "new ansible task template"
+---
+- hosts: $0
+  vars:
+  roles:
+  handlers:
+  tasks:
+endsnippet
+
+snippet service "service task/handler" b
+	service: name=${1:name} state=${2:started}
+endsnippet
+
+snippet debug "Debug task statement" b
+- debug: var=${1:var}
+endsnippet
+
+snippet privateip "Description" i
+{{ ansible_eth0_1.ipv4.address  }}
+endsnippet
