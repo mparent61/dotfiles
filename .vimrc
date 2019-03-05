@@ -73,18 +73,14 @@ Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'fisadev/vim-isort', { 'for': 'python' }
+Plug 'ambv/black', { 'for': 'python' }
 
 " Other Languages
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
-Plug 'Icinga/icinga2', { 'rtp': 'tools/syntax/vim' }
-Plug 'nginx/nginx', { 'rtp': 'contrib/vim' }
 Plug 'davidoc/taskpaper.vim'
 
 " Async Linting
 Plug 'w0rp/ale'
-
-" HTML, JS, CSS Beautify
-Plug 'maksimr/vim-jsbeautify'
 
 " Disable search highlighting when not searching
 Plug 'romainl/vim-cool'
@@ -97,23 +93,11 @@ Plug 'PeterRincker/vim-argumentative'
 "Plug 'jceb/vim-hier'
 
 "---------- Experimental ----------
-Plug 'codeindulgence/vim-tig'
-Plug 'tpope/vim-abolish'
-Plug 'idbrii/vim-diffusable'
-Plug 'dietsche/vim-lastplace'
+"Plug 'tpope/vim-abolish'
+"Plug 'idbrii/vim-diffusable'
+"Plug 'dietsche/vim-lastplace'
 " Intelligently re-open files at last edit position
-Plug 'nathanaelkane/vim-indent-guides'
-" Distraction-free writing
-Plug 'junegunn/goyo.vim'
-
-" Deoplete Auto-Compelete
-" if has('nvim')
-"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-"   Plug 'Shougo/deoplete.nvim'
-"   Plug 'roxma/nvim-yarp'
-"   Plug 'roxma/vim-hug-neovim-rpc'
-" endif
+"Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
 
@@ -204,6 +188,7 @@ endif
 syntax on
 " Do syntax highlight syncing from start (more CPU, but worth it)
 autocmd BufEnter * :syntax sync fromstart
+"autocmd BufEnter * :syntax sync minlines=200
 " Don't try to highlight lines longer than N characters
 set synmaxcol=800
 

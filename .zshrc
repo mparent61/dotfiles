@@ -53,6 +53,9 @@ export PATH=/usr/local/sbin:$PATH
 # For some reason this was missing...
 export PATH=/usr/local/bin:$PATH
 
+# This should automatically trigger periodic `brew cleanup` housekeeping
+export HOMEBREW_INSTALL_CLEANUP="true"
+
 plugins=(autojump
          brew
          docker
@@ -167,8 +170,6 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 # Use setuptools by default, distribute deprecated
 export VIRTUALENV_SETUPTOOLS=1
 # Default to Python 3
-#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-#export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/pyvenv-3.5
 export WORKON_HOME=$HOME/.virtualenvs
 source `which virtualenvwrapper.sh`
 mkvirtualenv2() {
@@ -177,6 +178,9 @@ mkvirtualenv2() {
 mkvirtualenv3() {
     mkvirtualenv -p python3 "$@"
 }
+
+# Use idpb for breakpoints
+export PYTHONBREAKPOINT=ipdb.set_trace
 
 ## Enable colored output (via homebrew's coreutils g* commands)
 if [ `uname` = "Linux" ]; then
@@ -240,6 +244,11 @@ jcurl () {
 
 whatismyip () {
     dig TXT +short o-o.myaddr.l.google.com @ns1.google.com
+}
+
+# Easy DNS flush on OSX (works w/ High Sierra)
+flushdns () {
+  sudo killall -HUP mDNSResponder && echo "DNS cache has been flushed"
 }
 
 #----------------------------------------------------------------------
