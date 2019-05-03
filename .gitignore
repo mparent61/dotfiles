@@ -1,54 +1,11 @@
-# Ignore all non-dotfiles (by first ignoring everything, then allowing files beginning with period)
-/*
-!.*
-
 # Dotfile blacklist
 .CFUserTextEncoding
 .DS_Store
-.NERDTreeBookmarks
-.Trash/
-.bash_history
-.boot2docker/
-.boto
-.cache/
-.config/
-.config/configstore/
-.cups/
-.docker/
-.dockercfg
-.dropbox/
-.fontconfig/
-.gem/
-.ipython/
-.lesshst
-.local/
-.node-gyp/
-.npm/
-.oh-my-zsh
-.psql_history
-.pylint.d/
-.pypirc
-.rediscli_history
-.rnd
-.ssh/
-.vagrant.d/
-.vim/.netrwhist
-.vim/autoload/plug.vim.old
-.vim/plugged
-.vim/tmp
-.virtualenvs/
-.yolk/
-.zcompdump*
-.zsh_history
+vim/.vim/.netrwhist
+vim/.vim/autoload/plug.vim.old
+vim/.vim/plugged
+vim/.vim/tmp
 
-.nviminfo
-.nvimlog
-.python_history
-.s3cfg
-.travis/
-
-# This file is symlinked from ~/.vim/local/${HOSTNAME}.vimrc
-.vimrc.local
 
 
 # The "ignore all except dotfiles" magic at top overrides any gitignore_global dotfile patterns, so we nee

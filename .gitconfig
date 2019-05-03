@@ -39,9 +39,15 @@
 
     delete-branch = "!f(){ git branch -D ${1} && git push origin --delete ${1}; };f"
 
-    # http://stackoverflow.com/a/38404202
-    delete-merged-branches = !git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
-    sync = !git pull && git delete-merged-branches
+    # Safely delete local branches that have been deleted on origin. This includes "squash merge" branches that Git thinks haven't been merged to master.
+    # https://stackoverflow.com/a/48411554
+    #   1) List local branches whose upstream branch is "gone"
+    #   2) Cleanup branch names
+    #   3) Remove blank lines
+    #   4) Delete!
+    delete-gone-branches = !git branch --list --format '%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' | sed 's,^refs/heads/,,'  | grep . | xargs git branch -D
+    # Useful "grab latest and prune branches" workhorse command
+    up = "!git pull && git fetch --prune && git delete-gone-branches"
 
     mt = mergetool
 
@@ -60,14 +66,8 @@
     # List w/o colors (for Unix pipes)
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
 
-    # Update all submodules
-    upsub = submodule foreach git pull
-
     # List aliases
     la = "!git config -l | grep alias | cut -c 7-"
-
-    # Push everything including all submodules
-    pushall = push --recurse-submodules=on-demand
 
     # Undo, edit + recommit last commit (for 'Ooops I didn't mean to commit yet')
     # http://stackoverflow.com/a/927386
@@ -76,6 +76,9 @@
     # 2) edit / add
     # 3) Recommit via:
     redoci = commit -c ORIG_HEAD
+
+    # List files changed vs master
+    list-files-changed-vs-master = diff --name-only master
 
     # Reset
     r = reset
@@ -108,11 +111,6 @@
     # Diff last commit
     difflast = diff HEAD^..HEAD
     ddlast = dd HEAD^..HEAD
-
-    # Housekeeping - delete stale remote-tracking branches
-    # TODO: Add more stuff to this commend?
-    # Note: could also do "git fetch -p"
-    cleanup = remote prune origin
 
     # Repo Info
     rso = remote show origin
