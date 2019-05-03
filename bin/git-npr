@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# SOURCE: https://github.com/smith/vim-config/blob/master/extra/bin/git-pr
+
+REPO=`git config --get remote.origin.url | cut -f 2 -d ":" | sed -e 's/\.git$//g' | tr -d '\n'`
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+git push --porcelain --progress --verbose --set-upstream origin $BRANCH
+# Wait for Github to sync (ensures "Open a pull request" can be loaded)
+sleep 1
+open "https://github.com/$REPO/compare/$BRANCH?expand=1"
