@@ -120,3 +120,6 @@ let g:ale_python_flake8_executable = 'python3'
 let g:ale_linters = {
 \   'python': ['flake8'],
 \}
+
+" Run Black auto-format on save
+autocmd BufWritePre *.py silent! execute ':Black'
