@@ -122,6 +122,7 @@ alias svim='sudo nvim'
 alias vimrc='nvim ~/.vimrc'
 alias zshrc='nvim ~/.zshrc'
 alias plan='nvim -O ~/plan.taskpaper ~/notes.txt'
+alias spacevim='nvim -u ~/.SpaceVim/init.vim'
 alias brewcheck='brew update && brew outdated && brew doctor'
 alias g='git'
 alias gs='git st'
@@ -141,6 +142,7 @@ alias http='http --style solarized'
 alias htop='sudo htop'
 # Include hidden files by default
 alias ag='ag --hidden'
+alias curli='curl -I -XGET'
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
