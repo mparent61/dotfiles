@@ -6,29 +6,10 @@
 # INTERNAL UTILITY FUNCTIONS
 #======================================================================
 
-
 # Returns whether the given command is executable or aliased.
 _has() {
   return $( whence $1 >/dev/null )
 }
-
-# Returns whether the given statement executed cleanly. Try to avoid this
-# because this slows down shell loading.
-_try() {
-  return $( eval $* >/dev/null 2>&1 )
-}
-
-# Returns whether the current host type is what we think it is. (HOSTTYPE is
-# set later.)
-_is() {
-  return $( [ "$HOSTTYPE" = "$1" ] )
-}
-
-# Returns whether out terminal supports color.
-_color() {
-  return $( [ -z "$INSIDE_EMACS" ] )
-}
-
 
 #======================================================================
 # OH-MY-ZSH
@@ -44,14 +25,7 @@ export DISABLE_AUTO_TITLE="true"
 # Disable bi-weekly auto-update checks
 export DISABLE_AUTO_UPDATE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Homebrewed Python
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-# Some Homebrew installs (inc RabbitMQ)
-export PATH=/usr/local/sbin:$PATH
-# For some reason this was missing...
-export PATH=/usr/local/bin:$PATH
+COMPLETION_WAITING_DOTS="true"
 
 # This should automatically trigger periodic `brew cleanup` housekeeping
 export HOMEBREW_INSTALL_CLEANUP="true"
@@ -142,7 +116,11 @@ alias http='http --style solarized'
 alias htop='sudo htop'
 # Include hidden files by default
 alias ag='ag --hidden'
+# The default -I uses a HEAD request, which sometimes behaves differently than GET
 alias curli='curl -I -XGET'
+## Enable colored LS output
+alias ls='ls -G'
+
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
@@ -184,14 +162,6 @@ mkvirtualenv3() {
 # Use idpb for breakpoints
 export PYTHONBREAKPOINT=ipdb.set_trace
 
-## Enable colored output (via homebrew's coreutils g* commands)
-if [ `uname` = "Linux" ]; then
-    eval `dircolors ~/.dir_colors/dircolors.ansi-light`
-else
-    eval `gdircolors ~/.dir_colors/dircolors.ansi-light`
-    alias ls='gls --color'
-fi
-
 # Fast switch between VIM + SZH
 # http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 fancy-ctrl-z () {
@@ -206,13 +176,9 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# User Bin
-export PATH=~/util/bin:$PATH
-
 if [[ -f "${HOME}/.zshrc.local" ]]; then
     source "${HOME}/.zshrc.local"
 fi
-
 
 # fzf via Homebrew
 if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
@@ -251,20 +217,6 @@ whatismyip () {
 # Easy DNS flush on OSX (works w/ High Sierra)
 flushdns () {
   sudo killall -HUP mDNSResponder && echo "DNS cache has been flushed"
-}
-
-#----------------------------------------------------------------------
-# TESTING
-#----------------------------------------------------------------------
-# Ranger
-function ranger-cd {
-  tempfile='/tmp/chosendir'
-  ranger --choosedir="$tempfile" "${@:-$(pwd)}"
-  test -f "$tempfile" &&
-  if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
-    cd -- "$(cat "$tempfile")"
-  fi
-  rm -f -- "$tempfile"
 }
 
 
