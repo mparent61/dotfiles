@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+pipenv lock --clear
+
+# Heavy-handedly blow away cache directory
+rm -rf ~/Library/Caches/pipenv

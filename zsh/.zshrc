@@ -36,6 +36,7 @@ plugins=(autojump
          fabric
          fzf
          git
+         gitfast
          history
          mercurial
          osx
@@ -110,6 +111,8 @@ alias git=hub
 alias dock=docker
 alias dm=docker-machine
 alias dc=docker-compose
+# Terraform
+alias tf=terraform
 # HTTPie (Curl Replacement)
 alias http='http --style solarized'
 # OSX HTOP requires sudo
@@ -224,3 +227,15 @@ flushdns () {
 # FZF
 #----------------------------------------------------------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#----------------------------------------------------------------------
+# Auto-completion
+#----------------------------------------------------------------------
+# Load Git completion
+zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
+
+# Look for completion scripts in ~/.zsh
+fpath=(~/.zsh $fpath)
+
+# Init shell auto-completion functionality
+autoload -Uz compinit && compinit

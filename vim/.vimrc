@@ -23,7 +23,8 @@ Plug 'tpope/vim-sensible'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/matchit.zip'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" mparent -- breaks tab key in python...
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 Plug 'justinmk/vim-sneak'
 
@@ -56,9 +57,9 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 
 " File Syntax
-Plug 'smerrill/vcl-vim-plugin'  " Varnish syntax
-Plug 'Keithbsmiley/tmux.vim'    " TMUX syntax
-Plug 'duganchen/vim-soy'        " Closure templates
+"Plug 'smerrill/vcl-vim-plugin'  " Varnish syntax
+Plug 'Keithbsmiley/tmux.vim'     " TMUX syntax
+Plug 'hashivim/vim-terraform'
 
 " Markdown
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
@@ -73,10 +74,9 @@ Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'fisadev/vim-isort', { 'for': 'python' }
-Plug 'ambv/black', { 'for': 'python' }
+Plug 'python/black', { 'for': 'python' }
 
 " Other Languages
-Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'davidoc/taskpaper.vim'
 
 " Async Linting
@@ -88,11 +88,11 @@ Plug 'romainl/vim-cool'
 " Easily shift function arguments
 Plug 'PeterRincker/vim-argumentative'
 
-" Experimental Scala Stuff
-"Plug 'derekwyatt/vim-scala'
-"Plug 'jceb/vim-hier'
-
 "---------- Experimental ----------
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'andrewstuart/vim-kubernetes'
+
 "Plug 'tpope/vim-abolish'
 "Plug 'idbrii/vim-diffusable'
 "Plug 'dietsche/vim-lastplace'
@@ -114,11 +114,6 @@ nmap \x :cclose<CR>
 
 " Edit last (most recent) file
 nmap <C-e> :e#<CR>
-
-" TODO: shortcut to toggle folds
-" nnoremap <space> za
-" vnoremap <space> zf
-
 
 " Case insensitive Write + Quit
 command! Q q
@@ -203,21 +198,6 @@ function! <SID>ToggleBackground()
 endfunction
 nmap <leader>BG :ToggleBackground<CR>
 
-" Distraction-free Writing Mode
-function! ProseMode()
-  "set formatoptions=1an
-  call goyo#execute(0, [])
-  set spell noci nosi noai nolist noshowmode noshowcmd
-  set complete+=s
-  set bg=light
-  if !has('gui_running')
-    let g:solarized_underline = 1
-    let g:solarized_termcolors=256
-  endif
-  colors solarized
-endfunction
-command! ProseMode call ProseMode()
-
 "======================================================================
 " Section: VIM options {{{1
 "======================================================================
@@ -236,7 +216,7 @@ set encoding=utf8           " UTF-8 by default
 set expandtab               " No tabs by default
 set foldenable              " I like folding
 set fileformats=unix,dos,mac  " Prefer Unix
-set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄ " Unicode chars for diffs/folds, and rely on Colors for window borders
+set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄ " Unicode chars for diffs/folds, and rely on Colors for window borders()
 silent! set foldmethod=marker " Use braces by default
 set formatoptions+=t    " Don't auto-wrap text using textwidth
 set formatoptions+=q    " Allow formatting of comments with "gq".
@@ -309,6 +289,23 @@ set clipboard=unnamed   " yank go straight to system clipboard
 set go+=a               " auto-copy visual selection to system clipboard
 
 "======================================================================
+" Section: Auto-Read {{{1
+"======================================================================
+
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+" Auto-reload VIMRC
+autocmd! bufwritepost $MYVIMRC source %
+
+"======================================================================
+
 " Section: Diff {{{1
 "======================================================================
 " Toggle some options that depend on whether we're in diff mode or not
@@ -521,27 +518,40 @@ nnoremap <leader>go :Git checkout<Space>
 nnoremap <leader>gps :Dispatch! git push<CR>
 nnoremap <leader>gpl :Dispatch! git pull<CR>
 
+" Conflict Resolution
+" Pull change from left
+nnoremap gdh :diffget //2<CR>
+" Pull change from right
+nnoremap gdl :diffget //3<CR>
+
+
 "---------- FZF ----------
-" Automatically find top-level directory (https://github.com/junegunn/fzf/issues/369)
-function! s:FZF_Root_Files()
-    for vcs in ['.git', '.svn', '.hg']
-        let dir = finddir(vcs.'/..', ';')
-        if !empty(dir)
-            " Exclude home directory (dotfiles repo)
-            if dir != expand('~')
-                execute 'Files' dir
-                return
-            endif
-        endif
-    endfor
-    Files
+" Automatically find root Git project directory
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-command! RootFiles call s:FZF_Root_Files()
+command! FZFRepoFiles execute 'Files' s:find_git_root()
+command! FZFSiblingRepoFiles execute 'Files' fnamemodify(s:find_git_root(), ':h')
+function! s:find_git_project_root()
+    let l:root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+    let l:path = expand('%:p')
+    " Recursively look for parent project directory, until we either get to git root
+    " or filesystem root "/"
+    while len(l:path) > 1 && fnamemodify(l:path, ':h') != l:root
+        let l:path = fnamemodify(l:path, ':h')
+    endwhile
+    return l:path
+endfunction
+command! FZFProjectFiles execute 'Files' s:find_git_project_root()
 
 nmap ; :Buffers<CR>
 nmap <leader>l :Lines<CR>
 nmap <leader>t :Tags<CR>
-nmap <leader>f :RootFiles<CR>
+" Search entire containing Git repo
+nmap <leader>f :FZFProjectFiles<CR>
+nmap <leader>F :FZFRepoFiles<CR>
+" Search ALL sibling projects too
+nmap <leader>S :FZFSiblingRepoFiles<CR>
 nmap <leader>A :Ag<CR>
 " Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
 nnoremap <leader>V :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
@@ -607,9 +617,24 @@ function! s:MaybeUpdateLightline()
     end
 endfunction
 
+"---------- NERDTree ----------
+" Don't use for directory exploring
+let NERDTreeHijackNetrw = 0
+
+command! NERDTreeRepoFiles execute 'NERDTreeFind' s:find_git_root()
+" Focus on current repository
+nmap <leader>ntr :NERDTreeRepoFiles<CR>
+" Focus on current path
+nmap <leader>ntp :NERDTreeFind<CR>
+
+
+
 "---------- NetRW ----------
 " Allow removal of non-empty local directories
 let g:netrw_localrmdir="rm -r"
+
+
+
 
 "---------- Rainbow Parens ----------
 augroup rainbow_dev
@@ -630,6 +655,8 @@ hi link taskpaperDone Underlined
 "   Canceled tasks -> Yellow
 hi link taskpaperCancelled Type
 
+"---------- Terraform ----------
+let g:terraform_fmt_on_save=1
 
 "---------- Tig (Git Explorer) ----------
 map <C-G> :Tig<Cr>
@@ -657,15 +684,16 @@ if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
+
 "======================================================================
 " Section: Legacy Settings (pre-Nov 2017) {{{1
 "======================================================================
 
-" if exists('+relativenumber')
-"   " Hybrid mode - shows relative numbering with current line's absolute number
-"   set relativenumber
-"   set number
-"endif
+if exists('+relativenumber')
+    " Hybrid mode - shows relative numbering with current line's absolute number
+    set relativenumber
+    set number
+endif
 
 " " Backspace key works in normal mode too
 " " http://tech.groups.yahoo.com/group/vim/message/17237
@@ -673,13 +701,6 @@ endif
 " " NOTE: This might be useless, and I can find some other use for 'backspace'
 " noremap <BS> d<BS>
 
-""nnoremap <leader>rv :source $MYVIMRC<CR>:redraw<CR>:echo $MYVIMRC 'reloaded'<CR>
-"" Auto-reload VIMRC on change
-"augroup reload_vimrc
-"    autocmd!
-"    " 2013-06-13: Need to use 'nested' autocmd to avoid breaking vim-powerline
-"    autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
-"augroup END
 
 " Quickfix window always on bottom taking up entire horizontal space
 au FileType qf wincmd J

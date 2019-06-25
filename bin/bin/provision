@@ -22,6 +22,7 @@ brew install \
     tree \
     the_silver_searcher \
     vim \
+    watch \
     zsh
 
 brew upgrade

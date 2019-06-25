@@ -35,12 +35,12 @@ let g:pymode_rope = 0
 let g:jedi#force_py_version = 3
 
 
-" Force linters to use correct line length. Otherwise seem to always use '80' despite whatever
-" set in config files.
-let g:pymode_lint_options_pylint =
-    \ {'max-line-length': g:pymode_options_max_line_length}
-let g:pymode_lint_options_pep8 =
-    \ {'max_line_length': g:pymode_options_max_line_length}
+" " Force linters to use correct line length. Otherwise seem to always use '80' despite whatever
+" " set in config files.
+" let g:pymode_lint_options_pylint =
+"     \ {'max-line-length': g:pymode_options_max_line_length}
+" let g:pymode_lint_options_pep8 =
+"     \ {'max_line_length': g:pymode_options_max_line_length}
 
 
 let g:ale_python_flake8_options = ''

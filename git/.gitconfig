@@ -1,6 +1,6 @@
 [user]
     name = Mike Parent
-    email = mparent@umich.edu
+    email = michael.parent@tillable.com
 [core]
     excludesfile = ~/.gitignore_global
     pager = cat
@@ -80,12 +80,7 @@
     list-files-changed-vs-master = diff --name-only master
 
     # Reset
-    r = reset
-    r1 = reset HEAD^
-    r2 = reset HEAD^^
     rh = reset --hard
-    rh1 = reset HEAD^ --hard
-    rh2 = reset HEAD^^ --hard
 
     # Find file path
     f = "!git ls-files | grep -i"
