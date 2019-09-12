@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # SOURCE: https://github.com/smith/vim-config/blob/master/extra/bin/git-pr
 
