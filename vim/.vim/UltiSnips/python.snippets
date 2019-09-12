@@ -125,24 +125,11 @@ snippet pylint "Inline pylint disable" !
 endsnippet
 
 snippet skip
-@unittest.skip('${1:TODO}')
-endsnippet
-
-snippet skipif
-@unittest.skipIf(${1:condition}, '${2:message}')
+@pytest.mark.skip('${1:TODO}')
 endsnippet
 
 snippet todo
 # TODO(mparent):
-endsnippet
-
-snippet noseattr
-from nose.plugins.attrib import attr
-@attr('${1:category}')
-endsnippet
-
-snippet importattr
-from nose.plugins.attrib import attr
 endsnippet
 
 snippet patch "Mock patch decorator" !b

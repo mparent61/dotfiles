@@ -23,8 +23,7 @@ Plug 'tpope/vim-sensible'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/matchit.zip'
-" mparent -- breaks tab key in python...
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 Plug 'justinmk/vim-sneak'
 
@@ -47,9 +46,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
-" Grep (Ack plugin used with Silver Searcher)
-Plug 'mileszs/ack.vim'
-
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'itchyny/lightline.vim'
@@ -57,14 +53,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 
 " File Syntax
-"Plug 'smerrill/vcl-vim-plugin'  " Varnish syntax
 Plug 'Keithbsmiley/tmux.vim'     " TMUX syntax
 Plug 'hashivim/vim-terraform'
 
 " Markdown
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
-Plug 'nelstrom/vim-markdown-folding', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'itspriddle/vim-marked', { 'for': 'markdown' }  " Integration with Marked2 viewer
 
 " Javascript
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -77,6 +71,7 @@ Plug 'fisadev/vim-isort', { 'for': 'python' }
 Plug 'python/black', { 'for': 'python' }
 
 " Other Languages
+Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'davidoc/taskpaper.vim'
 
 " Async Linting
@@ -97,7 +92,7 @@ Plug 'andrewstuart/vim-kubernetes'
 "Plug 'idbrii/vim-diffusable'
 "Plug 'dietsche/vim-lastplace'
 " Intelligently re-open files at last edit position
-"Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
 
@@ -367,6 +362,12 @@ autocmd BufLeave Dockerfile                     normal! mD
 " Section: Spelling {{{1
 "======================================================================
 
+" mparent(2019-07-11): Enable spell-checking by default (else will enable on file-type-basis)
+set spell spelllang=en_us
+
+" Limit suggestion height (default takes up entire screen)
+set spellsuggest+=10
+
 " Enable spellcheck in commit messages
 autocmd FileType gitcommit setlocal spell
 
@@ -410,7 +411,7 @@ function! DeleteTrailingWhitespace()
     " Restore cursor
     call setpos('.', save_cursor)
 endfunction
-autocmd BufWritePre *.py,*.mako,*.js,*.css,*.less,*.cpp,*.h,*.todo,*.txt,*.ini,*.taskpaper,*.vim,.vimrc call DeleteTrailingWhitespace()
+autocmd BufWritePre *.py,*.mako,*.js,*.css,*.less,*.cpp,*.h,*.todo,*.txt,*.ini,*.taskpaper,*.tf,*.vim,.vimrc call DeleteTrailingWhitespace()
 nnoremap <leader>W :call DeleteTrailingWhitespace()<CR>
 
 " Fix mixed EOLs (^M)
@@ -442,21 +443,6 @@ nnoremap <leader>v :vsplit<space>
 "======================================================================
 " Section: Plugin Settings {{{1
 "======================================================================
-
-"---------- Ack ----------
-nnoremap <leader>a :Ack<space>
-" Use Silver Searcher if available
-if executable('ag')
-    let g:ackprg = 'ag --nogroup --hidden --nocolor --column'
-    set grepprg=ag\ --nogroup\ --nocolor\ --column
-    set grepformat=%f:%l:%c%m
-endif
-" " Grep word undercusor
-" mparent(2017-11-09): This was buggy!
-" nmap <M-k>    :Ack! "\b<cword>\b" <CR>
-" nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
-" nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
-" nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
 
 "---------- ALE ----------
 let g:ale_sign_warning = '▲'
@@ -498,14 +484,13 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " REF: https://github.com/tpope/vim-fugitive/issues/81#issuecomment-1245830
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+nnoremap <leader>gs :G<CR>
 nnoremap <leader>ga :Git add %:p<CR><CR>
-nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gv :Gcommit --no-verify -q<CR>
 nnoremap <leader>gt :Gcommit --no-verify -q %:p<CR>
 nnoremap <leader>gd :Gdiff<CR>
-"nnoremap <leader>gd :Gvdiff<CR>
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gR :Gremove<CR>
 nnoremap <leader>gr :Gread<CR>:w!<CR>
@@ -532,27 +517,25 @@ function! s:find_git_root()
 endfunction
 command! FZFRepoFiles execute 'Files' s:find_git_root()
 command! FZFSiblingRepoFiles execute 'Files' fnamemodify(s:find_git_root(), ':h')
-function! s:find_git_project_root()
-    let l:root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-    let l:path = expand('%:p')
-    " Recursively look for parent project directory, until we either get to git root
-    " or filesystem root "/"
-    while len(l:path) > 1 && fnamemodify(l:path, ':h') != l:root
-        let l:path = fnamemodify(l:path, ':h')
-    endwhile
-    return l:path
-endfunction
-command! FZFProjectFiles execute 'Files' s:find_git_project_root()
+" function! s:find_git_project_root()
+"     let l:root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+"     let l:path = expand('%:p')
+"     " Recursively look for parent project directory, until we either get to git root
+"     " or filesystem root "/"
+"     while len(l:path) > 1 && fnamemodify(l:path, ':h') != l:root
+"         let l:path = fnamemodify(l:path, ':h')
+"     endwhile
+"     return l:path
+" endfunction
+" command! FZFProjectFiles execute 'Files' s:find_git_project_root()
 
 nmap ; :Buffers<CR>
+nmap <leader>a :Ag<CR>
 nmap <leader>l :Lines<CR>
 nmap <leader>t :Tags<CR>
 " Search entire containing Git repo
-nmap <leader>f :FZFProjectFiles<CR>
-nmap <leader>F :FZFRepoFiles<CR>
-" Search ALL sibling projects too
-nmap <leader>S :FZFSiblingRepoFiles<CR>
-nmap <leader>A :Ag<CR>
+nmap <leader>f :FZFRepoFiles<CR>
+nmap <leader>F :FZFSiblingRepoFiles<CR>
 " Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
 nnoremap <leader>V :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
 
@@ -565,8 +548,11 @@ let g:gundo_prefer_python3 = 1  " Python 3 support
 
 "---------- Indent Guides ----------
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=11
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=11
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightgrey
+
 
 "---------- Lightline ----------
 let g:lightline = {
@@ -627,13 +613,11 @@ nmap <leader>ntr :NERDTreeRepoFiles<CR>
 " Focus on current path
 nmap <leader>ntp :NERDTreeFind<CR>
 
-
-
 "---------- NetRW ----------
 " Allow removal of non-empty local directories
 let g:netrw_localrmdir="rm -r"
-
-
+" Fixes file/copy commands by having current directory track browsing directory (see "help netrw-c")
+let g:netrw_keepdir=0
 
 
 "---------- Rainbow Parens ----------

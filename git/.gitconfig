@@ -65,6 +65,8 @@
     # List w/o colors (for Unix pipes)
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
 
+    # Search all of git history for a string
+
     # List aliases
     la = "!git config -l | grep alias | cut -c 7-"
 
@@ -86,9 +88,7 @@
     f = "!git ls-files | grep -i"
 
     # Grep
-    grep = grep -Ii
-    gr = grep -Ii
-    grephist = "!git rev-list --all | xargs git grep"
+    grep-changed = !sh -c 'git log -S$1' -
 
     # Show modified files in last commit
     dl = "!git ll -1"
@@ -108,13 +108,14 @@
 
     # Repo Info
     rso = remote show origin
+	lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
 
 [pull]
     rebase = true
 [push]
 	default = simple
 [merge]
-	tool = fugitive
+	tool = vim-fugitive
 [difftool]
     # Stop vim prompting about launching vimdiff
     prompt = false
@@ -125,5 +126,6 @@
 [mergetool]
     # Don't create *.orig backup files
 	keepBackup = false
-[mergetool "fugitive"]
-	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+[mergetool "vim-fugitive"]
+    # 3-way diff
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"

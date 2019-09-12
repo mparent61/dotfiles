@@ -4,7 +4,8 @@ setlocal spell                " Spellcheck on by default
 setlocal spelllang=en_us      " Use U.S. English dictionary
 nmap <silent> <localleader>s :set spell!<CR>
 
-nmap <leader>w :!wc -w %<CR>
+" Open preview
+nmap <leader>mo :MarkedOpen<CR>
 
 set wrap
 
@@ -34,5 +35,6 @@ endif
 
 setlocal nocursorline
 
-"" Initailize vim-pencil (does this work?)
-"call pencil#init()
+"---------- Markdown Plugin Config ----------
+" Auto-folding is annoying, I like to see entire doc
+let g:vim_markdown_folding_disabled = 1

@@ -38,6 +38,7 @@ plugins=(autojump
          git
          gitfast
          history
+         kubectl
          mercurial
          osx
          python
@@ -96,7 +97,6 @@ alias svi='sudo nvim'
 alias svim='sudo nvim'
 alias vimrc='nvim ~/.vimrc'
 alias zshrc='nvim ~/.zshrc'
-alias plan='nvim -O ~/plan.taskpaper ~/notes.txt'
 alias spacevim='nvim -u ~/.SpaceVim/init.vim'
 alias brewcheck='brew update && brew outdated && brew doctor'
 alias g='git'
@@ -107,6 +107,8 @@ alias gcv='git commit --no-verify'
 alias cdr='$(git rev-parse --show-toplevel)'
 # Use GitHub git wrapper
 alias git=hub
+# Common typo
+alias gti=git
 # Docker
 alias dock=docker
 alias dm=docker-machine
@@ -123,7 +125,6 @@ alias ag='ag --hidden'
 alias curli='curl -I -XGET'
 ## Enable colored LS output
 alias ls='ls -G'
-
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
@@ -214,7 +215,7 @@ jcurl () {
 }
 
 whatismyip () {
-    dig TXT +short o-o.myaddr.l.google.com @ns1.google.com
+    dig TXT +short o-o.myaddr.l.google.com @ns1.google.com  | sed 's/"//g'
 }
 
 # Easy DNS flush on OSX (works w/ High Sierra)

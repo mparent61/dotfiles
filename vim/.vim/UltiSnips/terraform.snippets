@@ -1,0 +1,36 @@
+snippet var "Declare variable"
+variable "$1" {
+	description = "$2"
+	type = ${3:type}
+}
+endsnippet
+
+snippet vartags "Declare tag variable"
+variable "tags" {
+	description = "Base tags applied to each resource"
+	type        = map
+}
+endsnippet
+
+snippet output "Terraform output value declaration"
+output "$1" {
+	description = "$2"
+	value = $3
+}
+endsnippet
+
+snippet module "Terraform module declaration"
+module "$1" {
+	source = "$2"
+
+	$3
+}
+endsnippet
+
+snippet head "Terraform file header"
+#
+# $1
+#
+#-------------------------------------------------------------------------------
+
+endsnippet
