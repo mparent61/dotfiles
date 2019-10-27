@@ -172,6 +172,10 @@ snippet argopt "add argparse optional argument" !b
 parser.add_argument('--${1:name}', help='${2:help}')
 endsnippet
 
+snippet argreq "add argparse required argument" !b
+parser.add_argument('--${1:name}', required=True, help='${2:help}')
+endsnippet
+
 snippet argbool "add argparse boolean argument" !b
 parser.add_argument('--${1:name}', action='store_true', help='${2:help}')
 endsnippet

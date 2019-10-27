@@ -65,8 +65,6 @@
     # List w/o colors (for Unix pipes)
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
 
-    # Search all of git history for a string
-
     # List aliases
     la = "!git config -l | grep alias | cut -c 7-"
 

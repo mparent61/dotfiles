@@ -12,6 +12,7 @@
 "======================================================================
 call plug#begin('~/.vim/plugged')
 
+Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
@@ -19,7 +20,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-sensible'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/matchit.zip'
@@ -49,8 +49,11 @@ Plug 'tpope/vim-rhubarb'
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'itchyny/lightline.vim'
-"Plug 'docunext/closetag.vim'
+Plug 'docunext/closetag.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
+
+" Completion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " File Syntax
 Plug 'Keithbsmiley/tmux.vim'     " TMUX syntax
@@ -66,16 +69,18 @@ Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 
 " Python
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
 Plug 'fisadev/vim-isort', { 'for': 'python' }
 Plug 'python/black', { 'for': 'python' }
+" TODO: try this --
+Plug 'Vimjas/vim-python-pep8-indent'
 
 " Other Languages
-Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'davidoc/taskpaper.vim'
+Plug 'mustache/vim-mustache-handlebars'
 
 " Async Linting
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " Disable search highlighting when not searching
 Plug 'romainl/vim-cool'
@@ -84,13 +89,16 @@ Plug 'romainl/vim-cool'
 Plug 'PeterRincker/vim-argumentative'
 
 "---------- Experimental ----------
+Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'andrewstuart/vim-kubernetes'
 
+" Remember last place edited in files
+Plug 'dietsche/vim-lastplace'
+
 "Plug 'tpope/vim-abolish'
 "Plug 'idbrii/vim-diffusable'
-"Plug 'dietsche/vim-lastplace'
 " Intelligently re-open files at last edit position
 Plug 'nathanaelkane/vim-indent-guides'
 
@@ -444,9 +452,27 @@ nnoremap <leader>v :vsplit<space>
 " Section: Plugin Settings {{{1
 "======================================================================
 
+"---------- Ack ----------
+nnoremap <leader>A :Ack<space>
+" Use Silver Searcher if available
+if executable('ag')
+    let g:ackprg = 'ag --nogroup --hidden --nocolor --column'
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+    set grepformat=%f:%l:%c%m
+endif
+" " Grep word undercusor
+" mparent(2017-11-09): This was buggy!
+" nmap <M-k>    :Ack! "\b<cword>\b" <CR>
+" nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
+" nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
+" nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
+
 "---------- ALE ----------
-let g:ale_sign_warning = '▲'
-let g:ale_sign_error = '✗'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_fix_on_save = 1
+let g:ale_open_list = 1
+
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
@@ -488,8 +514,7 @@ nnoremap <leader>gs :G<CR>
 nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>gv :Gcommit --no-verify -q<CR>
-nnoremap <leader>gt :Gcommit --no-verify -q %:p<CR>
+nnoremap <leader>gV :Gcommit --no-verify -q<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gR :Gremove<CR>
@@ -517,20 +542,20 @@ function! s:find_git_root()
 endfunction
 command! FZFRepoFiles execute 'Files' s:find_git_root()
 command! FZFSiblingRepoFiles execute 'Files' fnamemodify(s:find_git_root(), ':h')
-" function! s:find_git_project_root()
-"     let l:root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-"     let l:path = expand('%:p')
-"     " Recursively look for parent project directory, until we either get to git root
-"     " or filesystem root "/"
-"     while len(l:path) > 1 && fnamemodify(l:path, ':h') != l:root
-"         let l:path = fnamemodify(l:path, ':h')
-"     endwhile
-"     return l:path
-" endfunction
-" command! FZFProjectFiles execute 'Files' s:find_git_project_root()
+
+" Run Ag against root Git directory
+function! s:with_git_root()
+  let root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+  return v:shell_error ? {} : {'dir': root}
+endfunction
+command! -nargs=* AgGitRoot
+  \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), g:fzf_layout))
+
+" Configure FZF window size and position
+let g:fzf_layout = { 'down': '~40%' }
 
 nmap ; :Buffers<CR>
-nmap <leader>a :Ag<CR>
+nmap <leader>a :AgGitRoot<CR>
 nmap <leader>l :Lines<CR>
 nmap <leader>t :Tags<CR>
 " Search entire containing Git repo
