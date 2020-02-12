@@ -1,4 +1,5 @@
 [user]
+
     name = Mike Parent
     email = michael.parent@tillable.com
 [core]
@@ -26,6 +27,9 @@
     co-all = checkout -- .
     # Undo all unstaged modifications
     revertall = checkout -- .
+
+    # Forget a file by removing it from Git cache (https://stackoverflow.com/a/1274447)
+    forget = rm --cached
 
     nb = checkout -b
     br = branch
@@ -81,9 +85,6 @@
 
     # Reset
     rh = reset --hard
-
-    # Find file path
-    f = "!git ls-files | grep -i"
 
     # Grep
     grep-changed = !sh -c 'git log -S$1' -

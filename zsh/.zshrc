@@ -123,8 +123,14 @@ alias htop='sudo htop'
 alias ag='ag --hidden'
 # The default -I uses a HEAD request, which sometimes behaves differently than GET
 alias curli='curl -I -XGET'
-## Enable colored LS output
-alias ls='ls -G'
+## Fancy Diff
+#alias diff="diff-so-fancy"
+## Fancy `ls`
+alias ls="exa"
+alias l="exa -lahF"
+## Bat
+alias bat="bat --theme GitHub"
+alias cat="bat"
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }

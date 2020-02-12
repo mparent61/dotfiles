@@ -648,8 +648,15 @@ let g:netrw_keepdir=0
 "---------- Rainbow Parens ----------
 augroup rainbow_dev
   autocmd!
-  autocmd FileType scala,python RainbowParentheses
+  autocmd FileType terraform,scala,python RainbowParentheses
 augroup END
+
+"Support: ([{
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+
+" Don't used default Solarized's text color
+let g:rainbow#blacklist = [12]
+
 
 "---------- Sneak ----------
 " Label mode

@@ -1,3 +1,18 @@
 [flake8]
-max-line-length = 120
-ignore = E501,E702
+
+# Global Ignores
+#   E203: whitespace before ':' (BLACK WILL FIX)
+#   E301: expected 1 blank line, found 0 (BLACK WILL FIX)
+#   E302: expected 2 blank lines, found 1 (BLACK WILL FIX)
+#   E303: too many blank lines (BLACK WILL FIX)
+#   E501: line too long (TOO CONTROVERSIAL, LIMITED UTILITY)
+#   E711: comparison to None should be 'if cond is None:' (SQLALCHEMY USES THIS)
+#   E712: comparison to True should be 'if cond is True:' or 'if cond:' (sqlalchemy uses this)
+#   W503: line break before binary operator (BLACK WILL FIX)
+ignore = E203,E301,E302,E303,E501,E711,E712,W503
+
+# File-specific Ignores
+#   conftest.py: Warnings about normal PyTest fixture use
+#   migrations: Allow unused imports from auto-generated migration template
+per-file-ignores =
+	*/migrations/versions/*.py:F401

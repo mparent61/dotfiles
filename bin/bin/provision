@@ -9,13 +9,17 @@ brew install \
     autoenv \
     autojump \
     autossh \
+    bat \
     coreutils \
+    diff-so-fancy \
+    exa \
     fzf \
     git \
     htop-osx \
     neovim \
     reattach-to-user-namespace \
     rename \
+    ripgrep \
     stow \
     tmux \
     trash \
@@ -37,7 +41,7 @@ brew unlink python3 && brew link --overwrite python3
 brew install vim
 
 # Oh-My-Zsh
-#env ZSH=$ZSH /bin/sh $ZSH/tools/upgrade.sh
+env ZSH=$ZSH /bin/sh $ZSH/tools/upgrade.sh
 
 # Required for VIM/NeoVIM plugins (including Deoplete)
 #pip3 install --upgrade neovim
