@@ -1,10 +1,12 @@
 [user]
-
     name = Mike Parent
     email = michael.parent@tillable.com
 [core]
     excludesfile = ~/.gitignore_global
-    pager = cat
+	pager = diff-so-fancy | less --tabs=4 -RFX
+    ## mparent(2020-06-05): Disabled b/c this blocked `pre-commit` plugin from running. Originally intended to add 
+    ## "don't commit to MASTER" check.
+    #hooksPath = /Users/mparent/githooks
 [color]
     branch = auto
     diff = auto
@@ -62,8 +64,8 @@
     st = status -sb
 
     # Pretty looking log
-    ls = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ad\\ %C(blue)%<(14)%cn\\ %C(red)%d%C(reset)\\ %s" --decorate --date=relative --max-count=100
-    ld = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ai\\ %C(blue)%<(14)%cn\\ %C(red)%d%C(reset)\\ %s" --decorate --date=short --max-count=100 
+    ls = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ad\\ %C(blue)%<(14)%cn\\ %C(red)%d%C(reset)\\ %s" --decorate --date=relative --max-count=25
+    ld = log --reverse --pretty=format:"%C(yellow)%h\\ %C(green)%ai\\ %C(blue)%<(14)%cn\\ %C(red)%d%C(reset)\\ %s" --decorate --date=short --max-count=25
     # List commits showing changed files
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     # List w/o colors (for Unix pipes)
@@ -126,5 +128,11 @@
     # Don't create *.orig backup files
 	keepBackup = false
 [mergetool "vim-fugitive"]
-    # 3-way diff
-	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+    # 3-way diff, selecting top (merged) window
+	cmd = nvim -f -c \"Ghdiffsplit :3|Gvdiffsplit :2\" \"$MERGED\" -c '$wincmd k'
+[credential]
+	helper = osxkeychain
+
+[branch "master"]
+    # Prevent merging to master
+    mergeoptions = --no-ff

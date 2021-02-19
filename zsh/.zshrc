@@ -42,7 +42,7 @@ plugins=(autojump
          mercurial
          osx
          python
-         sudo
+         terraform
          tmux
          tmuxinator
          vagrant
@@ -131,6 +131,8 @@ alias l="exa -lahF"
 ## Bat
 alias bat="bat --theme GitHub"
 alias cat="bat"
+# Run local webserver serving local directory
+alias webserver="ruby -run -e httpd . -p 80"
 
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
@@ -169,9 +171,6 @@ mkvirtualenv3() {
     mkvirtualenv -p python3 "$@"
 }
 
-# Use idpb for breakpoints
-export PYTHONBREAKPOINT=ipdb.set_trace
-
 # Fast switch between VIM + SZH
 # http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 fancy-ctrl-z () {
@@ -209,10 +208,13 @@ fi
 
 
 # Make Directory + CD to it
-mkcdir ()
-{
-    mkdir -p -- "$1" &&
-      cd -P -- "$1"
+mkcd(){
+    if [[ -d $1 ]]; then
+        echo "It already exists! cd to the directory."
+        cd $1
+    else
+        mkdir -p $1 && cd $1
+    fi
 }
 
 # Easy Curl + JQ
@@ -229,11 +231,25 @@ flushdns () {
   sudo killall -HUP mDNSResponder && echo "DNS cache has been flushed"
 }
 
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && fasd_cd -d "$*" && return
+  local dir
+  dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
+}
 
 #----------------------------------------------------------------------
 # FZF
 #----------------------------------------------------------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Customize FZF command to use RipGrep
+# --files: List files that would be searched but do not search
+# --no-ignore-vcs: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --glob "!.git/*"'
 
 #----------------------------------------------------------------------
 # Auto-completion
@@ -246,3 +262,12 @@ fpath=(~/.zsh $fpath)
 
 # Init shell auto-completion functionality
 autoload -Uz compinit && compinit
+
+# Add Kubernetes info to prompt
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+export KUBE_PS1_SYMBOL_USE_IMG=true
+#PS1='$(kube_ps1)'$PS#1
+#PS1=$PS1'$(kube_ps1)'
+
+# RipGrep requires you point to your config file
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"

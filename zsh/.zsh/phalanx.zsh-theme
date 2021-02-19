@@ -93,8 +93,14 @@ PROMPT+=' '
 PROMPT+='%{$COLOR_CYAN%}%(?,,%{$COLOR_RED%}[%?] )'
 PROMPT+='
 '  # Newline
-PROMPT+='$(virtualenv_prompt_info)'
-PROMPT+='$%{$reset_color%} '
+# Kubernetes
+PROMPT+='$(kube_ps1)'
+# Terraform
+PROMPT+=$'%{$COLOR_VIOLET%}$(tf_prompt_info)%{$reset_color%}'
+# Python
+PROMPT+=$'%{$COLOR_YELLOW%}$(virtualenv_prompt_info)%{$reset_color%}'
+# Input Prompt Character
+PROMPT+='%{$COLOR_BLUE%}$%{$reset_color%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$COLOR_VIOLET%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"

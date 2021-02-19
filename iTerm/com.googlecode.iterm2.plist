@@ -25,7 +25,7 @@
 	<key>AutoHideTmuxClientSession</key>
 	<false/>
 	<key>CheckTestRelease</key>
-	<true/>
+	<false/>
 	<key>ClosingHotkeySwitchesSpaces</key>
 	<true/>
 	<key>CommandSelection</key>
@@ -541,7 +541,7 @@
 	dWxs0g0ODxJaTlMub2JqZWN0c1YkY2xhc3OiEBGAAoAKgA3TFA0OFRkdV05TLmtleXOj
 	FhcYgAOABIAFoxobHIAGgAeACIAJWklkZW50aWZpZXJVV2lkdGhWSGlkZGVuUTAjQGjA
 	AAAAAAAI0iUmJyhaJGNsYXNzbmFtZVgkY2xhc3Nlc1xOU0RpY3Rpb25hcnmiJylYTlNP
-	YmplY3TTFA0OKy8doxYXGIADgASABaMwMRyAC4AMgAiACVExI0BzsZ2yLQ5W0iUmNzhe
+	YmplY3TTFA0OKy8doxYXGIADgASABaMwMRyAC4AMgAiACVExI0B0oZ2yLQ5W0iUmNzhe
 	TlNNdXRhYmxlQXJyYXmjNzkpV05TQXJyYXkACAARABoAJAApADIANwBJAEwAUgBUAGMA
 	aQBuAHkAgACDAIUAhwCJAJAAmACcAJ4AoACiAKYAqACqAKwArgC5AL8AxgDIANEA0gDX
 	AOIA6wD4APsBBAELAQ8BEQETARUBGQEbAR0BHwEhASMBLAExAUABRAAAAAAAAAIBAAAA
@@ -565,15 +565,15 @@
 	<key>NSWindow Frame ProfilesPanel</key>
 	<string>-2429 1389 735 382 -3840 -195 3840 2137 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
-	<string>-1988 1269 616 174 -3360 0 3360 1867 </string>
+	<string>-1988 905 616 174 -3360 -364 3360 1867 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>-2230 910 620 392 -3840 -398 3840 2137 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>-3621 129 796 486 -3840 -398 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2695 330 1265 747 -3360 0 3360 1867 </string>
+	<string>-3360 -364 2527 1867 -3360 -364 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-3667 1194 585 377 -3840 -398 3840 2137 </string>
+	<string>-2777 795 585 377 -3360 -364 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>-3307 -69 585 377 -3840 -398 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -2902,6 +2902,7 @@
 	<key>NoSyncAllAppVersions</key>
 	<array>
 		<string>3.3.8beta3</string>
+		<string>3.3.10beta4</string>
 		<string>3.3.7beta1</string>
 		<string>3.3.0beta11</string>
 		<string>3.3.0beta9</string>
@@ -2915,7 +2916,11 @@
 		<string>3.3.5beta2</string>
 		<string>3.3.8beta4</string>
 		<string>3.3.8beta5</string>
+		<string>3.3.9beta1</string>
+		<string>3.3.11beta1</string>
+		<string>3.3.10beta2</string>
 		<string>3.3.8beta1</string>
+		<string>3.3.10beta3</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
@@ -2934,7 +2939,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>27F6CFD9-0941-4D27-9CAA-C2B9FDDFE4B1</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>34</integer>
+	<integer>45</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -3707,15 +3712,15 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/testing_new.xml?shard=79</string>
+	<string>https://iterm2.com/appcasts/final_new.xml?shard=79</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-02-07T03:26:16Z</date>
+	<date>2020-06-16T13:47:43Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
-	<false/>
+	<true/>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -3769,6 +3774,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.8beta5</string>
+	<string>3.3.11beta1</string>
 </dict>
 </plist>

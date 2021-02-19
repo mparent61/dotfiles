@@ -34,3 +34,14 @@ snippet head "Terraform file header"
 #-------------------------------------------------------------------------------
 
 endsnippet
+
+snippet lsource "Source a local module"
+source = "../../../terraform-modules/$1"
+endsnippet
+
+snippet dsn "Disable Slack Notification tags"
+tags = merge(local.tags, {
+# TODO: Temporary disable Slack notifications (esp Error "@devops" messages)
+SlackBuildNotifications = false
+})
+endsnippet

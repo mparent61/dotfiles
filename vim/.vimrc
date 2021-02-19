@@ -12,9 +12,8 @@
 "======================================================================
 call plug#begin('~/.vim/plugged')
 
-Plug 'tpope/vim-sensible'
+"Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -23,43 +22,45 @@ Plug 'tpope/vim-vinegar'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/matchit.zip'
+"--- START MARKER ---------------
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"--- END MARKER ---------------
 
 Plug 'justinmk/vim-sneak'
 
 " Auto-close/end on ENTER
 Plug 'tpope/vim-endwise'
-" Adds support for "{", "(" etc. (compliments vim-endwise)
+""" Adds support for "{", "(" etc. (compliments vim-endwise)
 Plug 'rstacruz/vim-closer'
 
-" Scratch buffer
+""" Scratch buffer
 Plug 'idbrii/itchy.vim'
 
-" Fire events on TMUX window switch, allowing auto-save
+""" Fire events on TMUX window switch, allowing auto-save
 Plug 'sjl/gundo.vim'
 
-" Fuzzy finder
+"" Grep / Fuzzy finder
+Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Git
+"" Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
 Plug 'vim-scripts/DirDiff.vim'
-Plug 'vim-scripts/YankRing.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'docunext/closetag.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 
 " Completion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" mparent(2020-10-13): Testing insert issues related to quick list
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" File Syntax
-Plug 'Keithbsmiley/tmux.vim'     " TMUX syntax
+""" File Syntax
 Plug 'hashivim/vim-terraform'
 
-" Markdown
+""" Markdown
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'itspriddle/vim-marked', { 'for': 'markdown' }  " Integration with Marked2 viewer
 
@@ -68,38 +69,44 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 
 " Python
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
-Plug 'fisadev/vim-isort', { 'for': 'python' }
+" mparent(2020-10-13): Testing insert issues related to quick list
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" mparent(2020-10-13): Testing insert issues related to quick list
+" Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
 Plug 'python/black', { 'for': 'python' }
-" TODO: try this --
-Plug 'Vimjas/vim-python-pep8-indent'
 
 " Other Languages
 Plug 'davidoc/taskpaper.vim'
 Plug 'mustache/vim-mustache-handlebars'
 
 " Async Linting
+"" NOTE: This causes weird cursor A/append behavior, jumping back to parens
 Plug 'dense-analysis/ale'
 
-" Disable search highlighting when not searching
+""" Disable search highlighting when not searching
 Plug 'romainl/vim-cool'
 
-" Easily shift function arguments
+""" Easily shift function arguments
 Plug 'PeterRincker/vim-argumentative'
 
-"---------- Experimental ----------
-Plug 'mileszs/ack.vim'
+""---------- Experimental ----------
+
+Plug '~/.vim/downloaded_plugins/yankring'
+
+""Plug 'svermeulen/vim-easyclip'
+" Plug 'svermeulen/vim-cutlass'
+" Plug 'svermeulen/vim-yoink'
+" Plug 'svermeulen/vim-subversive'
+
+"" Set pwd to Git root
+Plug 'airblade/vim-rooter'
+
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'andrewstuart/vim-kubernetes'
 
-" Remember last place edited in files
+"" Remember last place edited in files
 Plug 'dietsche/vim-lastplace'
 
-"Plug 'tpope/vim-abolish'
-"Plug 'idbrii/vim-diffusable'
-" Intelligently re-open files at last edit position
 Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
@@ -112,15 +119,10 @@ call plug#end()
 let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
-" Close QuickFix window
-nmap \x :cclose<CR>
-
-" Edit last (most recent) file
-nmap <C-e> :e#<CR>
-
-" Case insensitive Write + Quit
+" Case insensitive Quit
 command! Q q
-command! W w
+" Easy write/quit/all!
+command! W wqa
 
 " Force-save file (useful if forget to run vim w/ sudo)
 " http://stackoverflow.com/questions/1005/getting-root-permissions-on-a-file-inside-of-vi
@@ -155,20 +157,10 @@ nnoremap <leader>ef :e!<CR>
 nnoremap ' `
 nnoremap ` '
 
-" Quick insertion of newline in normal mode with <CR>
-if has("autocmd")
-nnoremap <silent> <CR> :put=''<CR>
-augroup newline
-    autocmd!
-    autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-    autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
-augroup END
-endif
-
 "======================================================================
 " Section: Syntax + Coloring {{{1
 "======================================================================
-set background=dark
+set background=light
 colorscheme solarized
 " mparent(2017-10-26): Trying this out
 "let g:solarized_underline = 1
@@ -214,7 +206,8 @@ set cinkeys-=0#                 " Comments don't fiddle with indenting
 set cino=                   " See :h cinoptions-values
 set commentstring=\ \ #%s   " When folds are created, add them to this
 set copyindent              " Make autoindent use the same chars as prev line
-set directory-=.            " Don't store temp files in cwd
+" mparent(2020-10-05): Maybe don't need this?
+"set directory-=.            " Don't store temp files in cwd
 set encoding=utf8           " UTF-8 by default
 set expandtab               " No tabs by default
 set foldenable              " I like folding
@@ -241,6 +234,7 @@ set modelines=3             " How many lines of head & tail to look for ml's
 set nobackup                " No backups left after done editing
 set nojoinspaces        " Insert only one space after '.', '?', '!' when joining lines
 set nolist              " Don't show special characters for whitespace (tab, eol, etc)
+
 set nonumber                " No line numbers to start
 set noswapfile
 set notitle                 " Don't set the title of the Vim window
@@ -276,9 +270,11 @@ set wildignore+=node_modules
 set wrapscan                    " Wrap around when searching
 
 
-" Force-disable comment continuation
-au FileType * set fo-=c fo-=r fo-=o
+" mparent(2020-10-05): Maybe don't need this?
+" " Force-disable comment continuation
+" au FileType * set fo-=c fo-=r fo-=o
 
+" mparent(2020-10-05): Maybe don't need this?
 "======================================================================
 " Section: Copy/Paste {{{1
 "======================================================================
@@ -452,26 +448,17 @@ nnoremap <leader>v :vsplit<space>
 " Section: Plugin Settings {{{1
 "======================================================================
 
-"---------- Ack ----------
-nnoremap <leader>A :Ack<space>
-" Use Silver Searcher if available
-if executable('ag')
-    let g:ackprg = 'ag --nogroup --hidden --nocolor --column'
-    set grepprg=ag\ --nogroup\ --nocolor\ --column
-    set grepformat=%f:%l:%c%m
-endif
-" " Grep word undercusor
-" mparent(2017-11-09): This was buggy!
-" nmap <M-k>    :Ack! "\b<cword>\b" <CR>
-" nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
-" nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
-" nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
-
 "---------- ALE ----------
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
+let g:ale_set_loclist = 1
+" mparent(2020-07-02): This 'fix' actually breaks lots of other stuff
+" " mparent(2020-06-01): LocList causes cursor to jump back to nearest closing paren (weird) on some appends.
+" " Somehow using QuickFix list instead fixes this.
+" let g:ale_set_loclist = 0
+" let g:ale_set_quickfix = 1
 
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
@@ -484,6 +471,12 @@ sunmap W
 sunmap B
 sunmap E
 
+""---------- Cutlass ----------
+"" Cut-to-Clipboard mappings
+"nnoremap m d
+"xnoremap m d
+"nnoremap mm dd
+"nnoremap M D
 
 "---------- Deoplete (Async auto-completion) ----------
 let g:deoplete#enable_at_startup = 1  " On by default
@@ -513,6 +506,7 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 nnoremap <leader>gs :G<CR>
 nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gB :Gbrowse<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gV :Gcommit --no-verify -q<CR>
 nnoremap <leader>gd :Gdiff<CR>
@@ -523,8 +517,8 @@ nnoremap <leader>gw :Gwrite<CR><CR>
 nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
 nnoremap <leader>gp :Ggrep<Space>
 nnoremap <leader>gm :Gmove<Space>
-nnoremap <leader>gb :Git branch<Space>
 nnoremap <leader>go :Git checkout<Space>
+nnoremap <leader>gnb :Git nb<Space>
 nnoremap <leader>gps :Dispatch! git push<CR>
 nnoremap <leader>gpl :Dispatch! git pull<CR>
 
@@ -534,38 +528,57 @@ nnoremap gdh :diffget //2<CR>
 " Pull change from right
 nnoremap gdl :diffget //3<CR>
 
-
 "---------- FZF ----------
-" Automatically find root Git project directory
+
+" Custom RipGrep options, and add right-side preview
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore-vcs: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+
+let fzf_rg_base_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore-vcs --hidden --follow --glob "!.git/*" --color "always" '
+
+command! -bang -nargs=* FZFRg
+  \ call fzf#vim#grep(fzf_rg_base_command.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview({'options': []}, 'up:60%', 'ctrl-p'), <bang>0)
+
+au FileType * call SetFzfRgCurrentTypeCommand()
+function! SetFzfRgCurrentTypeCommand()
+	command! -bang -nargs=* FZFRgCurrentType
+	\ call fzf#vim#grep((fzf_rg_base_command."--type " . &filetype . " ").shellescape(<q-args>), 1,
+	\   fzf#vim#with_preview({'options': []}, 'up:60%', 'ctrl-p'), <bang>0)
+endfunction
+
+" Add right-side Preview window to stock Files command
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:50%', 'ctrl-p'), <bang>0)
+
+" Repository siblings - Automatically find parent directory of my root Git project
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-command! FZFRepoFiles execute 'Files' s:find_git_root()
 command! FZFSiblingRepoFiles execute 'Files' fnamemodify(s:find_git_root(), ':h')
 
-" Run Ag against root Git directory
-function! s:with_git_root()
-  let root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-  return v:shell_error ? {} : {'dir': root}
-endfunction
-command! -nargs=* AgGitRoot
-  \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), g:fzf_layout))
-
 " Configure FZF window size and position
-let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_layout = { 'down': '~80%' }
 
 nmap ; :Buffers<CR>
-nmap <leader>a :AgGitRoot<CR>
+nmap <leader>a :FZFRg<CR>
+" Maybe move this into Python-only config?
+nmap <leader>At :FZFRgCurrentType<CR>
 nmap <leader>l :Lines<CR>
 nmap <leader>t :Tags<CR>
 " Search entire containing Git repo
-nmap <leader>f :FZFRepoFiles<CR>
+nmap <leader>f :Files<CR>
 nmap <leader>F :FZFSiblingRepoFiles<CR>
 " Fast virtualenv file lookup (chooses correct Python version via wildcard, can only be 1 though)
 nnoremap <leader>V :Files $VIRTUAL_ENV/lib/*/site-packages<CR>
-
-" Find word under cursor
-nnoremap <leader>K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 "---------- Gundo ----------
 noremap <leader>U :GundoToggle<CR>
@@ -573,11 +586,8 @@ let g:gundo_prefer_python3 = 1  " Python 3 support
 
 "---------- Indent Guides ----------
 let g:indent_guides_auto_colors = 0
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=11
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightgrey
-
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black
 
 "---------- Lightline ----------
 let g:lightline = {
@@ -646,16 +656,26 @@ let g:netrw_keepdir=0
 
 
 "---------- Rainbow Parens ----------
-augroup rainbow_dev
-  autocmd!
-  autocmd FileType terraform,scala,python RainbowParentheses
-augroup END
+"augroup rainbow_dev
+"  autocmd!
+"  autocmd FileType terraform,scala,python RainbowParentheses
+"augroup END
 
-"Support: ([{
-let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+""Support: ([{
+"let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 
-" Don't used default Solarized's text color
-let g:rainbow#blacklist = [12]
+"" Don't used default Solarized's text color
+"let g:rainbow#blacklist = [12]
+
+"---------- RipGrep ----------
+nmap <leader>A :Rg<space>
+let g:rg_highlight = 1
+" " Grep word undercusor
+" mparent(2017-11-09): This was buggy!
+" nmap <M-k>    :Ack! "\b<cword>\b" <CR>
+" nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
+" nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
+" nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
 
 
 "---------- Sneak ----------
@@ -674,8 +694,6 @@ hi link taskpaperCancelled Type
 "---------- Terraform ----------
 let g:terraform_fmt_on_save=1
 
-"---------- Tig (Git Explorer) ----------
-map <C-G> :Tig<Cr>
 
 "---------- UltiSnips ----------
 " Edit window is horizontal split (default is vertical)
@@ -686,11 +704,9 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " Fast snippet editing
 noremap <leader>ue :UltiSnipsEdit<CR>
+" Use standard `.vim/` config folder, even w/ NeoVim
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
-"---------- Yankring ----------
-set viminfo+=n~/.vim/tmp/viminfo
-let g:yankring_history_dir = '$HOME/.vim/tmp'
-nnoremap <silent> <leader>Y :YRShow<CR>     " Yankring history menu
 
 "======================================================================
 " Section: Local Config {{{1
@@ -700,6 +716,16 @@ if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
+"======================================================================
+" Section: Experimental
+"======================================================================
+
+"Auto-close quickfix
+autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+            \   q :cclose<cr>:lclose<cr>
+autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+            \   bd|
+            \   q | endif
 
 "======================================================================
 " Section: Legacy Settings (pre-Nov 2017) {{{1
@@ -716,12 +742,3 @@ endif
 " " NOTE: May need to use 'nnoremap' instead if this doesn't work as expected in Visual and Operator-pending modes
 " " NOTE: This might be useless, and I can find some other use for 'backspace'
 " noremap <BS> d<BS>
-
-
-" Quickfix window always on bottom taking up entire horizontal space
-au FileType qf wincmd J
-" Auto resize QF window to fit contents
-au FileType qf call AdjustWindowHeight(3, 20)
-function! AdjustWindowHeight(minheight, maxheight)
-    exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
-endfunction

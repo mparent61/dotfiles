@@ -13,8 +13,7 @@ set foldnestmax=1  " Max one-level folding (high-level only)
 " Less jarring to have it always open (must set global "g:" option for some reason)
 let g:ale_sign_column_always = 1
 
-" TODO: isort too?
-let b:ale_fixers = {'python': [ "black", "trim_whitespace"]}
+let b:ale_fixers = {'python': [ "black", "isort", "trim_whitespace"]}
 let b:ale_linters = {'python': ['flake8']}
 
 " Disable trailing whitespace warnings, Black will fix

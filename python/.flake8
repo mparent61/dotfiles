@@ -9,10 +9,16 @@
 #   E711: comparison to None should be 'if cond is None:' (SQLALCHEMY USES THIS)
 #   E712: comparison to True should be 'if cond is True:' or 'if cond:' (sqlalchemy uses this)
 #   W503: line break before binary operator (BLACK WILL FIX)
-ignore = E203,E301,E302,E303,E501,E711,E712,W503
+#   N806: variable in function should be lowercase (USED FOR CONSTANTS)
+ignore = E203,E301,E302,E303,E501,E711,E712,W503,N806
 
 # File-specific Ignores
-#   conftest.py: Warnings about normal PyTest fixture use
 #   migrations: Allow unused imports from auto-generated migration template
 per-file-ignores =
 	*/migrations/versions/*.py:F401
+#======================================================================
+# Plugin: pep8-naming
+#----------------------------------------------------------------------
+# List of decorators to consider as "classmethod" for PEP8 naming
+#   - declared_attr (SQLAlchemy)
+classmethod_decorators = classmethod,declared_attr
