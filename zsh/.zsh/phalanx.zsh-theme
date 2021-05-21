@@ -108,5 +108,6 @@ ZSH_THEME_GIT_PROMPT_DIRTY="%{$COLOR_GREEN%}!"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$COLOR_GREEN]%}?"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-local return_status="%{$COLOR_RED%}%(?..✘)"
-RPROMPT='${return_status}%{$reset_color%}'
+# # mparent(2021-04-23): Disabled, the right-justified "✘" is hard to see and messes up copy-paste
+# local return_status="%{$COLOR_RED%}%(?..✘)"
+# RPROMPT='${return_status}%{$reset_color%}'

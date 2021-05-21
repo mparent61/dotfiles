@@ -69,10 +69,8 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 
 " Python
-" mparent(2020-10-13): Testing insert issues related to quick list
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-" mparent(2020-10-13): Testing insert issues related to quick list
-" Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
 Plug 'python/black', { 'for': 'python' }
 
 " Other Languages
@@ -92,11 +90,7 @@ Plug 'PeterRincker/vim-argumentative'
 ""---------- Experimental ----------
 
 Plug '~/.vim/downloaded_plugins/yankring'
-
-""Plug 'svermeulen/vim-easyclip'
-" Plug 'svermeulen/vim-cutlass'
-" Plug 'svermeulen/vim-yoink'
-" Plug 'svermeulen/vim-subversive'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 "" Set pwd to Git root
 Plug 'airblade/vim-rooter'
@@ -162,8 +156,6 @@ nnoremap ` '
 "======================================================================
 set background=light
 colorscheme solarized
-" mparent(2017-10-26): Trying this out
-"let g:solarized_underline = 1
 " Make sure VIM recognizes 256-color support. Especially important for iTerm2
 if !has('gui_running')
     if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
@@ -507,8 +499,8 @@ nnoremap <leader>gs :G<CR>
 nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gB :Gbrowse<CR>
-nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>gV :Gcommit --no-verify -q<CR>
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gV :Git commit --no-verify -q<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gR :Gremove<CR>

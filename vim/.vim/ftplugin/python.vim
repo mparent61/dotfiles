@@ -13,7 +13,16 @@ set foldnestmax=1  " Max one-level folding (high-level only)
 " Less jarring to have it always open (must set global "g:" option for some reason)
 let g:ale_sign_column_always = 1
 
-let b:ale_fixers = {'python': [ "black", "isort", "trim_whitespace"]}
+" Add custom support for "autoflake" fixer (not supported by ALE)
+function! PythonAutoFlake(buffer) abort
+    return {
+    \   'command': 'autoflake --in-place --remove-all-unused-imports %t',
+    \   'read_temporary_file': 1,
+    \}
+endfunction
+execute ale#fix#registry#Add('autoflake', 'PythonAutoFlake', ['python'], 'autoflake for python')
+
+let b:ale_fixers = {'python': [ "black", "autoflake", "isort", "trim_whitespace"]}
 let b:ale_linters = {'python': ['flake8']}
 
 " Disable trailing whitespace warnings, Black will fix

@@ -1,6 +1,9 @@
 # Python
 *.pyc
 
+# DirEnv
+*.envrc
+
 **/.ropeproject/
 
 pip-selfcheck.json

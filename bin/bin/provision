@@ -12,6 +12,7 @@ brew install \
     bat \
     coreutils \
     diff-so-fancy \
+    direnv \
     exa \
     fzf \
     git \

@@ -22,8 +22,8 @@ export ZSH_THEME="phalanx"
 # Disable oh-my-zsh title updating for tmux
 export DISABLE_AUTO_TITLE="true"
 
-# Disable bi-weekly auto-update checks
-export DISABLE_AUTO_UPDATE="true"
+# Silently update
+export DISABLE_UPDATE_PROMPT=true
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
@@ -32,6 +32,7 @@ export HOMEBREW_INSTALL_CLEANUP="true"
 
 plugins=(autojump
          brew
+         direnv
          docker
          fabric
          fzf
@@ -238,6 +239,7 @@ z() {
   dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
 }
 
+
 #----------------------------------------------------------------------
 # FZF
 #----------------------------------------------------------------------
@@ -271,3 +273,7 @@ export KUBE_PS1_SYMBOL_USE_IMG=true
 
 # RipGrep requires you point to your config file
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+# Terraform auto-complete
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
