@@ -191,3 +191,7 @@ dryland
 passwordless
 JWT
 FrozenList
+ExternalParcelProvider
+URLs
+Shapefile
+QGIS

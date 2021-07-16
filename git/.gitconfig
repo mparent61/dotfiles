@@ -52,7 +52,7 @@
     #   4) Delete!
     delete-gone-branches = !git branch --list --format '%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' | sed 's,^refs/heads/,,'  | grep . | xargs git branch -D
     # Useful "grab latest and prune branches" workhorse command
-    up = "!git pull && git fetch --prune && git delete-gone-branches"
+    up = "!git pull && git fetch --prune && git delete-gone-branches && git brd"
 
     mt = mergetool
 

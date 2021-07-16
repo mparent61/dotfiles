@@ -12,7 +12,7 @@
 "======================================================================
 call plug#begin('~/.vim/plugged')
 
-"Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
@@ -22,9 +22,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'sjl/vitality.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'vim-scripts/matchit.zip'
-"--- START MARKER ---------------
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-"--- END MARKER ---------------
 
 Plug 'justinmk/vim-sneak'
 
@@ -78,7 +76,6 @@ Plug 'davidoc/taskpaper.vim'
 Plug 'mustache/vim-mustache-handlebars'
 
 " Async Linting
-"" NOTE: This causes weird cursor A/append behavior, jumping back to parens
 Plug 'dense-analysis/ale'
 
 """ Disable search highlighting when not searching
@@ -437,6 +434,13 @@ autocmd VimResized * wincmd =
 nnoremap <leader>v :vsplit<space>
 
 "======================================================================
+" Section: Python {{{1
+"======================================================================
+
+let g:python2_host_prog = '/usr/local/opt/python@2/bin/python2'
+let g:python3_host_prog = '/usr/local/opt/python@3.8/bin/python3'
+
+"======================================================================
 " Section: Plugin Settings {{{1
 "======================================================================
 
@@ -444,13 +448,10 @@ nnoremap <leader>v :vsplit<space>
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 1
-let g:ale_open_list = 1
 let g:ale_set_loclist = 1
-" mparent(2020-07-02): This 'fix' actually breaks lots of other stuff
-" " mparent(2020-06-01): LocList causes cursor to jump back to nearest closing paren (weird) on some appends.
-" " Somehow using QuickFix list instead fixes this.
-" let g:ale_set_loclist = 0
-" let g:ale_set_quickfix = 1
+" Disable auto-opening, this weirdly causes issue where APPEND text command position can be shifted one-to-left
+" And weirdly, only if using "loclist", not with "quickfix" (which is not ideal)
+let g:ale_open_list = 0
 
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title

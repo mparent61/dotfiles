@@ -87,18 +87,15 @@ alias reload='source ~/.zshrc'
 alias x='chmod ugo+x'
 # Switch to neovim
 alias vim='nvim'
-alias v='nvim'
-alias vi='nvim'
-alias vimdiff='nvim -d'
-# Read-only VIM
-alias vr='nvim -M'
+alias v='vim'
+alias vi='vim'
+alias vimdiff='vim -d'
 # Sudo VIM
-alias sv='sudo nvim'
-alias svi='sudo nvim'
-alias svim='sudo nvim'
-alias vimrc='nvim ~/.vimrc'
-alias zshrc='nvim ~/.zshrc'
-alias spacevim='nvim -u ~/.SpaceVim/init.vim'
+alias sv='sudo vim'
+alias svi='sudo vim'
+alias svim='sudo vim'
+alias vimrc='vim ~/.vimrc'
+alias zshrc='vim ~/.zshrc'
 alias brewcheck='brew update && brew outdated && brew doctor'
 alias g='git'
 alias gs='git st'
@@ -126,12 +123,16 @@ alias ag='ag --hidden'
 alias curli='curl -I -XGET'
 ## Fancy Diff
 #alias diff="diff-so-fancy"
-## Fancy `ls`
+# Modern CLI replacements
+# https://github.com/ibraheemdev/modern-unix
 alias ls="exa"
 alias l="exa -lahF"
-## Bat
+alias du="dust"
+alias df="duf"
+alias tree="broot"
 alias bat="bat --theme GitHub"
 alias cat="bat"
+alias find="fd"
 # Run local webserver serving local directory
 alias webserver="ruby -run -e httpd . -p 80"
 
@@ -147,10 +148,21 @@ export GREP_OPTIONS='--color=auto'
 # Save LOTS of history
 export HISTSIZE=100000
 export SAVEHIST=100000
+# Skip duplicates
+export HIST_IGNORE_DUPS=1
+export HIST_FIND_NO_DUPS=1
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 # Default is UP/DOWN arrows, but CTRL-J/K is faster
 bindkey '^K' history-substring-search-up
 bindkey '^J' history-substring-search-down
+# Use this to remove duplicates from history (shouldn't be anymore now that I've set disabled dupes)
+# https://github.com/zsh-users/zsh-history-substring-search/issues/19#issuecomment-366102754
+function dedupHistory() {
+    cp ~/.zsh_history{,-old}
+    tmpFile=`mktemp`
+    awk -F ";" '!seen[$2]++' ~/.zsh_history > $tmpFile
+    mv $tmpFile ~/.zsh_history
+}
 
 # Reload latest crontab
 if [[ -f ~/.crontab.$(hostname) ]]; then
@@ -271,9 +283,15 @@ export KUBE_PS1_SYMBOL_USE_IMG=true
 #PS1='$(kube_ps1)'$PS#1
 #PS1=$PS1'$(kube_ps1)'
 
+# McFly shell history search
+eval "$(mcfly init zsh)"
+
 # RipGrep requires you point to your config file
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 # Terraform auto-complete
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+
+source /Users/mparent/.config/broot/launcher/bash/br
+
