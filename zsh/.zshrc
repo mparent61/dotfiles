@@ -139,7 +139,7 @@ alias webserver="ruby -run -e httpd . -p 80"
 # Filter processes (ignoring piped grep command)
 pgrep(){ ps aux | grep -i "$@" | grep -v 'grep'; }
 # Vim Directory Diff
-ddiff() { nvim '+next' "+execute \"DirDiff\" \"$1\" \"$2\""; }
+ddiff() { vim '+next' "+execute \"DirDiff\" \"$1\" \"$2\""; }
 
 export EDITOR=`which nvim`
 
@@ -149,8 +149,7 @@ export GREP_OPTIONS='--color=auto'
 export HISTSIZE=100000
 export SAVEHIST=100000
 # Skip duplicates
-export HIST_IGNORE_DUPS=1
-export HIST_FIND_NO_DUPS=1
+setopt HIST_FIND_NO_DUPS
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 # Default is UP/DOWN arrows, but CTRL-J/K is faster
 bindkey '^K' history-substring-search-up
@@ -285,9 +284,15 @@ export KUBE_PS1_SYMBOL_USE_IMG=true
 
 # McFly shell history search
 eval "$(mcfly init zsh)"
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_FUZZY=true
+export MCFLY_LIGHT=true
 
 # RipGrep requires you point to your config file
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+# McFly history search - fix colors to work with Solarized
+export MCFLY_LIGHT=TRUE
 
 # Terraform auto-complete
 autoload -U +X bashcompinit && bashcompinit

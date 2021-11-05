@@ -36,7 +36,6 @@
     nb = checkout -b
     br = branch
     # List of branches by date modified
-    # TODO: Fixed width columns
     brd = for-each-ref --sort=committerdate refs/heads/ --format='%(color:red)%(objectname:short)%(color:reset) %(color:green)%(committerdate:relative)%(color:reset)\t%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(contents:subject) - %(authorname)'
     # List merged/unmerged branches
     brm = branch --merged

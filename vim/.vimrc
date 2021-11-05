@@ -46,14 +46,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
-Plug 'vim-scripts/DirDiff.vim'
+Plug 'will133/vim-dirdiff'
 Plug 'itchyny/lightline.vim'
 Plug 'docunext/closetag.vim'
-Plug 'junegunn/rainbow_parentheses.vim'
+"Plug 'junegunn/rainbow_parentheses.vim'
 
 " Completion
-" mparent(2020-10-13): Testing insert issues related to quick list
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 """ File Syntax
 Plug 'hashivim/vim-terraform'
@@ -70,13 +69,15 @@ Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript'}
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
 Plug 'python/black', { 'for': 'python' }
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
 " Other Languages
 Plug 'davidoc/taskpaper.vim'
 Plug 'mustache/vim-mustache-handlebars'
 
 " Async Linting
-Plug 'dense-analysis/ale'
+" mparent(2021-08-03): Tagged to last-known working version, later broke "fix on save"
+Plug 'dense-analysis/ale', {'tag': 'v3.1.0'}
 
 """ Disable search highlighting when not searching
 Plug 'romainl/vim-cool'
@@ -475,7 +476,7 @@ sunmap E
 let g:deoplete#enable_at_startup = 1  " On by default
 
 "---------- DirDiff ----------
-let g:DirDiffExcludes = ".hg,.git"
+let g:DirDiffExcludes = ".hg,.git,.terraform"
 " My modified Solarized 'DiffChange' color clashes with DirDiff, so use something else:
 hi def link DirDiffSelected     Underlined
 
@@ -649,16 +650,21 @@ let g:netrw_keepdir=0
 
 
 "---------- Rainbow Parens ----------
-"augroup rainbow_dev
+
+"augroup rainbow_parens
 "  autocmd!
-"  autocmd FileType terraform,scala,python RainbowParentheses
+"  " TODO: Doesn't work with Terraform...
+"  autocmd FileType json,scala,python RainbowParentheses
+"  "autocmd FileType json,python,scala,terraform RainbowParentheses
 "augroup END
 
-""Support: ([{
+"" Support these markers: ([{
 "let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 
-"" Don't used default Solarized's text color
-"let g:rainbow#blacklist = [12]
+"" Don't use Solarized text colors
+""let g:rainbow#blacklist = [10, 11, 12, 13]
+"" For Solarized LIGHT backgrounds - skip colors that blend with light background
+"let g:rainbow#blacklist = [14, 49, 226, 249]
 
 "---------- RipGrep ----------
 nmap <leader>A :Rg<space>
