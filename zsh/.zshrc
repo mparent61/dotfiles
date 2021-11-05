@@ -197,10 +197,6 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-if [[ -f "${HOME}/.zshrc.local" ]]; then
-    source "${HOME}/.zshrc.local"
-fi
-
 # fzf via Homebrew
 if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
   source /usr/local/opt/fzf/shell/key-bindings.zsh
@@ -299,4 +295,9 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
 source /Users/mparent/.config/broot/launcher/bash/br
+
+# Load host-specific config (ex: work stuff)
+if [[ -f "${HOME}/.zshrc.${HOST}" ]]; then
+    source "${HOME}/.zshrc.${HOST}"
+fi
 

@@ -1,13 +1,13 @@
 # Dotfile blacklist
 .CFUserTextEncoding
 .DS_Store
+neovim/.config
+tmux/.tmux/plugins
+tmux/.tmux/resurrect
 vim/.vim/.netrwhist
 vim/.vim/autoload/plug.vim.old
+vim/.vim/black
+vim/.vim/downloaded_plugins
 vim/.vim/plugged
 vim/.vim/tmp
 
-
-
-# The "ignore all except dotfiles" magic at top overrides any gitignore_global dotfile patterns, so we nee
-# to add them here
-**/.ropeproject/

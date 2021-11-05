@@ -70,6 +70,9 @@
     # List w/o colors (for Unix pipes)
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
 
+    # Log date range (from Sprehe)
+    logdr = "!f(){ git log --pretty=format:\"(%h) %ad - %an: %s\" --after=\"${1}\" --until=\"${2}\"; };f"
+
     # List aliases
     la = "!git config -l | grep alias | cut -c 7-"
 
