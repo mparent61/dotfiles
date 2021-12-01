@@ -11,17 +11,6 @@ snippet #!3 "Shebang (Python 3)" b
 endsnippet
 
 
-snippet im "Import module"
-import ${1:module}
-endsnippet
-
-snippet fim "From/Import"
-from ${1:module} import ${2:target}
-endsnippet
-
-snippet absimp "use absolute import" !b
-from __future__ import absolute_import
-endsnippet
 
 snippet prop "Property" !b
 @property
@@ -125,6 +114,7 @@ snippet pylint "Inline pylint disable" !
 endsnippet
 
 snippet skip
+import pytest
 @pytest.mark.skip('${1:TODO}')
 endsnippet
 

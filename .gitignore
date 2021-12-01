@@ -1,7 +1,6 @@
 # Dotfile blacklist
 .CFUserTextEncoding
 .DS_Store
-neovim/.config
 tmux/.tmux/plugins
 tmux/.tmux/resurrect
 vim/.vim/.netrwhist

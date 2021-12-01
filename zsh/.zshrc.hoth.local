@@ -33,9 +33,11 @@ alias dr='docker-compose run \
         --volume "$HOME/.ipython/profile_default/ipython_config.py:/root/.ipython/profile_default/ipython_config.py" \
         --volume "$HOME/.pdbrc.py:/root/.pdbrc.py" \
         '
-alias dra='cd ~/dev/api/tillable && dr admin'
-alias drc='cd ~/dev/api/tillable && dr client'
-alias drs='cd ~/dev/api/silo && dr silo'
+# Default to running bash shell
+drc() { cd ~/dev/api/tillable && dr client "${1:-bash}"; }
+dra() { cd ~/dev/api/tillable && dr admin "${1:-bash}"; }
+drs() { cd ~/dev/api/silo && dr silo "${1:-bash}"; }
+
 
 # Enable writing local KubeConfig
 #export TF_VAR_write_kubeconfig=true

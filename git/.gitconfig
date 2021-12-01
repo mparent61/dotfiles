@@ -36,7 +36,7 @@
     nb = checkout -b
     br = branch
     # List of branches by date modified
-    brd = for-each-ref --sort=committerdate refs/heads/ --format='%(color:red)%(objectname:short)%(color:reset) %(color:green)%(committerdate:relative)%(color:reset)\t%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(contents:subject) - %(authorname)'
+    b = for-each-ref --sort=committerdate refs/heads/ --format='%(color:red)%(objectname:short)%(color:reset) %(color:green)%(committerdate:relative)%(color:reset)\t%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(contents:subject) - %(authorname)'
     # List merged/unmerged branches
     brm = branch --merged
     brnm = branch --no-merged
@@ -51,7 +51,7 @@
     #   4) Delete!
     delete-gone-branches = !git branch --list --format '%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' | sed 's,^refs/heads/,,'  | grep . | xargs git branch -D
     # Useful "grab latest and prune branches" workhorse command
-    up = "!git pull && git fetch --prune && git delete-gone-branches && git brd"
+    up = "!git pull && git fetch --prune && git delete-gone-branches && git b"
 
     mt = mergetool
 

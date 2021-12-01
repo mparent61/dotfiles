@@ -40,8 +40,8 @@ plugins=(autojump
          gitfast
          history
          kubectl
+         macos
          mercurial
-         osx
          python
          terraform
          tmux
