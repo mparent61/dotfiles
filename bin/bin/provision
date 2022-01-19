@@ -6,7 +6,6 @@ brew update
 brew doctor
 
 brew install \
-    autoenv \
     autojump \
     autossh \
     bat \
@@ -17,6 +16,8 @@ brew install \
     fzf \
     git \
     htop-osx \
+    hub \
+    mcfly \
     neovim \
     reattach-to-user-namespace \
     rename \
@@ -24,25 +25,24 @@ brew install \
     stow \
     tmux \
     trash \
-    tree \
-    the_silver_searcher \
     vim \
     watch \
     zsh
 
+brew install php  # For Alfred "GitHub" workflow
+
 brew upgrade
 
-# Python
+# Python 3
 brew install python
-brew install python3
 brew unlink python && brew link --overwrite python
-brew unlink python3 && brew link --overwrite python3
-
-# VIM
-brew install vim
 
 # Oh-My-Zsh
 env ZSH=$ZSH /bin/sh $ZSH/tools/upgrade.sh
 
 # Required for VIM/NeoVIM plugins (including Deoplete)
 #pip3 install --upgrade neovim
+
+
+# Additional Neovim setup
+brew install nodejs

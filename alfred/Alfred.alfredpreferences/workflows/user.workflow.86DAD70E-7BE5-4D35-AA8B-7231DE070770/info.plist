@@ -38,7 +38,7 @@
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>mcpr</string>
+				<string>prc</string>
 				<key>subtext</key>
 				<string>GitHub</string>
 				<key>text</key>
@@ -61,7 +61,7 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://github.com/pulls?q=is%3Apr+author%3Amparent61+archived%3Afalse+is%3Aclosed</string>
+				<string>https://github.com/pulls?q=is%3Apr+author%3Amparent61+archived%3Afalse+is%3Aclosed+sort%3Aupdated-desc</string>
 				<key>utf8</key>
 				<true/>
 			</dict>

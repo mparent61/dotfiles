@@ -13,7 +13,7 @@ set foldnestmax=1  " Max one-level folding (high-level only)
 " Less jarring to have it always open (must set global "g:" option for some reason)
 let g:ale_sign_column_always = 1
 
-" Add custom support for "autoflake" fixer (not supported by ALE)
+" Add custom support for "autoflake" fixer (not supported by ALE until next release after 3.1.0)
 function! PythonAutoFlake(buffer) abort
     return {
     \   'command': 'autoflake --in-place --remove-all-unused-imports %t',
@@ -22,11 +22,11 @@ function! PythonAutoFlake(buffer) abort
 endfunction
 execute ale#fix#registry#Add('autoflake', 'PythonAutoFlake', ['python'], 'autoflake for python')
 
-let b:ale_fixers = {'python': [ "black", "autoflake", "isort", "trim_whitespace"]}
-"" 2021-07-09: Testing out mypy, need this to be smarter / only for API projects...
+let b:ale_fixers = {'python': [ "black", "isort", "autoflake", "trim_whitespace"]}
 let b:ale_linters = {'python': ['flake8', 'mypy']}
-"let b:ale_linters = {'python': ['flake8']}
 let b:ale_python_mypy_options = '--config-file equipment/mypy.ini'
+" TODO: For post-3.1.0
+"let b:ale_python_autoflake_options = "--remove-all-unused-imports"
 
 " Disable trailing whitespace warnings, Black will fix
 let b:ale_warn_about_trailing_whitespace = 0

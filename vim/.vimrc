@@ -78,6 +78,7 @@ Plug 'mustache/vim-mustache-handlebars'
 " Async Linting
 " mparent(2021-08-03): Tagged to last-known working version, later broke "fix on save"
 Plug 'dense-analysis/ale', {'tag': 'v3.1.0'}
+"Plug 'dense-analysis/ale'
 
 """ Disable search highlighting when not searching
 Plug 'romainl/vim-cool'
@@ -290,8 +291,6 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
-" Auto-reload VIMRC
-autocmd! bufwritepost $MYVIMRC source %
 
 "======================================================================
 
@@ -449,10 +448,11 @@ let g:python3_host_prog = '/usr/local/opt/python@3.8/bin/python3'
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 1
-let g:ale_set_loclist = 1
 " Disable auto-opening, this weirdly causes issue where APPEND text command position can be shifted one-to-left
 " And weirdly, only if using "loclist", not with "quickfix" (which is not ideal)
-let g:ale_open_list = 0
+" medate: Trying this out again...
+let g:ale_set_loclist = 1
+let g:ale_open_list = 1
 
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
@@ -643,10 +643,8 @@ nmap <leader>ntr :NERDTreeRepoFiles<CR>
 nmap <leader>ntp :NERDTreeFind<CR>
 
 "---------- NetRW ----------
-" Allow removal of non-empty local directories
-let g:netrw_localrmdir="rm -r"
-" Fixes file/copy commands by having current directory track browsing directory (see "help netrw-c")
-let g:netrw_keepdir=0
+" " Fixes file/copy commands by having current directory track browsing directory (see "help netrw-c")
+" let g:netrw_keepdir=0
 
 
 "---------- Rainbow Parens ----------

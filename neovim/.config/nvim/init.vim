@@ -3,8 +3,6 @@
 "======================================================================
 call plug#begin('~/.local/share/nvim/plugged')
 
-"Plug 'davidhalter/jedi-vim'
-
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -18,6 +16,8 @@ Plug 'tpope/vim-vinegar'
 Plug 'will133/vim-dirdiff'
 Plug 'justinmk/vim-sneak'
 
+Plug 'bkad/CamelCaseMotion'
+
 Plug 'lifepillar/vim-solarized8'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -25,9 +25,21 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'hashivim/vim-terraform'
-
 Plug 'idbrii/itchy.vim'  " Scratch buffer
+
+Plug 'romainl/vim-cool'   " Disable search highlighting when not searching
+
+" Python
+Plug 'psf/black', { 'branch': 'main' }
+Plug 'fisadev/vim-isort'
+Plug 'tell-k/vim-autoflake'
+
+" """ Markdown
+" mparent(2022-01-10): - causes error during `checkhealth` about missing group `markdownError`
+"Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'itspriddle/vim-marked', { 'for': 'markdown' }  " Integration with Marked2 viewer
+
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
@@ -39,10 +51,10 @@ let maplocalleader = "\\"
 
 
 "======================================================================
-" Save/Quit
+" File/Buffer Management
 command! Q q            " Case insensitive Quit
 command! W wqa          " Easy write/quit/all!
-nmap <leader>w :w!<CR>  " Force write current file
+nmap <leader>w :wa!<CR>  " Force write all files
 nmap <leader>x :x<CR>
 nmap <leader>q :xa<CR>
 nmap <leader>o :only<CR>
@@ -51,6 +63,9 @@ au FocusLost * silent! :wa    " Auto-save everything on lost focus
 " http://stackoverflow.com/questions/1005/getting-root-permissions-on-a-file-inside-of-vi
 cmap w!! w !sudo tee >/dev/null %
 
+" Open previous buffer
+nmap <C-e> :e#<CR>
+
 " Quick-open Neovim config
 nnoremap <silent> <leader>E :e $MYVIMRC<cr>
 
@@ -58,11 +73,18 @@ nnoremap <silent> <leader>E :e $MYVIMRC<cr>
 " Colorscheme
 set background=light
 let g:solarized_use16=1
+let g:solarized_italics=0  " Prevent ugly gray highlight with 16-color mode
 colorscheme solarized8
 " Make sure NVIM recognizes 256-color support. Especially important for iTerm2
 if $TERM == "xterm-256color" || $TERM == "screen-256color"
     set t_Co=256
 endif
+
+"---------- NetRW ----------
+" Allow removal of non-empty local directories
+let g:netrw_localrmdir="rm -r"
+" Fixes file/copy commands by having current directory track browsing directory (see "help netrw-c")
+"let g:netrw_keepdir=0
 
 "======================================================================
 " Editing
@@ -81,11 +103,13 @@ augroup highlight_yank
 augroup END
 
 
-" Search
+" Find/Replace
 set ignorecase              " Case insensitive
 set incsearch               " Search as you type
 set hlsearch                " Highlight all search term matches
 "set infercase               " Completion recognizes capitalization
+set gdefault                " :sub "all" flag on by default (don't need add 'g' on end of searches
+
 
 " Line Numbers - shows relative numbering with current line's absolute number
 set relativenumber
@@ -97,8 +121,48 @@ set softtabstop=4
 set shiftwidth=4            " Number of spaces to shift for autoindent or >,<
 set tabstop=4               " The One True Tab
 
+"======================================================================
 " Diffs
+" Toggle some options that depend on whether we're in diff mode or not
+function! ToggleDiffOptions()
+    if &diff
+        " Cursorline + Colorcolumn conflict with solarized colors
+        setlocal nocursorline
+        setlocal colorcolumn=
+    else
+        setlocal cursorline
+        setlocal colorcolumn=+1
+    endif
+endfunction
+
+augroup DiffModeOptions
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter,FilterWritePre,FilterWritePost * call ToggleDiffOptions()
+    " Only show cursorline in active window
+    autocmd WinLeave * setlocal nocursorline
+augroup END
+
+function! DiffToggle()
+    if &diff
+        " Turn off diff in all windows in current tab
+        diffoff!
+    else
+        diffthis
+    endif
+endfunction
+
+function! DiffWhitespaceToggle()
+    if &diffopt =~ 'iwhite'
+        set diffopt-=iwhite
+    else
+        set diffopt+=iwhite
+    endif
+endfunction
+"
 set diffopt+=vertical           " Prefer vertical diff splits
+
+nnoremap <silent> <Leader>dt :call DiffToggle()<CR>
+nnoremap <silent> <Leader>dw :call DiffWhitespaceToggle()<CR>
 
 "---------- Whitespace ----------
 " Delete trailing whitespace on save
@@ -143,8 +207,29 @@ endif
 
 
 "======================================================================
-" Python
+" Providers
 let g:python3_host_prog = "~/.virtualenvs/neovim/bin/python"
+" Disabled (don't use these yet, makes `checkhealth` cleaner)
+let g:loaded_node_provider = 0
+let g:loaded_perl_provider = 0
+let g:loaded_python_provider = 0  " Disable Python 2 (not installed on lastest OSX)
+let g:loaded_ruby_provider = 0
+
+
+"======================================================================
+" Autoflake
+" TODO: Move to ftplugin/python.vim ?
+let g:autoflake_remove_all_unused_imports=1
+let g:autoflake_remove_unused_variables=1
+let g:autoflake_disable_show_diff=1
+
+"---------- CamelCaseMotion ----------
+map W <Plug>CamelCaseMotion_w
+map B <Plug>CamelCaseMotion_b
+map E <Plug>CamelCaseMotion_e
+sunmap W
+sunmap B
+sunmap E
 
 "======================================================================
 " CoC
@@ -223,6 +308,12 @@ nnoremap <silent> <localleader>a :FZFRgCurrentType<CR>
 nnoremap <silent> <localleader>A :FZFRgCurrentTypeAndWord<CR>
 " Search for word under cursor
 nnoremap <silent> ; :Buffers<CR>
+
+" Conflict Resolution
+" Pull change from left
+nnoremap gdh :diffget //2<CR>
+" Pull change from right
+nnoremap gdl :diffget //3<CR>
 
 
 " Terraform

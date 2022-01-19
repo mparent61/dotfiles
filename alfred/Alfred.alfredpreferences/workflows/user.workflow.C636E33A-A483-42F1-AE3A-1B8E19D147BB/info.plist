@@ -23,13 +23,13 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string></string>
+	<string>Me!</string>
 	<key>description</key>
 	<string></string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>JIRA - Tillable</string>
+	<string>View PR Reviews</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -38,11 +38,11 @@
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>jira</string>
+				<string>prr</string>
 				<key>subtext</key>
-				<string>JIRA</string>
+				<string>GitHub</string>
 				<key>text</key>
-				<string>Open JIRA app</string>
+				<string>Open my Pull Request reviews</string>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -61,7 +61,7 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://tillable.atlassian.net/jira/software/projects/TN/boards/6</string>
+				<string>https://github.com/pulls/review-requested</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
@@ -93,6 +93,6 @@
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string>https://tillable.atlassian.net/jira/software/projects/TN/boards/6</string>
+	<string></string>
 </dict>
 </plist>

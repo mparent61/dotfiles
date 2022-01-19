@@ -30,26 +30,23 @@ COMPLETION_WAITING_DOTS="true"
 # This should automatically trigger periodic `brew cleanup` housekeeping
 export HOMEBREW_INSTALL_CLEANUP="true"
 
-plugins=(autojump
-         brew
-         direnv
-         docker
-         fabric
-         fzf
-         git
-         gitfast
-         history
-         kubectl
-         macos
-         mercurial
-         python
-         terraform
-         tmux
-         tmuxinator
-         vagrant
-         vi-mode
-         virtualenv
-         virtualenvwrapper)
+plugins=(
+  autojump
+  brew
+  direnv
+  docker
+  fzf
+  git
+  gitfast
+  history
+  kubectl
+  macos
+  python
+  terraform
+  tmux
+  vi-mode
+  virtualenv
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,6 +95,7 @@ alias vimrc='vim ~/.vimrc'
 alias zshrc='vim ~/.zshrc'
 alias brewcheck='brew update && brew outdated && brew doctor'
 alias g='git'
+alias gi='git'
 alias gs='git st'
 alias gc='git commit'
 alias gcv='git commit --no-verify'
@@ -171,16 +169,14 @@ fi
 # zsh-completions
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# Use setuptools by default, distribute deprecated
-export VIRTUALENV_SETUPTOOLS=1
-# Default to Python 3
-export WORKON_HOME=$HOME/.virtualenvs
-source `which virtualenvwrapper.sh`
-mkvirtualenv2() {
-    mkvirtualenv -p python2.7 "$@"
+# Always use Python 3 (no more 2)
+export VIRTUAL_ENV_DIR=$HOME/.virtualenvs
+workon() {
+  source $VIRTUAL_ENV_DIR/$1/bin/activate
 }
-mkvirtualenv3() {
-    mkvirtualenv -p python3 "$@"
+mkvenv() {
+    python3 -m venv $VIRTUAL_ENV_DIR/$1
+    workon $1
 }
 
 # Fast switch between VIM + SZH
@@ -263,8 +259,6 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --glob 
 #----------------------------------------------------------------------
 # Auto-completion
 #----------------------------------------------------------------------
-# Load Git completion
-zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
 
 # Look for completion scripts in ~/.zsh
 fpath=(~/.zsh $fpath)
@@ -273,10 +267,8 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
 
 # Add Kubernetes info to prompt
-source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
 export KUBE_PS1_SYMBOL_USE_IMG=true
-#PS1='$(kube_ps1)'$PS#1
-#PS1=$PS1'$(kube_ps1)'
 
 # McFly shell history search
 eval "$(mcfly init zsh)"

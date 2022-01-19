@@ -1,22 +1,6 @@
 # My Evil Plan!
 alias plan='nvim -O ~/Library/Mobile\ Documents/com~apple~CloudDocs/Documents/Tillable/{plan.taskpaper,scratch.txt}'
 
-# Add Homebrew-installed Python binaries
-PATH="/usr/local/opt/python@3.8/bin:$PATH"
-
-# Add Go binaries to PATH
-PATH=$PATH:`go env GOPATH`/bin
-
-# Using older Homebrew keg for PostgreSQL
-export PATH="/usr/local/opt/postgresql@12/bin:$PATH"
-
-# Use newer Ruby for Tmuxinator support
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-export PATH="$(gem environment gemdir)/bin:$PATH"
-
-# Use Node@10
-export PATH="/usr/local/opt/node@14/bin:$PATH"
-
 # Terraform concise plan
 tfcp () {
     tf plan -out ~/tmp/tf.plan $* && tf show -json ~/tmp/tf.plan | jq -r ' .resource_changes[] | select(any(.change.actions[]; IN("no-op", "read")|not)) | [(.change.actions | join(",") | ascii_upcase), (.module_address), (.type), (.name), (.index)] | @tsv ' | column -t
@@ -25,23 +9,27 @@ tfcp () {
 #--------------------------------------------------
 # Development
 #--------------------------------------------------
+# Python
+alias pt=pytest
 # Map volumes for local development + configuration
 alias dr='docker-compose run \
         --volume "$HOME/.bashrc:/root/.bashrc" \
         --volume "$HOME/.bash_history:/root/.bash_history" \
         --volume "$HOME/.inputrc:/root/.inputrc" \
-        --volume "$HOME/.ipython/profile_default/ipython_config.py:/root/.ipython/profile_default/ipython_config.py" \
+        --volume "$HOME/.ipython/:/root/.ipython/" \
         --volume "$HOME/.pdbrc.py:/root/.pdbrc.py" \
         '
 # Default to running bash shell
-drc() { cd ~/dev/api/tillable && dr client "${1:-bash}"; }
-dra() { cd ~/dev/api/tillable && dr admin "${1:-bash}"; }
-drs() { cd ~/dev/api/silo && dr silo "${1:-bash}"; }
+drc() { cd ~/dev/api && dr client "${1:-bash}"; }
+dra() { cd ~/dev/api && dr admin "${1:-bash}"; }
+drs() { cd ~/dev/api && dr silo "${1:-bash}"; }
 
 
 # Enable writing local KubeConfig
 #export TF_VAR_write_kubeconfig=true
-export TF_VAR_write_kubeconfig=false
+
+# 2022-01-10: Fix for running Terraform on Apple M1
+export GODEBUG=asyncpreemptoff=1
 
 # Disable AWS CLI use of external pager (just print results and exit)
 export AWS_PAGER=""

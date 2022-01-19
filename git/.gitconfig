@@ -54,6 +54,7 @@
     up = "!git pull && git fetch --prune && git delete-gone-branches && git b"
 
     mt = mergetool
+    mm = merge master
 
     ci = commit
     ca = commit -a
