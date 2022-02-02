@@ -120,6 +120,7 @@
 	default = simple
 [merge]
 	tool = vim-fugitive
+	conflictstyle = zdiff3
 [difftool]
     # Stop vim prompting about launching vimdiff
     prompt = false

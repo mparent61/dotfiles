@@ -166,9 +166,6 @@ if [[ -f ~/.crontab.$(hostname) ]]; then
     crontab ~/.crontab.$(hostname)
 fi
 
-# zsh-completions
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 # Always use Python 3 (no more 2)
 export VIRTUAL_ENV_DIR=$HOME/.virtualenvs
 workon() {
@@ -292,4 +289,3 @@ source /Users/mparent/.config/broot/launcher/bash/br
 if [[ -f "${HOME}/.zshrc.${HOST}" ]]; then
     source "${HOME}/.zshrc.${HOST}"
 fi
-

@@ -18,6 +18,7 @@ alias dr='docker-compose run \
         --volume "$HOME/.inputrc:/root/.inputrc" \
         --volume "$HOME/.ipython/:/root/.ipython/" \
         --volume "$HOME/.pdbrc.py:/root/.pdbrc.py" \
+        --volume "$HOME/.pdbrc:/root/.pdbrc" \
         '
 # Default to running bash shell
 drc() { cd ~/dev/api && dr client "${1:-bash}"; }
