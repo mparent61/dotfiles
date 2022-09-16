@@ -1,0 +1,13 @@
+# Default print using Rich library
+alias p from rich import inspect; inspect(%1, docs=False)
+alias pa from rich import inspect; inspect(%1, docs=False, all=True)
+
+# Print the member variables of a thing.
+alias pi p %*.__dict__
+
+# Print the member variables of self.
+alias ps pi self
+
+# Print locals
+alias pl p locals()
+alias pg p globals()

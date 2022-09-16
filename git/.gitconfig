@@ -25,15 +25,17 @@
     local = yellow
     remote = green
 [alias]
-    co = checkout
-    co-all = checkout -- .
+    # mparent(2022-08-09): Use SWITCH and RESTORE instead of CHECKOUT
+    co = switch
+    s = switch
+    r = restore
     # Undo all unstaged modifications
-    revertall = checkout -- .
+    restore-all = restore -- .
 
     # Forget a file by removing it from Git cache (https://stackoverflow.com/a/1274447)
     forget = rm --cached
 
-    nb = checkout -b
+    nb = switch --create
     br = branch
     # List of branches by date modified
     b = for-each-ref --sort=committerdate refs/heads/ --format='%(color:red)%(objectname:short)%(color:reset) %(color:green)%(committerdate:relative)%(color:reset)\t%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(contents:subject) - %(authorname)'
@@ -114,13 +116,16 @@
     rso = remote show origin
 	lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
 
+    # Show new TODO statements in current branch
+    branch-todo = "!git diff master | grep '\\+.*#\\s*TODO'"
+
 [pull]
     rebase = true
 [push]
 	default = simple
 [merge]
 	tool = vim-fugitive
-	conflictstyle = zdiff3
+	conflictstyle = merge
 [difftool]
     # Stop vim prompting about launching vimdiff
     prompt = false

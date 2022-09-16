@@ -7,6 +7,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -25,19 +26,30 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'idbrii/itchy.vim'  " Scratch buffer
+Plug 'mbbill/undotree'
+
+""" Scratch buffer
+Plug 'mtth/scratch.vim'
 
 Plug 'romainl/vim-cool'   " Disable search highlighting when not searching
+
+" Yank Ring
+Plug 'bfredl/nvim-miniyank'
 
 " Python
 Plug 'psf/black', { 'branch': 'main' }
 Plug 'fisadev/vim-isort'
 Plug 'tell-k/vim-autoflake'
 
+Plug 'airblade/vim-rooter'  " Set working directory to current file's repository root
+
 " """ Markdown
 " mparent(2022-01-10): - causes error during `checkhealth` about missing group `markdownError`
 "Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'itspriddle/vim-marked', { 'for': 'markdown' }  " Integration with Marked2 viewer
+
+" JSONC
+Plug 'neoclide/jsonc.vim'
 
 Plug 'hashivim/vim-terraform'
 
@@ -110,6 +122,7 @@ set hlsearch                " Highlight all search term matches
 "set infercase               " Completion recognizes capitalization
 set gdefault                " :sub "all" flag on by default (don't need add 'g' on end of searches
 
+set scrolloff=3   " Auto-scroll to show extra lines above/below current line
 
 " Line Numbers - shows relative numbering with current line's absolute number
 set relativenumber
@@ -120,6 +133,9 @@ set expandtab               " No tabs by default
 set softtabstop=4
 set shiftwidth=4            " Number of spaces to shift for autoindent or >,<
 set tabstop=4               " The One True Tab
+set breakindent             " Wrapped text matches indent of line above
+" Line-break marker
+set showbreak=↪\            " Note: there's a trailing <Space> after the slash
 
 "======================================================================
 " Diffs
@@ -233,22 +249,39 @@ sunmap E
 
 "======================================================================
 " CoC
+"----------------------------------------------------------------------
+
+" Use <tab> and <S-tab> to navigate completion list: >
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+" Insert <tab> when previous text is space, refresh completion if not.
+inoremap <silent><expr> <TAB>
+    \ coc#pum#visible() ? coc#pum#next(1):
+    \ <SID>check_back_space() ? "\<Tab>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+" Open Diagnostics list
+nnoremap <localleader>d :CocDiagnostics<CR>
 
 "======================================================================
+" Map <tab> for trigger completion, completion confirm, snippet expand and jump like VSCode: >
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+    \ coc#pum#visible() ? coc#_select_confirm() :
+    \ coc#expandableOrJumpable() ?
+    \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 let g:coc_snippet_next = '<tab>'
+"======================================================================
+
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -268,6 +301,7 @@ nnoremap <leader>gc :Git commit<CR>
 nnoremap <leader>gC :Git commit --no-verify -q<CR>
 nnoremap <leader>gd :Gdiff<CR>
 
+"======================================================================
 " FZF
 " Repository siblings - Automatically find parent directory of my root Git project
 function! s:find_git_root()
@@ -276,7 +310,6 @@ endfunction
 
 command! FZFRepoFiles execute 'Files' s:find_git_root()
 command! FZFSiblingRepoFiles execute 'Files' fnamemodify(s:find_git_root(), ':h')
-
 
 let fzf_rg_base_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore-vcs --hidden --follow --glob "!.git/*" --color "always" '
 
@@ -316,5 +349,22 @@ nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
 
+"======================================================================
+"" Mini-Yank
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+" "startput" will directly put the most recent item in the shared history:
+map <leader>p <Plug>(miniyank-startput)
+map <leader>P <Plug>(miniyank-startPut)
+"Right after a put, use "cycle" to go through history:
+map <leader>n <Plug>(miniyank-cycle)
+" Stepped too far? You can cycle back to more recent items using:
+map <leader>N <Plug>(miniyank-cycleback)
+"Maybe the register type was wrong? Well, you can change it after putting:
+map <Leader>c <Plug>(miniyank-tochar)
+map <Leader>l <Plug>(miniyank-toline)
+map <Leader>b <Plug>(miniyank-toblock)
+
+"======================================================================
 " Terraform
 let g:terraform_fmt_on_save = 1

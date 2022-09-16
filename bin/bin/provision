@@ -17,6 +17,7 @@ brew install \
     git \
     htop-osx \
     hub \
+    jq \
     mcfly \
     neovim \
     reattach-to-user-namespace \

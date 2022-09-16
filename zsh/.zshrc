@@ -130,7 +130,7 @@ alias df="duf"
 alias tree="broot"
 alias bat="bat --theme GitHub"
 alias cat="bat"
-alias find="fd"
+alias pt="pytest"
 # Run local webserver serving local directory
 alias webserver="ruby -run -e httpd . -p 80"
 
@@ -174,6 +174,10 @@ workon() {
 mkvenv() {
     python3 -m venv $VIRTUAL_ENV_DIR/$1
     workon $1
+}
+mklocalvenv() {
+    python3 -m venv .venv
+    source .venv/bin/activate
 }
 
 # Fast switch between VIM + SZH
@@ -289,3 +293,13 @@ source /Users/mparent/.config/broot/launcher/bash/br
 if [[ -f "${HOME}/.zshrc.${HOST}" ]]; then
     source "${HOME}/.zshrc.${HOST}"
 fi
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/slss.zsh

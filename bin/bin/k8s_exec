@@ -8,12 +8,14 @@
 # Note: make sure KUBECONFIG environment variable contains path to your K8s config
 #
 
-NAME_PATTERN=$1
+NAMESPACE=$1
+shift
+APP_PATTERN=$1
 shift
 
 # Find the first pod matching pattern
-POD=$(kubectl get pods -o name | grep $NAME_PATTERN | head -n 1)
+POD=$(kubectl get pods -n $NAMESPACE -o name | grep $APP_PATTERN | head -n 1)
 
-echo "Running command in $POD"
+echo "Running command in $NAMESPACE $POD"
 
-kubectl exec -it $POD -- "${@:-bash}"
+kubectl exec -it -n $NAMESPACE $POD -- "${@:-bash}"

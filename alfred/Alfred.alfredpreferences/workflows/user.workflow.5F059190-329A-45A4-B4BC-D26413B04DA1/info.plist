@@ -74,7 +74,7 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://github.com/pulls</string>
+				<string>https://github.com/pulls?q=is%3Aopen+is%3Apr+author%3Amparent61+archived%3Afalse+user%3Atillable</string>
 				<key>utf8</key>
 				<true/>
 			</dict>

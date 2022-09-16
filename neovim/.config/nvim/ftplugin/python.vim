@@ -1,5 +1,9 @@
-" Organize imports
 
+" Initial config from https://github.com/fannheyward/coc-pyright/issues/521#issuecomment-858530052
+" Should prune unused patterns once this is working correctly
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
+
+" Organize imports
 aug python
     au!
     autocmd BufWritePre *.py Isort
@@ -25,6 +29,9 @@ let g:autoflake_disable_show_diff=1
 " Must point to our virtual enviroment binary
 let g:autoflake_cmd=expand('~/.virtualenvs/neovim/bin/autoflake')
 
+" Smart-indent wrapped comments (assumes `breakindent` on)
+set breakindentopt+=list:-1
+set formatlistpat=^\\s*#\\s*
 
 
 "======================================================================
