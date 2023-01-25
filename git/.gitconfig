@@ -1,6 +1,6 @@
 [user]
     name = Mike Parent
-    email = michael.parent@tillable.com
+    email = michael.parent@camo.ag
 [core]
     excludesfile = ~/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
@@ -124,7 +124,7 @@
 [push]
 	default = simple
 [merge]
-	tool = vim-fugitive
+	tool = fugitive
 	conflictstyle = merge
 [difftool]
     # Stop vim prompting about launching vimdiff
@@ -136,12 +136,15 @@
 [mergetool]
     # Don't create *.orig backup files
 	keepBackup = false
-[mergetool "vim-fugitive"]
-    # 3-way diff, selecting top (merged) window
-	cmd = nvim -f -c \"Ghdiffsplit :3|Gvdiffsplit :2\" \"$MERGED\" -c '$wincmd k'
+[mergetool "fugitive"]
+      cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\" -c '$wincmd K'
+
+      #cmd = nvim -f -c \"Ghdiffsplit :3|Gvdiffsplit :2\" \"$MERGED\" -c '$wincmd k'
 [credential]
 	helper = osxkeychain
 
 [branch "master"]
     # Prevent merging to master
     mergeoptions = --no-ff
+    # Prevent push to remote https://stackoverflow.com/a/57998309
+    pushRemote = no_push

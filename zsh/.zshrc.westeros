@@ -11,10 +11,11 @@ tfcp () {
 #--------------------------------------------------
 # Python
 alias pt=pytest
+alias ptp='pt -n auto'
 # Stop and remove all containers
 alias dka='docker ps -aq | xargs docker stop | xargs docker rm'
-# Map volumes for local development + configuration
-alias dr='docker-compose run \
+# Auto-cleanup container, and map volumes for local development + configuration
+alias dr='docker-compose run --rm \
         --volume "$HOME/.bash_history:/root/.bash_history" \
         --volume "$HOME/.bashrc:/root/.bashrc" \
         --volume "$HOME/.inputrc:/root/.inputrc" \
@@ -41,8 +42,7 @@ export GODEBUG=asyncpreemptoff=1
 # Disable AWS CLI use of external pager (just print results and exit)
 export AWS_PAGER=""
 
-# VPN
-alias vpn='networksetup -connectpppoeservice "Tillable VPN"'
+alias vpn='vpn_start "Tillable VPN"'
 alias vpn-stop='networksetup -disconnectpppoeservice "Tillable VPN"'
 
 # Build settings

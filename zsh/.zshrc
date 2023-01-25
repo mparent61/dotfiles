@@ -111,6 +111,9 @@ alias dm=docker-machine
 alias dc=docker-compose
 # Terraform
 alias tf=terraform
+alias tfa='tf apply'`
+alias tfp='tf plan'`
+alias tfv='tf validate'`
 # HTTPie (Curl Replacement)
 alias http='http --style solarized'
 # OSX HTOP requires sudo
@@ -290,16 +293,9 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 source /Users/mparent/.config/broot/launcher/bash/br
 
 # Load host-specific config (ex: work stuff)
-if [[ -f "${HOME}/.zshrc.${HOST}" ]]; then
-    source "${HOME}/.zshrc.${HOST}"
+OSX_HOSTNAME=`hostname -s`
+if [[ -f "${HOME}/.zshrc.${OSX_HOSTNAME}" ]]; then
+    source "${HOME}/.zshrc.${OSX_HOSTNAME}"
 fi
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/mparent/dev/devops/serverless/node_modules/tabtab/.completions/slss.zsh
+source /Users/mparent/.docker/init-zsh.sh || true # Added by Docker Desktop

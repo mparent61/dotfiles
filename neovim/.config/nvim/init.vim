@@ -53,6 +53,9 @@ Plug 'neoclide/jsonc.vim'
 
 Plug 'hashivim/vim-terraform'
 
+
+Plug 'rhysd/conflict-marker.vim'
+
 call plug#end()
 
 
@@ -83,7 +86,7 @@ nnoremap <silent> <leader>E :e $MYVIMRC<cr>
 
 "======================================================================
 " Colorscheme
-set background=light
+set background=dark
 let g:solarized_use16=1
 let g:solarized_italics=0  " Prevent ugly gray highlight with 16-color mode
 colorscheme solarized8
@@ -101,8 +104,9 @@ let g:netrw_localrmdir="rm -r"
 "======================================================================
 " Editing
 set noswapfile
-set nobackup                " No backups left after done editing
 set smartcase               " case-sensitive search if 1+ letters are uppercase
+set backup
+set backupdir=$HOME/tmp/nvim
 set autoread                " Don't bother me when a file changes
 set autowriteall            " Save as often as possible
 
@@ -114,6 +118,9 @@ augroup highlight_yank
     au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
 augroup END
 
+" Windows
+set equalalways                " New windows/splits are equal size
+autocmd VimResized * wincmd =  " Always equalize windows on resize
 
 " Find/Replace
 set ignorecase              " Case insensitive
@@ -131,7 +138,7 @@ set number
 " Whitespace
 set expandtab               " No tabs by default
 set softtabstop=4
-set shiftwidth=4            " Number of spaces to shift for autoindent or >,<
+set shiftwidth=4            " Number of spaces to shift for auto-indent or >,<
 set tabstop=4               " The One True Tab
 set breakindent             " Wrapped text matches indent of line above
 " Line-break marker
@@ -196,10 +203,14 @@ function! DeleteTrailingWhitespace()
     " Restore cursor
     call setpos('.', save_cursor)
 endfunction
-autocmd BufWritePre *.py,*.mako,*.js,*.css,*.tf,*.vim call DeleteTrailingWhitespace()
+autocmd BufWritePre *.py,*.mako,*.js,*.css,*.tf,*.vim,*.yaml call DeleteTrailingWhitespace()
 nnoremap <leader>W :call DeleteTrailingWhitespace()<CR>
 
 "======================================================================
+" Spelling
+"
+set spell spelllang=en_us
+
 " Autocorrections
 " My Nemesis!
 iab recieve receive
@@ -208,8 +219,6 @@ iab RECIEVE RECEIVE
 iab recieved received
 iab Recieved Received
 iab RECIEVED RECEIVED
-" Convenience
-iab TD TODO
 
 "======================================================================
 " Undo is great!
@@ -222,6 +231,8 @@ if ! isdirectory(expand(&undodir))
 endif
 
 
+
+
 "======================================================================
 " Providers
 let g:python3_host_prog = "~/.virtualenvs/neovim/bin/python"
@@ -231,6 +242,53 @@ let g:loaded_perl_provider = 0
 let g:loaded_python_provider = 0  " Disable Python 2 (not installed on lastest OSX)
 let g:loaded_ruby_provider = 0
 
+"======================================================================
+" Treesitter - WIP
+
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   -- A list of parser names, or "all"
+"   ensure_installed = { "python" },
+
+"   -- Install parsers synchronously (only applied to `ensure_installed`)
+"   sync_install = false,
+
+"   -- Automatically install missing parsers when entering buffer
+"   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+"   auto_install = true,
+
+"   -- List of parsers to ignore installing (for "all")
+"   ignore_install = { "javascript" },
+
+"   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+"   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+"   highlight = {
+"     -- `false` will disable the whole extension
+"     enable = true,
+
+"     -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+"     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+"     -- the name of the parser)
+"     -- list of language that will be disabled
+"     disable = { "c", "rust" },
+"     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+"     disable = function(lang, buf)
+"         local max_filesize = 100 * 1024 -- 100 KB
+"         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+"         if ok and stats and stats.size > max_filesize then
+"             return true
+"         end
+"     end,
+
+"     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+"     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+"     -- Using this option may slow down your editor, and you may see some duplicate highlights.
+"     -- Instead of true it can also be a list of languages
+"     additional_vim_regex_highlighting = false,
+"   },
+" }
+" EOF
 
 "======================================================================
 " Autoflake
@@ -332,6 +390,8 @@ function! SetFzfRgCurrentTypeCommand()
 	\   fzf#vim#with_preview({'options': ['-q', expand('<cword>')]}, 'up:60%', 'ctrl-p'), <bang>0)
 endfunction
 
+let g:fzf_preview_window = ['hidden,right,50%,<70(up,40%)', 'ctrl-/']
+
 
 nnoremap <silent> <leader>f :FZFRepoFiles<CR>
 nnoremap <silent> <leader>F :FZFSiblingRepoFiles<CR>
@@ -368,3 +428,19 @@ map <Leader>b <Plug>(miniyank-toblock)
 "======================================================================
 " Terraform
 let g:terraform_fmt_on_save = 1
+
+
+" function! CocNvimHighlight()
+"     highlight CocErrorHighlight ctermfg=Red  guifg=#ff0000
+"     highlight CocWarningHighlight ctermfg=Red  guifg=#ff0000
+"     highlight CocInfoHighlight ctermfg=Red  guifg=#ff0000
+"     highlight CocHintHighlight ctermfg=Red  guifg=#ff0000
+"     highlight CocErrorLine ctermfg=Red  guifg=#ff0000
+"     highlight CocWarningLine ctermfg=Red  guifg=#ff0000
+"     highlight CocInfoLine ctermfg=Red  guifg=#ff0000
+"     highlight CocHintLine ctermfg=Red  guifg=#ff0000
+
+"     highlight CocHighlightText  guibg=#111111 ctermbg=223
+" endfunction
+
+" autocmd VimEnter function CocNvimHighlight()

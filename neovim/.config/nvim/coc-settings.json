@@ -1,0 +1,47 @@
+{
+    "languageserver": {
+        "terraform": {
+            "command": "terraform-ls",
+            "args": [
+                "serve"
+            ],
+            "filetypes": [
+                "terraform",
+                "tf"
+            ],
+            "initializationOptions": {},
+            "settings": {}
+        }
+    },
+    "coc.preferences.formatOnSaveFiletypes": [
+        "json",
+        // Disabled b/c CoC auto-formatting fails/times-out, instead I run plugins on pre-write, see 'ftplugin/python.vim'
+        //"python",
+        "terraform"
+    ],
+    "json.enable": true,
+    "json.format.enable": true,
+    //==================================================
+    // PyRight Configuration - 
+    // https://github.com/microsoft/pyright/blob/main/docs/configuration.md
+    //==================================================
+    // Could try this if still getting timeouts after I re-enable formatOnSave
+    // "coc.preferences.willSaveHandlerTimeout": 1000,
+    "pyright.organizeimports.provider": "isort",
+    //"python.analysis.stubPath": "stubs",
+    //"python.analysis.stubPath": "stubs",
+    //"python.formatting.blackPath": "/Users/mparent/.virtualenvs/neovim/bin/black",
+    "python.formatting.provider": "black",
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": ["--install-types"],
+    "python.pythonPath": "/Users/mparent/.virtualenvs/neovim/bin/python",
+    "python.sortImports.path": "/Users/mparent/.virtualenvs/neovim/bin/isort",
+    "python.venvPath": "/Users/mparent/.virtualenvs/",
+    "python.analysis.extraPaths": [
+        "/Users/mparent/dev/api/equipment",
+        "/Users/mparent/dev/api"
+    ],
+    "diagnostic.checkCurrentLine": true
+}
