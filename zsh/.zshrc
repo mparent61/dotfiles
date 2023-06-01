@@ -111,9 +111,9 @@ alias dm=docker-machine
 alias dc=docker-compose
 # Terraform
 alias tf=terraform
-alias tfa='tf apply'`
-alias tfp='tf plan'`
-alias tfv='tf validate'`
+alias tfa='tf apply'
+alias tfp='tf plan'
+alias tfv='tf validate'
 # HTTPie (Curl Replacement)
 alias http='http --style solarized'
 # OSX HTOP requires sudo
@@ -271,7 +271,7 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
 
 # Add Kubernetes info to prompt
-source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
+source "`brew --prefix`/opt/kube-ps1/share/kube-ps1.sh"
 export KUBE_PS1_SYMBOL_USE_IMG=true
 
 # McFly shell history search
