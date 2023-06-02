@@ -10,7 +10,6 @@ brew install \
     autossh \
     bat \
     coreutils \
-    diff-so-fancy \
     direnv \
     exa \
     fzf \
@@ -18,6 +17,7 @@ brew install \
     htop-osx \
     hub \
     jq \
+    kube-ps1 \
     mcfly \
     neovim \
     reattach-to-user-namespace \
@@ -39,11 +39,21 @@ brew install python
 brew unlink python && brew link --overwrite python
 
 # Oh-My-Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 env ZSH=$ZSH /bin/sh $ZSH/tools/upgrade.sh
 
+#-----------------------------------------------------
+# NEOVIM
 # Required for VIM/NeoVIM plugins (including Deoplete)
-#pip3 install --upgrade neovim
-
-
-# Additional Neovim setup
+# Install plugins
+mkvenv neovim
+workon neovim && pip install neovim
+nvim -i NONE -c "PlugInstall" -c "qa" -V
+# Other packages
 brew install nodejs
+
+
+#-----------------------------------------------------
+# OSX
+# Show hidden files in Finder
+defaults write com.apple.Finder AppleShowAllFiles true && killall Finder

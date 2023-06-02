@@ -27,14 +27,16 @@ export DISABLE_UPDATE_PROMPT=true
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
+# Homebrew
 # This should automatically trigger periodic `brew cleanup` housekeeping
 export HOMEBREW_INSTALL_CLEANUP="true"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
 
 plugins=(
   autojump
   brew
   direnv
-  docker
   fzf
   git
   gitfast
@@ -130,7 +132,6 @@ alias ls="exa"
 alias l="exa -lahF"
 alias du="dust"
 alias df="duf"
-alias tree="broot"
 alias bat="bat --theme GitHub"
 alias cat="bat"
 alias pt="pytest"
@@ -271,7 +272,7 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
 
 # Add Kubernetes info to prompt
-source "`brew --prefix`/opt/kube-ps1/share/kube-ps1.sh"
+source "`brew --prefix kube-ps1`/share/kube-ps1.sh"
 export KUBE_PS1_SYMBOL_USE_IMG=true
 
 # McFly shell history search
@@ -290,12 +291,8 @@ export MCFLY_LIGHT=TRUE
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
-source /Users/mparent/.config/broot/launcher/bash/br
-
 # Load host-specific config (ex: work stuff)
 OSX_HOSTNAME=`hostname -s`
 if [[ -f "${HOME}/.zshrc.${OSX_HOSTNAME}" ]]; then
     source "${HOME}/.zshrc.${OSX_HOSTNAME}"
 fi
-
-source /Users/mparent/.docker/init-zsh.sh || true # Added by Docker Desktop
