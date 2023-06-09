@@ -8,8 +8,10 @@ brew doctor
 brew install \
     autojump \
     autossh \
+    awscli \
     bat \
     coreutils \
+    diff-so-fancy \
     direnv \
     exa \
     fzf \
@@ -18,40 +20,46 @@ brew install \
     hub \
     jq \
     kube-ps1 \
+    kubectx \
     mcfly \
     neovim \
+    nodejs \
+    php \
     reattach-to-user-namespace \
     rename \
     ripgrep \
     stow \
+    terraform-ls \
     tmux \
     trash \
     vim \
     watch \
+    warrensbox/tap/tfswitch \
     zsh
 
-brew install php  # For Alfred "GitHub" workflow
 
 brew upgrade
 
 # Python 3
-brew install python
-brew unlink python && brew link --overwrite python
+brew install python && brew unlink python && brew link --overwrite python
+
+# Git Credentials
+brew tap microsoft/git
+brew install --cask git-credential-manager-core
 
 # Oh-My-Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-env ZSH=$ZSH /bin/sh $ZSH/tools/upgrade.sh
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# env ZSH=$ZSH /bin/sh $ZSH/tools/upgrade.sh
 
 #-----------------------------------------------------
 # NEOVIM
 # Required for VIM/NeoVIM plugins (including Deoplete)
 # Install plugins
-mkvenv neovim
-workon neovim && pip install neovim
-nvim -i NONE -c "PlugInstall" -c "qa" -V
-# Other packages
-brew install nodejs
-
+# mkvenv neovim
+# workon neovim && pip install neovim
+nvim -i NONE -c "PlugInstall" +qall
+# CoC
+nvim -i NONE -c "CocInstall coc-json coc-pyright coc-snippets" +qall
 
 #-----------------------------------------------------
 # OSX

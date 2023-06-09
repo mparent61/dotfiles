@@ -27,6 +27,9 @@ export DISABLE_UPDATE_PROMPT=true
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
+# My dotfile tooling
+export PATH="$HOME/bin:$PATH"
+
 # Homebrew
 # This should automatically trigger periodic `brew cleanup` housekeeping
 export HOMEBREW_INSTALL_CLEANUP="true"

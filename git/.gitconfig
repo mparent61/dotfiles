@@ -141,7 +141,7 @@
 
       #cmd = nvim -f -c \"Ghdiffsplit :3|Gvdiffsplit :2\" \"$MERGED\" -c '$wincmd k'
 [credential]
-	helper = osxkeychain
+	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [branch "master"]
     # Prevent merging to master

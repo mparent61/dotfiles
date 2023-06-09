@@ -102,6 +102,7 @@ colorscheme solarized8
 if $TERM == "xterm-256color" || $TERM == "screen-256color"
     set t_Co=256
 endif
+set termguicolors
 
 "---------- NetRW ----------
 " Allow removal of non-empty local directories
