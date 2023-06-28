@@ -9,6 +9,10 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
+" " If installed using Homebrew on Apple Silicon
+" set rtp+=/opt/homebrew/opt/fzf
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Git
@@ -29,10 +33,11 @@ Plug 'bkad/CamelCaseMotion'
 
 Plug 'lifepillar/vim-solarized8'
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
 
 Plug 'mbbill/undotree'
 
@@ -378,7 +383,7 @@ endfunction
 command! FZFRepoFiles execute 'Files' s:find_git_root()
 command! FZFSiblingRepoFiles execute 'Files' fnamemodify(s:find_git_root(), ':h')
 
-let fzf_rg_base_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore-vcs --hidden --follow --glob "!.git/*" --color "always" '
+let fzf_rg_base_command = $FZF_DEFAULT_COMMAND "--column --line-number --no-heading --fixed-strings --ignore-case --color always "
 
 command! -bang -nargs=* FZFRg
   \ call fzf#vim#grep(fzf_rg_base_command.shellescape(<q-args>), 1,

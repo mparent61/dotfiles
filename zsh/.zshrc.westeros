@@ -13,7 +13,7 @@ tfcp () {
 alias pt=pytest
 alias ptp='pt -n auto'
 # Stop and remove all containers
-alias dka='docker ps -aq | xargs docker stop | xargs docker rm'
+alias dka='docker ps -aq | xargs docker kill | xargs docker rm'
 # Auto-cleanup container, and map volumes for local development + configuration
 alias dr='docker compose run --rm \
         --volume "$HOME/.bash_history:/root/.bash_history" \
@@ -33,6 +33,10 @@ dbc() { cd ~/dev/api && dr --service-ports client ${@}; }
 dba() { cd ~/dev/api && dr --service-ports admin ${@}; }
 dbs() { cd ~/dev/api && dr --service-ports silo ${@}; }
 
+# Kubernetes
+alias kc='kubectx'
+alias kn='kubens'
+
 # Enable writing local KubeConfig
 #export TF_VAR_write_kubeconfig=true
 
@@ -42,8 +46,8 @@ export GODEBUG=asyncpreemptoff=1
 # Disable AWS CLI use of external pager (just print results and exit)
 export AWS_PAGER=""
 
-alias vpn='vpn_start "Tillable VPN"'
-alias vpn-stop='networksetup -disconnectpppoeservice "Tillable VPN"'
+alias vpn='vpn_start.sh CamoAg'
+alias vpn-stop='networksetup -disconnectpppoeservice "CamoAg"'
 
 # Build settings
 export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
@@ -54,6 +58,9 @@ export PATH="/opt/homebrew/opt/node@14/bin:$PATH"
 
 # CURL
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+
+# Postgres
+export PATH="/Applications/Postgres.app/Contents/Versions/12/bin:$PATH"
 
 # NGROK
 alias ngf="ngrok http --hostname=tillable.ngrok.io 7777"

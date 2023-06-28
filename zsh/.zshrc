@@ -174,13 +174,13 @@ if [[ -f ~/.crontab.$(hostname) ]]; then
 fi
 
 # Always use Python 3 (no more 2)
-export VIRTUAL_ENV_DIR=$HOME/.virtualenvs
+#export VIRTUAL_ENV_DIR=$HOME/.virtualenvs
 workon() {
   source $VIRTUAL_ENV_DIR/$1/bin/activate
 }
 mkvenv() {
-    python3 -m venv $VIRTUAL_ENV_DIR/$1
-    workon $1
+    python3 -m venv 
+    workon .venv
 }
 mklocalvenv() {
     python3 -m venv .venv
@@ -201,22 +201,20 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# fzf via Homebrew
-if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
-  source /usr/local/opt/fzf/shell/key-bindings.zsh
-  source /usr/local/opt/fzf/shell/completion.zsh
-fi
+# # fzf via Homebrew
+# if [ -e  `brew --prefix fzf`/shell/completion.zsh ]; then
+#   source `brew --prefix fzf`/shell/key-bindings.zsh
+#   source `brew --prefix fzf`/shell/completion.zsh
+# fi
 
-# fzf + ag configuration
-if _has fzf && _has ag; then
-  export FZF_DEFAULT_COMMAND='ag --hidden --nocolor -g ""'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_DEFAULT_OPTS='
-  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
-  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
-  '
-fi
+
+# # Customize FZF command to use RipGrep
+# # --files: List files that would be searched but do not search
+# # --no-ignore-vcs: Do not respect .gitignore, etc...
+# # --hidden: Search hidden files and folders
+# # --follow: Follow symlinks
+# # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --glob "!.git/*" --glob "!**/.mypy_cache/*" --glob "!**/*.pyc*" --glob "!**/.pytest_cache/*" --glob "!**/.terraform/*" --glob "!**/.venv/**"'
 
 
 # Make Directory + CD to it
@@ -250,19 +248,6 @@ z() {
   dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
 }
 
-
-#----------------------------------------------------------------------
-# FZF
-#----------------------------------------------------------------------
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Customize FZF command to use RipGrep
-# --files: List files that would be searched but do not search
-# --no-ignore-vcs: Do not respect .gitignore, etc...
-# --hidden: Search hidden files and folders
-# --follow: Follow symlinks
-# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --glob "!.git/*"'
 
 #----------------------------------------------------------------------
 # Auto-completion
