@@ -65,3 +65,8 @@ nvim -i NONE -c "CocInstall coc-json coc-pyright coc-snippets" +qall
 # OSX
 # Show hidden files in Finder
 defaults write com.apple.Finder AppleShowAllFiles true && killall Finder
+
+#-------------------------------------------------------------------------------
+# VSCode
+# Enable key-repeat for VIM extension
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false

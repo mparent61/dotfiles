@@ -209,12 +209,12 @@ bindkey '^Z' fancy-ctrl-z
 
 
 # # Customize FZF command to use RipGrep
-# # --files: List files that would be searched but do not search
 # # --no-ignore-vcs: Do not respect .gitignore, etc...
 # # --hidden: Search hidden files and folders
 # # --follow: Follow symlinks
-# # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --glob "!.git/*" --glob "!**/.mypy_cache/*" --glob "!**/*.pyc*" --glob "!**/.pytest_cache/*" --glob "!**/.terraform/*" --glob "!**/.venv/**"'
+export FZF_BASE_COMMAND="rg --no-ignore-vcs --hidden --follow "
+# # --files: List files that would be searched but do not search
+export FZF_DEFAULT_COMMAND="$FZF_BASE_COMMAND --files"
 
 
 # Make Directory + CD to it
