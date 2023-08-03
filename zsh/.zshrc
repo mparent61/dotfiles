@@ -277,7 +277,7 @@ export MCFLY_LIGHT=TRUE
 
 # Terraform auto-complete
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform
+complete -o nospace -C `which terraform` terraform
 
 # Load host-specific config (ex: work stuff)
 OSX_HOSTNAME=`hostname -s`
