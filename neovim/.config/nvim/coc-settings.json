@@ -30,18 +30,18 @@
     "pyright.organizeimports.provider": "isort",
     //"python.analysis.stubPath": "stubs",
     //"python.analysis.stubPath": "stubs",
-    //"python.formatting.blackPath": "/Users/mparent/.virtualenvs/neovim/bin/black",
+    //"python.formatting.blackPath": "/Users/michaelparent/.virtualenvs/neovim/bin/black",
     "python.formatting.provider": "black",
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.linting.mypyEnabled": true,
     "python.linting.mypyArgs": ["--install-types"],
-    "python.pythonPath": "/Users/mparent/.virtualenvs/neovim/bin/python",
-    "python.sortImports.path": "/Users/mparent/.virtualenvs/neovim/bin/isort",
-    "python.venvPath": "/Users/mparent/.virtualenvs/",
+    "python.pythonPath": "/Users/michaelparent/.virtualenvs/neovim/bin/python",
+    "python.sortImports.path": "/Users/michaelparent/.virtualenvs/neovim/bin/isort",
+    "python.venvPath": "/Users/michaelparent/.virtualenvs/",
     "python.analysis.extraPaths": [
-        "/Users/mparent/dev/api/equipment",
-        "/Users/mparent/dev/api"
+        "/Users/michaelparent/dev/api/equipment",
+        "/Users/michaelparent/dev/api"
     ],
     "diagnostic.checkCurrentLine": true
 }

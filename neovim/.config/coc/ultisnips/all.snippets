@@ -1,0 +1,24 @@
+snippet date "Date YYYY-MM-DD" w
+`!v strftime("%Y-%m-%d")`
+endsnippet
+
+snippet medate "mparent(DATE): " w
+mparent(`!v strftime("%Y-%m-%d")`): 
+endsnippet
+
+snippet datetime "Date Time YYYY-MM-DD HHMM" w
+`!v strftime("%Y-%m-%d %H%M")`
+endsnippet
+
+
+snippet #== "Thick horizontal separator" b
+#===============================================================================
+endsnippet
+
+snippet #-- "Thin horizontal separator" b
+#-------------------------------------------------------------------------------
+endsnippet
+
+snippet tdd "Quick TODO comment" w
+# TODO - Temp Development
+endsnippet

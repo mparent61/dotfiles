@@ -61,10 +61,10 @@ Plug 'airblade/vim-rooter'  " Set working directory to current file's repository
 "Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'itspriddle/vim-marked', { 'for': 'markdown' }  " Integration with Marked2 viewer
 
-" JSONC
+" Languages
 Plug 'neoclide/jsonc.vim'
-
 Plug 'hashivim/vim-terraform'
+Plug 'smerrill/vcl-vim-plugin'
 
 
 Plug 'rhysd/conflict-marker.vim'
@@ -97,9 +97,15 @@ nmap <C-e> :e#<CR>
 " Quick-open Neovim config
 nnoremap <silent> <leader>E :e $MYVIMRC<cr>
 
+" Quick-open PLAN
+nnoremap <silent> <leader>L :vsplit $HOME/Library/Mobile\ Documents/com~apple~CloudDocs/Documents/Tillable/plan.taskpaper<cr>
+
+
 "======================================================================
 " Colorscheme
-set background=dark
+set background=light
+"set background=dark
+"
 let g:solarized_use16=1
 let g:solarized_italics=0  " Prevent ugly gray highlight with 16-color mode
 colorscheme solarized8
@@ -373,6 +379,9 @@ nnoremap <leader>gc :Git commit<CR>
 nnoremap <leader>gC :Git commit --no-verify -q<CR>
 nnoremap <leader>gd :Gdiff<CR>
 
+nnoremap <leader>gB :Git blame<CR>
+nnoremap <leader>gb :GBrowse<CR>
+
 "======================================================================
 " FZF
 " Repository siblings - Automatically find parent directory of my root Git project
@@ -383,7 +392,11 @@ endfunction
 command! FZFRepoFiles execute 'Files' s:find_git_root()
 command! FZFSiblingRepoFiles execute 'Files' fnamemodify(s:find_git_root(), ':h')
 
-let fzf_rg_base_command = $FZF_DEFAULT_COMMAND "--column --line-number --no-heading --fixed-strings --ignore-case --color always "
+let fzf_rg_base_command = $FZF_BASE_COMMAND " --column --line-number --no-heading --fixed-strings --ignore-case --color always "
+""let fzf_rg_base_command = $FZF_BASE_COMMAND
+
+"let fzf_rg_base_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore-vcs --hidden --follow --color "always" '
+let fzf_rg_base_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore-vcs --hidden --follow --glob "!.git/*" --color "always" '
 
 command! -bang -nargs=* FZFRg
   \ call fzf#vim#grep(fzf_rg_base_command.shellescape(<q-args>), 1,

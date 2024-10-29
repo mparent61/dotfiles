@@ -1,5 +1,5 @@
 # My Evil Plan!
-alias plan='nvim -O ~/Library/Mobile\ Documents/com~apple~CloudDocs/Documents/Tillable/{plan.taskpaper,scratch.txt}'
+alias plan='nvim -O ~/Library/Mobile\ Documents/com~apple~CloudDocs/Documents/Tillable/{plan.md,scratch.txt}'
 
 # Terraform concise plan
 tfcp () {
@@ -14,7 +14,7 @@ function tftree() {
     # Delete plan out file to avoid git tracking (although is included in .gitignore)
     if [ -f "plan.tfplan" ]; then rm plan.tfplan; fi
 }
-
+alias tft=tftree
 
 function tfsum() {
     echo -e "Starting Terraform summary..."
@@ -24,21 +24,26 @@ function tfsum() {
     # Delete plan out file to avoid git tracking (although is included in .gitignore)
     if [ -f "plan.tfplan" ]; then rm plan.tfplan; fi
 }
+alias tfs=tfsum
 
-export TF_CLI_ARGS_plan="-lock-timeout=10m"
-export TF_CLI_ARGS_apply="-lock-timeout=10m"
+export COMMON_TF_CLI_ARGS="-compact-warnings -lock-timeout=1m -parallelism=40"
+export TF_CLI_ARGS_plan="$COMMON_TF_CLI_ARGS"
+export TF_CLI_ARGS_apply="$COMMON_TF_CLI_ARGS"
 
 
 #--------------------------------------------------
 # Development
 #--------------------------------------------------
+# Search for outstanding TODO comments
+alias todo="rg --glob '!**/check_forbidden_strings.sh' --glob '!docs/style_guide.md' TODO"
 # Python
 alias pt=pytest
-alias ptp='pt -n auto'
+alias ptp='pt -n 3'
 # Stop and remove all containers
 alias dka='docker ps -aq | xargs docker kill | xargs docker rm'
 # Auto-cleanup container, and map volumes for local development + configuration
-alias dr='docker compose run --rm \
+alias dr='docker compose run \
+        --rm \
         --volume "$HOME/.bash_history:/root/.bash_history" \
         --volume "$HOME/.bashrc:/root/.bashrc" \
         --volume "$HOME/.inputrc:/root/.inputrc" \
@@ -47,14 +52,18 @@ alias dr='docker compose run --rm \
         --volume "$HOME/.pdbrc:/root/.pdbrc" \
         '
 # Default to running bash shell
-drc() { cd ~/dev/api && dr client ${@:-bash}; }
 dra() { cd ~/dev/api && dr admin ${@:-bash}; }
+drc() { cd ~/dev/api && dr client ${@:-bash}; }
+drl() { cd ~/dev/api && dr almanac ${@:-bash}; }
 drs() { cd ~/dev/api && dr silo ${@:-bash}; }
 
 # Allow breakpoints
-dbc() { cd ~/dev/api && dr --service-ports client ${@}; }
 dba() { cd ~/dev/api && dr --service-ports admin ${@}; }
+dbc() { cd ~/dev/api && dr --service-ports client ${@}; }
+dbl() { cd ~/dev/api && dr --service-ports almanac ${@}; }
 dbs() { cd ~/dev/api && dr --service-ports silo ${@}; }
+
+alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 
 # Kubernetes
 alias kc='kubectx'
@@ -89,3 +98,6 @@ export PATH="/Applications/Postgres.app/Contents/Versions/12/bin:$PATH"
 alias ngf="ngrok http --hostname=tillable.ngrok.io 7777"
 # alias ngc="ngrok http --hostname=tillable-api.ngrok.io 9000"
 # alias ngs="ngrok http --hostname=tillable-silo.ngrok.io 9002"
+
+# Airbyte
+alias airbyte-prod="ssh -i ~/.ssh/keys/PROD_AIRBYTE.pem -L 8000:localhost:8000 -N -f ec2-user@ec2-3-13-134-165.us-east-2.amazonaws.com; open http://localhost:8000"

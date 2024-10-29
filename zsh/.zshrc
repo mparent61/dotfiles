@@ -111,9 +111,10 @@ alias git=hub
 # Common typo
 alias gti=git
 # Docker
-alias dock=docker
-alias dm=docker-machine
-alias dc=docker-compose
+alias d=docker
+alias dc='docker compose'
+# Avoid warnings about orphaned containers on startup
+export COMPOSE_REMOVE_ORPHANS=1
 # Terraform
 alias tf=terraform
 alias tfa='tf apply'
@@ -131,8 +132,6 @@ alias curli='curl -I -XGET'
 #alias diff="diff-so-fancy"
 # Modern CLI replacements
 # https://github.com/ibraheemdev/modern-unix
-alias ls="exa"
-alias l="exa -lahF"
 alias du="dust"
 alias df="duf"
 alias bat="bat --theme GitHub"
@@ -178,10 +177,10 @@ fi
 workon() {
   source $VIRTUAL_ENV_DIR/$1/bin/activate
 }
-mkvenv() {
-    python3 -m venv 
-    workon .venv
-}
+# mkvenv() {
+#     python3 -m venv 
+#     workon .venv
+# }
 mklocalvenv() {
     python3 -m venv .venv
     source .venv/bin/activate
@@ -275,6 +274,10 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 # McFly history search - fix colors to work with Solarized
 export MCFLY_LIGHT=TRUE
 
+# PyEnv support
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 # Terraform auto-complete
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C `which terraform` terraform
@@ -284,3 +287,4 @@ OSX_HOSTNAME=`hostname -s`
 if [[ -f "${HOME}/.zshrc.${OSX_HOSTNAME}" ]]; then
     source "${HOME}/.zshrc.${OSX_HOSTNAME}"
 fi
+
