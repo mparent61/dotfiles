@@ -1,6 +1,24 @@
 Changelog
 =========
 
+Version 1.9.1 – 2024-12-05
+--------------------------
+
+### Bugfix
+
+* Fix for PHP 8.4 (@romantech)
+* Fix for branch names containing special chars like `#`
+
+
+Version 1.9 – 2024-02-04
+------------------------
+
+### Features
+
+* Better support for Alfred 5
+* `gh my stars` opens `/<username>?tab=stars` instead of `/stars`
+
+
 Version 1.8.1 – 2022-10-16
 --------------------------
 

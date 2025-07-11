@@ -56,7 +56,6 @@
     up = "!git pull && git fetch --prune && git delete-gone-branches && git b"
 
     mt = mergetool
-    mm = merge master
 
     ci = commit
     ca = commit -a
@@ -86,9 +85,6 @@
     # 2) edit / add
     # 3) Recommit via:
     redoci = commit -c ORIG_HEAD
-
-    # List files changed vs master
-    list-files-changed-vs-master = diff --name-only master
 
     # Reset
     rh = reset --hard
@@ -146,9 +142,12 @@
 	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [branch "master"]
-    # Prevent merging to master
+    # Prevent direct merging 
     mergeoptions = --no-ff
     # Prevent push to remote https://stackoverflow.com/a/57998309
     pushRemote = no_push
-[credential "https://dev.azure.com"]
-	useHttpPath = true
+[branch "production"]
+    # Prevent direct merging 
+    mergeoptions = --no-ff
+    # Prevent push to remote https://stackoverflow.com/a/57998309
+    pushRemote = no_push

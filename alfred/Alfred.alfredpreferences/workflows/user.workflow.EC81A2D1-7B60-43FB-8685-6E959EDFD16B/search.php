@@ -372,7 +372,7 @@ class Search
                             ->comparator($parts[0].' @'.$branch->name)
                             ->subtitle($branch->commit->sha)
                             ->icon('branch')
-                            ->arg('/'.$parts[0].'/tree/'.$branch->name)
+                            ->arg('/'.$parts[0].'/tree/'.str_replace('%2F', '/', urlencode($branch->name)))
                         );
                     }
                     break;
@@ -557,7 +557,7 @@ class Search
             'dashboard' => ['', 'View your dashboard'],
             'pulls ' => ['pulls', 'View your pull requests', 'pull-request'],
             'issues ' => ['issues', 'View your issues', 'issue'],
-            'stars' => ['stars', 'View your starred repositories'],
+            'stars' => [self::$user->login.'?tab=stars', 'View your starred repositories'],
             'profile' => [self::$user->login, 'View your public user profile', 'user'],
             'settings' => ['settings', 'View or edit your account settings'],
             'notifications' => ['notifications', 'View all your notifications'],

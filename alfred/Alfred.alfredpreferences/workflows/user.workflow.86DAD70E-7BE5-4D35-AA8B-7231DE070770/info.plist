@@ -58,12 +58,14 @@
 			<dict>
 				<key>browser</key>
 				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://github.com/pulls?q=is%3Apr+author%3Amparent61+archived%3Afalse+is%3Aclosed+sort%3Aupdated-desc</string>
-				<key>utf8</key>
-				<true/>
+				<string>https://github.com/pulls?q=is%3Aclosed+is%3Apr+author%3Amparent61+archived%3Afalse+user%3Acamoag+-repo%3Acamoag%2Fsnowflake-vcrpy+sort%3Aupdated-desc</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
@@ -80,18 +82,20 @@
 		<key>11D5721D-E45C-4D45-82C8-2CC370002271</key>
 		<dict>
 			<key>xpos</key>
-			<integer>270</integer>
+			<real>270</real>
 			<key>ypos</key>
-			<integer>50</integer>
+			<real>50</real>
 		</dict>
 		<key>6E4EEBD5-0AB8-4986-8EC0-1CD707F41689</key>
 		<dict>
 			<key>xpos</key>
-			<integer>50</integer>
+			<real>50</real>
 			<key>ypos</key>
-			<integer>50</integer>
+			<real>50</real>
 		</dict>
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
 	<key>webaddress</key>
 	<string></string>
 </dict>
